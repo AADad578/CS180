@@ -2,13 +2,21 @@ package User;
 
 public interface UserInterface {
     public String getName();
+
     public void setName(String name);
+
     public void setUserName(String userName);
+
     public String getUserName();
+
     public void setPassword(String password);
+
     public String getPassword();
+
     public void setBalance(double balance);
+
     public double getBalance();
+
     public String toString();
 
 

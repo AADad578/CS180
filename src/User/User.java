@@ -12,7 +12,7 @@ public class User implements Serializable, UserInterface {
     public User(String name, double balance/*, Item[] items*/, String username, String password) {
         this.name = name;
         this.balance = balance;
-    //    this.items = items;
+        //this.items = items;
         this.username = username;
         this.password = password;
     }
@@ -62,6 +62,6 @@ public class User implements Serializable, UserInterface {
         return "User: \n" +
                 "   username: " + username + "\'\n" +
                 "   name: " + name + "\'\n" +
-                "   balance: " + balance ;
+                "   balance: " + balance;
     }
 }
