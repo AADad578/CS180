@@ -1,7 +1,10 @@
+package Message;
+
 import java.io.*;
 import java.util.ArrayList;
+import User.User;
 
-public class Message {
+public class Message implements Serializable {
     private String messageContent;
     private int timeSent;
     private User sender;
