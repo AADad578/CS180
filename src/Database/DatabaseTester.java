@@ -73,7 +73,7 @@ public class DatabaseTester {
 
     @Test
     void testToString() {
-        String expected = "User: \n   username: alice123'\n   name: Alice'\n   balance: 100.0";
+        String expected = "Database: \n    Items: '\n    Chats: \n    Users: ";
         assertEquals(expected, db.toString());
     }
 
@@ -87,14 +87,13 @@ public class DatabaseTester {
         // Deserialize the user object
         ByteArrayInputStream byteIn = new ByteArrayInputStream(byteOut.toByteArray());
         ObjectInputStream in = new ObjectInputStream(byteIn);
-        User deserializedUser = (User) in.readObject();
+        Database deserializedDB = (Database) in.readObject();
 
         // Verify that the deserialized object is equal to the original
-        assertEquals(db.getName(), deserializedUser.getName());
-        assertEquals(db.getUserName(), deserializedUser.getUserName());
-        assertEquals(db.getBalance(), deserializedUser.getBalance());
+        assertEquals(db.getChats(), deserializedDB.getChats());
+        assertEquals(db.getItems(), deserializedDB.getItems());
+        assertEquals(db.getUsers(), deserializedDB.getUsers());
 
-        // Password will be null if it's marked transient
-        assertEquals(db.getPassword(), deserializedUser.getPassword());
+
     }
 }

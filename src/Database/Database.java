@@ -3,6 +3,7 @@ package Database;
 import Chat.Chat;
 import Item.Item;
 import User.User;
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Arrays;
  * 
  * @version 4/3/25
  */
-public class Database implements DatabaseInterface {
+public class Database implements Serializable, DatabaseInterface {
 
     private Item[] items;
     private Chat[] chats;
