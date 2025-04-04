@@ -1,5 +1,7 @@
 package Database;
 
+import Chat.Chat;
+import Item.Item;
 import User.User;
 
 /**
@@ -26,5 +28,6 @@ public interface DatabaseInterface {
 
     public void setUsers(User[] users);
 
+    @Override
     public String toString();
 }

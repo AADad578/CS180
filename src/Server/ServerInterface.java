@@ -1,6 +1,8 @@
 package Server;
 
+import Chat.Chat;
 import Database.Database;
+import Item.Item;
 import User.User;
 
 public interface ServerInterface {

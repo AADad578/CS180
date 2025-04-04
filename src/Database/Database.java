@@ -1,6 +1,9 @@
 package Database;
 
+import Chat.Chat;
+import Item.Item;
 import User.User;
+import java.util.Arrays;
 
 /**
  * DatabaseInterface
@@ -55,8 +58,9 @@ public class Database implements DatabaseInterface {
         this.users = users;
     }
 
+    @Override
     public String toString() {
-        return String.format("Database: \n    Items: %s\n    Chats: %s\n    Users: %s", items.toStirng(),
-                chats.toString(), users.toString());
+        return String.format("Database: \n    Items: %s\n    Chats: %s\n    Users: %s", Arrays.toString(items),
+                Arrays.toString(chats), Arrays.toString(users));
     }
 }

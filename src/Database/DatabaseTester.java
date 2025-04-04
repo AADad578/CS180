@@ -8,6 +8,14 @@ import java.io.ObjectOutputStream;
 
 import User.User;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import Chat.Chat;
+import Item.Item;
+
 public class DatabaseTester {
     private Database db;
     private Item[] items;

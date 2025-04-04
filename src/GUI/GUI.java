@@ -1,5 +1,7 @@
 package GUI;
 
+import Chat.Chat;
+import Item.Item;
 import User.User;
 
 public class GUI implements GUIInterface {

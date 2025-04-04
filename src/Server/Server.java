@@ -1,13 +1,14 @@
 package Server;
 
+import Chat.Chat;
+import Database.Database;
+import Item.Item;
+import User.User;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import Database.Database;
-import User.User;
 
 public class Server {
     private static Database db;
@@ -61,11 +62,9 @@ public class Server {
      * @param item the item to add
      */
     public static void addItem(Item item) {
-        Item[] currItems = db.getUsers();
+        Item[] currItems = db.getItems();
         Item[] newItems = new Item[currItems.length + 1];
-        for (int i = 0; i < currItems.length; i++) {
-            newItems[i] = currItems[i];
-        }
+        System.arraycopy(currItems, 0, newItems, 0, currItems.length);
         newItems[currItems.length] = item;
         db.setItems(newItems);
         saveDatabase();
@@ -104,11 +103,9 @@ public class Server {
      * @param chat the chat to add
      */
     public static void addChat(Chat chat) {
-        Chat[] currChats = db.getUsers();
+        Chat[] currChats = db.getChats();
         Chat[] newChats = new Chat[currChats.length + 1];
-        for (int i = 0; i < currChats.length; i++) {
-            newChats[i] = currChats[i];
-        }
+        System.arraycopy(currChats, 0, newChats, 0, currChats.length);
         newChats[currChats.length] = chat;
         db.setChats(newChats);
         saveDatabase();
@@ -118,8 +115,9 @@ public class Server {
      * removes a chat from the database if there is an exact match and saves it
      * 
      * @param chat the chat to add
+     * @throws InvalidInputException if the chat is not found
      */
-    public static void removeChat(Chat chat) {
+    public static void removeChat(Chat chat) throws InvalidInputException {
         Chat[] currChats = db.getChats();
         Chat[] newChats = new Chat[currChats.length - 1];
         boolean searching = true;
@@ -177,7 +175,7 @@ public class Server {
      * @return all items that match
      */
     public static Item[] searchItems(String searchTerm) {
-
+        return null;
     }
 
     public static void main(String[] args) {
