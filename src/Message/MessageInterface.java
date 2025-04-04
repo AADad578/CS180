@@ -1,3 +1,6 @@
+package Message;
+import User.User;
+
 public interface MessageInterface {
     void sendMessage();
     String viewMessages();
