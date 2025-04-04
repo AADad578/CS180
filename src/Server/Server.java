@@ -9,20 +9,26 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 public class Server {
     private static Database db;
 
     /**
      * adds a user to the database and saves it
+     * check if ID already exists
      * 
      * @param user the user to add
+     * @throws InvalidInputException if user.equals any existing item
      */
-    public static void addUser(User user) {
+    public static void addUser(User user) throws InvalidInputException {
         User[] currUsers = db.getUsers();
         User[] newUsers = new User[currUsers.length + 1];
         for (int i = 0; i < currUsers.length; i++) {
             newUsers[i] = currUsers[i];
+            if(user.equals(currUsers[i])) {
+                throw new InvalidInputException("Username already exists");
+            }
         }
         newUsers[currUsers.length] = user;
         db.setUsers(newUsers);
@@ -30,7 +36,7 @@ public class Server {
     }
 
     /**
-     * removes the first user from the database that exactly matches and saves it
+     * removes the first user from the database that .equals and saves it
      * 
      * @param user the user to add
      * @throws InvalidInputException if user is not found
@@ -47,7 +53,7 @@ public class Server {
                 continue;
             } else if (i + 1 == currUsers.length) {
                 // on the last item and didn't find a match
-                throw new InvalidInputException();
+                throw new InvalidInputException("Selected User not found");
             }
             newUsers[index] = currUsers[i];
             index++;
@@ -88,7 +94,7 @@ public class Server {
                 continue;
             } else if (i + 1 == currItems.length) {
                 // on the last item and didn't find a match
-                throw new InvalidInputException();
+                throw new InvalidInputException("Selected Item not found");
             }
             newItems[index] = currItems[i];
             index++;
@@ -129,7 +135,7 @@ public class Server {
                 continue;
             } else if (i + 1 == currChats.length) {
                 // on the last item and didn't find a match
-                throw new InvalidInputException();
+                throw new InvalidInputException("Selected Chat not found");
             }
             newChats[index] = currChats[i];
             index++;
@@ -157,11 +163,14 @@ public class Server {
      * recalls the database from a file.
      * FileName = "database.db"
      * Should be called on startup
+     * if file is not present IOException causes new database to be created
      */
     public static void recallDatabase() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("database.db"))) {
             Object o = ois.readObject();
             db = (Database) o;
+        } catch (IOException e) {
+            db = new Database(new Item[0], new Chat[0], new User[0]);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -174,12 +183,19 @@ public class Server {
      * @param searchTerm the term to match with
      * @return all items that match
      */
-    public static Item[] searchItems(String searchTerm) {
-        return null;
+    public static ArrayList<Item> searchItems(String searchTerm) {
+        ArrayList<Item> newItems = new ArrayList<>();
+        for (Item i : db.getItems()) {
+            if (i.getName().indexOf(searchTerm) >= 0) {
+                newItems.add(i);
+            }
+        }
+        return newItems;
     }
 
     public static void main(String[] args) {
         recallDatabase();
+        System.out.println(db);
     }
 
 }
