@@ -14,7 +14,6 @@ This documentation provides an overview of the `UserInterface` and `User` classe
     - Constructors
     - Methods
     - Fields
-3. [UserTester]
 
 ---
 
@@ -26,17 +25,18 @@ The `UserInterface` is an interface that defines the contract for interacting wi
 
 ### Methods
 
-| Method Signature                     | Description                                                                 |
-|--------------------------------------|-----------------------------------------------------------------------------|
-| `String getName()`                   | Retrieves the name of the user.                                             |
-| `void setName(String name)`          | Sets the name of the user.                                                 |
-| `String getUserName()`               | Retrieves the username of the user.                                        |
-| `void setUserName(String userName)`  | Sets the username of the user.                                             |
-| `String getPassword()`               | Retrieves the password of the user.                                        |
-| `void setPassword(String password)`  | Sets the password of the user.                                             |
-| `double getBalance()`                | Retrieves the balance of the user.                                         |
-| `void setBalance(double balance)`    | Sets the balance of the user.                                              |
-| `String toString()`                  | Returns a string representation of the user object.                        |
+| Method Signature                | Description                                                          |
+|---------------------------------|----------------------------------------------------------------------|
+| `String getName()`              | Retrieves the name of the user.                                      |
+| `void setName(String name)`     | Sets the name of the user.                                           |
+| `String getUserName()`          | Retrieves the username of the user.                                  |
+| `void setUserName(String userName)` | Sets the username of the user.                                       |
+| `String getPassword()`          | Retrieves the password of the user.                                  |
+| `void setPassword(String password)` | Sets the password of the user.                                       |
+| `double getBalance()`           | Retrieves the balance of the user.                                   |
+| `void setBalance(double balance)` | Sets the balance of the user.                                        |
+| `String toString()`             | Returns a string representation of the user object.                  |
+| `boolean equals(Object o)`      | Returns true or false based on if the username field are same or not |
 
 ---
 
@@ -54,18 +54,18 @@ The `User` class implements the `UserInterface` and provides concrete implementa
 
 ### Methods
 
-| Method Signature                    | Description                                                                 |
-|-------------------------------------|-----------------------------------------------------------------------------|
-| `String getName()`                  | Retrieves the name of the user.                                             |
-| `void setName(String name)`         | Sets the name of the user.                                                 |
-| `String getUserName()`              | Retrieves the username of the user.                                        |
-| `void setUserName(String userName)` | Sets the username of the user.                                             |
-| `String getPassword()`              | Retrieves the password of the user.                                        |
-| `void setPassword(String password)` | Sets the password of the user.                                             |
-| `double getBalance()`               | Retrieves the balance of the user.                                         |
-| `void setBalance(double balance)`   | Sets the balance of the user.                                              |
-| `String toString()`                 | Returns a string representation of the user object, including username, name, and balance. |
-| `Boolean equals(Object o)`          | Retruns true if the Object o is an instance of User and the username of o is equal to the usernme of the current User object
+| Method Signature                    | Description                                                                                                                  |
+|-------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| `String getName()`                  | Retrieves the name of the user.                                                                                              |
+| `void setName(String name)`         | Sets the name of the user.                                                                                                   |
+| `String getUserName()`              | Retrieves the username of the user.                                                                                          |
+| `void setUserName(String userName)` | Sets the username of the user.                                                                                               |
+| `String getPassword()`              | Retrieves the password of the user.                                                                                          |
+| `void setPassword(String password)` | Sets the password of the user.                                                                                               |
+| `double getBalance()`               | Retrieves the balance of the user.                                                                                           |
+| `void setBalance(double balance)`   | Sets the balance of the user.                                                                                                |
+| `String toString()`                 | Returns a string representation of the user object, including username, <br/> name, and balance.                             |
+| `boolean equals(Object o)`          | Retruns true if the Object o is an instance of User and the username of o <br/>is equal to the usernme of the current User object |
 ### Fields
 
 | Field Name     | Type       | Description                                                                 |

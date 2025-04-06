@@ -11,5 +11,9 @@ public interface ChatInterface {
     List<Message> getMessages();
 
     void addMessage(String message, User sentBy, int timesent) throws MessageError;
+
+    boolean equals(Object o);
+
+    String toString();
 }
 

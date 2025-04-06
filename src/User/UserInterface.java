@@ -1,24 +1,25 @@
 package User;
 
 public interface UserInterface {
-    public String getName();
+    String getName();
 
-    public void setName(String name);
+    void setName(String name);
 
-    public void setUserName(String userName);
+    void setUserName(String userName);
 
-    public String getUserName();
+    String getUserName();
 
-    public void setPassword(String password);
+    void setPassword(String password);
 
-    public String getPassword();
+    String getPassword();
 
-    public void setBalance(double balance);
+    void setBalance(double balance);
 
-    public double getBalance();
+    double getBalance();
 
-    public String toString();
+    String toString();
 
+    boolean equals(Object o);
 
     // If we ever plan to make a USER page
     // public boolean addItem(Item item);

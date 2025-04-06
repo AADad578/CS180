@@ -1,6 +1,6 @@
 # Client Interface Documentation
 
-The `Client` interface defines the essential methods for interacting with a server-side marketplace application. It includes functionalities such as connecting to the server, sending messages, logging in, and handling payments.
+The `ClientInterface` interface defines the essential methods for interacting with a server-side marketplace application. It includes functionalities such as connecting to the server, sending messages, logging in, and handling payments.
 
 ## Methods
 
@@ -58,21 +58,25 @@ Processes a payment for the user.
 
 ---
 
-### Placeholder Methods (To Be Added)
-
-#### `List<Chat> receiveChats()`
+### `List<Chat> receiveChats()`
 Retrieves a list of chat messages from the server.
 
 - **Returns**: `List<Chat>`
 
-#### `List<Item> receiveItems()`
+---
+
+### `List<Item> receiveItems()`
 Retrieves a list of items available on the marketplace.
 
 - **Returns**: `List<Item>`
 
-#### `void sendNewItem(Item item)`
+---
+
+### `void sendNewItem(Item item)`
 Sends a new item to be listed on the marketplace.
 
 - **Parameters**:
     - `item`: The `Item` object to be sent.
 - **Returns**: `void`
+
+---

@@ -1,14 +1,13 @@
 package User;
 
 import java.io.Serializable;
-import java.util.Objects;
 import Item.Item;
 
 public class User implements Serializable, UserInterface {
     private String username;
     private String name;
     private double balance;
-    private Item[] items; //Waiting for item class
+    private Item[] items;
     private String password;
 
     public User(String name, double balance, Item[] items, String username, String password) {
@@ -67,8 +66,13 @@ public class User implements Serializable, UserInterface {
                 "   balance: " + balance;
     }
 
-    public boolean equals(User o) {
-        return o.getUserName().equals(this.getUserName());
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof User)) {
+            return false;
+        }
+        User user = (User) o;
+        return user.getUserName().equals(this.getUserName());
     }
 
 }
