@@ -10,11 +10,6 @@ public interface ClientInterface {
 
     void disconnectFromServer();
 
-    <<<<<<<HEAD:src/Client/Client.java
-    List<Chat> recieveChats();
-
-    List<Item> receiveItems();=======
-
     ArrayList<Chat> receiveChats();
 
     ArrayList<Item> receiveItems();
