@@ -1,6 +1,9 @@
 package Message;
 
 import static org.junit.Assert.*;
+
+import Item.Item;
+import User.User;
 import org.junit.*;
 /**
  * Team Project Phase 1 -- MessageTester Class
