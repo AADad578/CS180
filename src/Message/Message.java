@@ -44,7 +44,7 @@ public class Message implements MessageInterface, Serializable {
      */
     public String toString() {
         return String.format("To: %s\nMessage: %s\nFrom: %s\nTime: %d\n",
-                receiver.getUserName(), messageContent, sender.getUserName(), timeSent);
+                receiver.getName(), messageContent, sender.getName(), timeSent);
     }
 
     /**
