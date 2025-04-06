@@ -1,18 +1,20 @@
 package User;
 
 import java.io.Serializable;
+import java.util.Objects;
+import Item.Item;
 
 public class User implements Serializable, UserInterface {
     private String username;
     private String name;
     private double balance;
-    //private Item[] items; //Waiting for item class
+    private Item[] items; //Waiting for item class
     private String password;
 
-    public User(String name, double balance/*, Item[] items*/, String username, String password) {
+    public User(String name, double balance, Item[] items, String username, String password) {
         this.name = name;
         this.balance = balance;
-        //this.items = items;
+        this.items = items;
         this.username = username;
         this.password = password;
     }
@@ -64,4 +66,11 @@ public class User implements Serializable, UserInterface {
                 "   name: " + name + "\'\n" +
                 "   balance: " + balance;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof User user)) return false;
+        return Objects.equals(username, user.username);
+    }
+
 }

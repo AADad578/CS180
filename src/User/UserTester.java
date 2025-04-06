@@ -2,8 +2,10 @@ package User;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import Item.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 
 import java.io.*;
 
@@ -12,7 +14,7 @@ class UserTester {
 
     @BeforeEach
     void setUp() {
-        user = new User("Alice", 100.0, "alice123", "securePass");
+        user = new User("Alice", 100.0, new Item[5],"alice123", "securePass");
     }
 
     @Test
