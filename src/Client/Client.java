@@ -1,18 +1,24 @@
 package Client;
 
+import Chat.Chat;
+import Item.Item;
+import Message.Message;
+
+import java.util.List;
+
 public interface Client {
 
     void connectToServer(String address, int port);
 
     void disconnectFromServer();
 
-    //List<Chat> recieveChats(); TO BE ADDED
+    List<Chat> recieveChats();
 
-    //List<Item> receiveItems(); TO BE ADDED
+    List<Item> receiveItems();
 
-    void sendMessage(String message);
+    void sendMessage(Message message);
 
-    //void sendNewItem(Item item); TO BE ADDED
+    void sendNewItem(Item item);
 
     boolean login(String username, String password);
 
