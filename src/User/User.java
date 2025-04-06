@@ -1,7 +1,6 @@
 package User;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class User implements Serializable, UserInterface {
     private String username;
@@ -66,10 +65,8 @@ public class User implements Serializable, UserInterface {
                 "   balance: " + balance;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof User user)) return false;
-        return Objects.equals(username, user.username);
+    public boolean equals(User o) {
+        return o.getUserName().equals(this.getUserName());
     }
 
 }

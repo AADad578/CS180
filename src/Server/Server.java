@@ -195,7 +195,8 @@ public class Server {
 
     public static void main(String[] args) {
         recallDatabase();
-        System.out.println(db);
+        System.out.println("Server Started");
+        
     }
 
 }
