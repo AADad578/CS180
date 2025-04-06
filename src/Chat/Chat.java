@@ -3,6 +3,7 @@ package Chat;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+
 import Message.Message;
 import User.User;
 
@@ -51,5 +52,32 @@ public class Chat implements ChatInterface, Serializable {
     @Override
     public ArrayList<Message> getMessages() {
         return messages;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Chat)) return false;
+        Chat chat = (Chat) o;
+
+        User[] users1 = chat.getUsers();
+        User[] users2 = this.getUsers();
+
+        return (users1[0].equals(users2[0]) && users1[1].equals(users2[1])) ||
+                (users1[0].equals(users2[1]) && users1[1].equals(users2[0]));
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (User u : users) {
+            sb.append(u.getUserName()).append(" (").append(u.getName()).append(")");
+            sb.append("\n");
+        }
+
+        for (Message m : messages) {
+            sb.append(m.toString()).append("\n");
+        }
+
+        return sb.toString();
     }
 }
