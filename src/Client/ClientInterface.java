@@ -2,26 +2,23 @@ package Client;
 
 import Chat.Chat;
 import Item.Item;
-import Message.Message;
+import java.util.ArrayList;
 
-import java.util.List;
-
-public interface Client {
+public interface ClientInterface {
 
     void connectToServer(String address, int port);
 
     void disconnectFromServer();
 
+    <<<<<<<HEAD:src/Client/Client.java
     List<Chat> recieveChats();
 
-    List<Item> receiveItems();
+    List<Item> receiveItems();=======
 
-    void sendMessage(Message message);
+    ArrayList<Chat> receiveChats();
 
-    void sendNewItem(Item item);
+    ArrayList<Item> receiveItems();
 
     boolean login(String username, String password);
-
-    boolean payment(double amount);
 
 }

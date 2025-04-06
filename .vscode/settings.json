@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "C:\\Users\\Ankur\\Documents\\GitHub\\CS180\\lib\\junit-platform-console-standalone-1.13.0-M2.jar"
+    ]
+}

@@ -24,10 +24,17 @@ public class DatabaseTester {
 
     @BeforeEach
     void setUp() {
-        Item[] items = { new Item(), new Item(), new Item() };
-        Chat[] chats = { new Chat(), new Chat(), new Chat() };
-        User[] users = { new User("test1", 1, "t1", "TEST1"), new User("test2", 2, "t2", "TEST2"),
-                new User("test3", 3, "t3", "TEST3") };
+        Item[] items = { new Item("test1", 1, "loc1", "pic1.png"),
+                new Item("test2", 2, "loc2", "pic2.png"),
+                new Item("test3", 3, "loc3", "pic3.png") };
+        Item[] item1 = { items[0] };
+        Item[] item2 = { items[1] };
+        Item[] item3 = { items[2] };
+
+        User[] users = { new User("test1", 1, item1, "t1", "TEST1"),
+                new User("test2", 2, item2, "t2", "TEST2"),
+                new User("test3", 3, item3, "t3", "TEST3") };
+        Chat[] chats = { new Chat(users[0], users[1]), new Chat(users[1], users[2]), new Chat(users[2], users[0]) };
         db = new Database(items, chats, users);
         this.items = items;
         this.chats = chats;
@@ -41,7 +48,8 @@ public class DatabaseTester {
 
     @Test
     void testSetItems() {
-        Item[] items2 = { new Item(), new Item() };
+        Item[] items2 = { new Item("test1", 1, "loc1", "pic1.png"),
+                new Item("test3", 3, "loc3", "pic3.png") };
         db.setItems(items2);
         assertEquals(items2, db.getItems());
     }
@@ -54,7 +62,7 @@ public class DatabaseTester {
     @Test
     void testSetChats() {
         Chat[] chats2 = { new Chat(), new Chat() };
-        db.setItems(chats2);
+        db.setChats(chats2);
         assertEquals(chats2, db.getChats());
     }
 
@@ -65,15 +73,45 @@ public class DatabaseTester {
 
     @Test
     void testSetUsers() {
-        User[] users2 = { new User("test1", 1, "t1", "TEST1"),
-                new User("test3", 3, "t3", "TEST3") };
-        db.setItems(users2);
+        Item[] item1 = { items[0] };
+        Item[] item3 = { items[2] };
+        User[] users2 = { new User("test1", 1, item1, "t1", "TEST1"),
+                new User("test3", 3, item3, "t3", "TEST3") };
+        db.setUsers(users2);
         assertEquals(users2, db.getUsers());
     }
 
     @Test
     void testToString() {
-        String expected = "Database: \n    Items: '\n    Chats: \n    Users: ";
+        String expected = """
+                Database:\s
+                    Items: [Item {Name: test1
+                Price: $1.00
+                Location: loc1
+                 }, Item {Name: test2
+                Price: $2.00
+                Location: loc2
+                 }, Item {Name: test3
+                Price: $3.00
+                Location: loc3
+                 }]
+                    Chats: [Chat { t1 (test1)
+                t2 (test2)
+                }, Chat { t2 (test2)
+                t3 (test3)
+                }, Chat { t3 (test3)
+                t1 (test1)
+                }]
+                    Users: [User:\s
+                   username: t1'
+                   name: test1'
+                   balance: 1.0, User:\s
+                   username: t2'
+                   name: test2'
+                   balance: 2.0, User:\s
+                   username: t3'
+                   name: test3'
+                   balance: 3.0]""";
         assertEquals(expected, db.toString());
     }
 
@@ -90,10 +128,7 @@ public class DatabaseTester {
         Database deserializedDB = (Database) in.readObject();
 
         // Verify that the deserialized object is equal to the original
-        assertEquals(db.getChats(), deserializedDB.getChats());
-        assertEquals(db.getItems(), deserializedDB.getItems());
-        assertEquals(db.getUsers(), deserializedDB.getUsers());
-
+        assertEquals(db.toString(), deserializedDB.toString());
 
     }
 }

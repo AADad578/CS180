@@ -1,3 +1,5 @@
+package Item;
+
 /**
  * Team Project Phase 1 -- Item Interface
  *
@@ -54,11 +56,13 @@ public interface ItemInterface {
      * A toString() method that returns a formatted String including
      * item name, item price, and item location (but not item picture file name)
      */
+    @Override
     String toString();
 
     /**
      * A equals() method that determines whether two Item objects
      * are equal to each other
      */
+    @Override
     boolean equals(Object o);
 }

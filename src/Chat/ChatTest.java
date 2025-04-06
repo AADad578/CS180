@@ -73,4 +73,10 @@ public class ChatTest {
         assertEquals(1, chatWithMsgs.getMessages().size());
         assertEquals("Hey", chatWithMsgs.getMessages().get(0).getMessageContent());
     }
+
+    @Test
+    public void testToString() {
+        String expected = "";
+        assertEquals(expected, chat.toString());
+    }
 }

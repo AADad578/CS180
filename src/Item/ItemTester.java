@@ -1,6 +1,11 @@
 package Item;
+
 import static org.junit.Assert.*;
+
+import Message.Message;
+import User.User;
 import org.junit.*;
+
 /**
  * Team Project Phase 1 -- ItemTester Class
  *

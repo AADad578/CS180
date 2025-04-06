@@ -1,4 +1,9 @@
+package Message;
+
 import java.io.Serializable;
+
+import User.User;
+
 /**
  * Team Project Phase 1 -- Message Class
  *
@@ -11,19 +16,19 @@ import java.io.Serializable;
  *
  */
 public class Message implements MessageInterface, Serializable {
-    private String messageContent; //message content for a message
-    private int timeSent; //time a message was sent in military time
-    private User sender; //sender of a message
-    private User receiver; //receiver for a message
+    private String messageContent; // message content for a message
+    private int timeSent; // time a message was sent in military time
+    private User sender; // sender of a message
+    private User receiver; // receiver for a message
 
     /**
      * Message Constructor Method
      * with four parameters
      *
      * @param messageContent message content for a message
-     * @param timeSent time a message was sent in military time
-     * @param sender sender of a message
-     * @param receiver receiver for a message
+     * @param timeSent       time a message was sent in military time
+     * @param sender         sender of a message
+     * @param receiver       receiver for a message
      */
     public Message(String messageContent, int timeSent, User sender, User receiver) {
         this.messageContent = messageContent;
@@ -39,8 +44,8 @@ public class Message implements MessageInterface, Serializable {
      * @return the formatted String
      */
     public String toString() {
-        return String.format("To: %s\nMessage: %s\nFrom: %s\nTime: %d\n",
-                receiver.getName(), messageContent, sender.getName(), timeSent);
+        return String.format("Message { To: %s\nMessage: %s\nFrom: %s\nTime: %d\n }",
+                receiver.getUserName(), messageContent, sender.getUserName(), timeSent);
     }
 
     /**
@@ -55,7 +60,7 @@ public class Message implements MessageInterface, Serializable {
      */
     public boolean equals(Object o) {
         if (o instanceof Message) {
-            Message m = (Message) o; //object o is cast as a Message object
+            Message m = (Message) o; // object o is cast as a Message object
             return this.messageContent.equals(m.getMessageContent()) && this.timeSent == m.getTimeSent()
                     && this.sender.equals(m.getSender()) && this.receiver.equals(m.getReceiver());
         }

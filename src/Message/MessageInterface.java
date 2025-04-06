@@ -1,3 +1,7 @@
+package Message;
+
+import User.User;
+
 /**
  * Team Project Phase 1 -- Message Interface
  *

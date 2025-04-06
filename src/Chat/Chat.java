@@ -1,14 +1,14 @@
 package Chat;
 
-import User.User;
-import Message.Message;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import Message.Message;
+import User.User;
+
 public class Chat implements ChatInterface, Serializable {
-    private User[] users;
-    private ArrayList<Message> messages;
+    private final User[] users;
+    private final ArrayList<Message> messages;
 
     public Chat() {
         users = new User[2];
@@ -35,7 +35,7 @@ public class Chat implements ChatInterface, Serializable {
             throw new MessageError("Sender is not a participant in this chat.");
         }
 
-        //Determining which user in the array sent the message
+        // Determining which user in the array sent the message
         User sender = sentBy.equals(users[0]) ? users[0] : users[1];
         User receiver = sender.equals(users[0]) ? users[1] : users[0];
 
@@ -51,5 +51,34 @@ public class Chat implements ChatInterface, Serializable {
     @Override
     public ArrayList<Message> getMessages() {
         return messages;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Chat))
+            return false;
+        Chat chat = (Chat) o;
+
+        User[] users1 = chat.getUsers();
+        User[] users2 = this.getUsers();
+
+        return (users1[0].equals(users2[0]) && users1[1].equals(users2[1])) ||
+                (users1[0].equals(users2[1]) && users1[1].equals(users2[0]));
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Chat { ");
+        for (User u : users) {
+            sb.append(u.getUserName()).append(" (").append(u.getName()).append(")");
+            sb.append("\n");
+        }
+
+        for (Message m : messages) {
+            sb.append(m.toString()).append("\n");
+        }
+        sb.append("}");
+        return sb.toString();
     }
 }
