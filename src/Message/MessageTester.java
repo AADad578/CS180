@@ -1,6 +1,5 @@
 import static org.junit.Assert.*;
 import org.junit.*;
-import java.io.*;
 /**
  * Team Project Phase 1 -- MessageTester Class
  *
