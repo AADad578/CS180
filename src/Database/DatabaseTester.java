@@ -83,7 +83,7 @@ public class DatabaseTester {
 
     @Test
     void testToString() {
-        String expected = "Database: \n    Items: '\n    Chats: \n    Users: ";
+        String expected = "Database { Items: \n    Chats: \n    Users: }";
         assertEquals(expected, db.toString());
     }
 

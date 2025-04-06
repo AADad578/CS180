@@ -125,7 +125,7 @@ public class Item implements ItemInterface, Serializable {
      */
     @Override
     public String toString() {
-        return String.format("Name: %s\nPrice: $%.2f\nLocation: %s\n", itemName, itemPrice, itemLocation);
+        return String.format("Item {Name: %s\nPrice: $%.2f\nLocation: %s\n }", itemName, itemPrice, itemLocation);
     }
 
     /**

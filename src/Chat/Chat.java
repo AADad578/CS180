@@ -2,6 +2,7 @@ package Chat;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import Message.Message;
 import User.User;
@@ -52,4 +53,9 @@ public class Chat implements ChatInterface, Serializable {
     public ArrayList<Message> getMessages() {
         return messages;
     }
+
+    @Override
+    public String toString() {
+      return String.format("Chat {Users: %s\nMessages: $%s}", Arrays.toString(users), messages);
+    };
 }
