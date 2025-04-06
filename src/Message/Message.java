@@ -1,4 +1,8 @@
+package Message;
+
 import java.io.Serializable;
+
+import User.User;
 /**
  * Team Project Phase 1 -- Message Class
  *

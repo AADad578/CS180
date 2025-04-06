@@ -1,7 +1,8 @@
 package Server;
 
+import java.util.ArrayList;
+
 import Chat.Chat;
-import Database.Database;
 import Item.Item;
 import User.User;
 
@@ -11,15 +12,17 @@ public interface ServerInterface {
      * adds a user to the database and saves it
      * 
      * @param user the user to add
+     * @throws InvalidInputException
      */
-    public void addUser(User user);
+    public void addUser(User user) throws InvalidInputException;
 
     /**
      * removes a user from the database if there is an exact match and saves it
      * 
      * @param user the user to add
+     * @throws InvalidInputException
      */
-    public void removeUser(User user);
+    public void removeUser(User user) throws InvalidInputException;
 
     /**
      * adds an item to the database and saves it
@@ -32,8 +35,9 @@ public interface ServerInterface {
      * removes an item from the database if there is an exact match and saves it
      * 
      * @param item the item to add
+     * @throws InvalidInputException
      */
-    public void removeItem(Item item);
+    public void removeItem(Item item) throws InvalidInputException;
 
     /**
      * adds a chat to the database and saves it
@@ -46,8 +50,9 @@ public interface ServerInterface {
      * removes a chat from the database if there is an exact match and saves it
      * 
      * @param chat the chat to add
+     * @throws InvalidInputException
      */
-    public void removeChat(Chat chat);
+    public void removeChat(Chat chat) throws InvalidInputException;
 
     /**
      * Saves the database to a file.
@@ -57,18 +62,11 @@ public interface ServerInterface {
     public void saveDatabase();
 
     /**
-     * recalls the database from a file.
-     * FileName = "database.db"
-     * Should be called on startup
-     */
-    public Database recallDatabase();
-
-    /**
      * returns all items that match the search term
      * 
      * @param searchTerm the term to match with
      * @return all items that match
      */
-    public Item[] searchItems(String searchTerm);
+    public ArrayList<Item> searchItems(String searchTerm);
 
 }

@@ -1,4 +1,7 @@
+package Item;
+
 import java.io.Serializable;
+
 /**
  * Team Project Phase 1 -- Item Class
  *
@@ -11,23 +14,23 @@ import java.io.Serializable;
  *
  */
 public class Item implements ItemInterface, Serializable {
-    private String itemName; //name of item
-    private double itemPrice; //price of item
-    private String itemLocation; //location of item
-    private String itemPictureFileName; //picture file name of item
-    private static final double EPSILON = 0.001; //small epsilon value for double comparisons
+    private String itemName; // name of item
+    private double itemPrice; // price of item
+    private String itemLocation; // location of item
+    private String itemPictureFileName; // picture file name of item
+    private static final double EPSILON = 0.001; // small epsilon value for double comparisons
 
     /**
      * Item Constructor Method
      * with four parameters
      *
-     * @param itemName item name of item
-     * @param itemPrice price of item
-     * @param itemLocation location of item
+     * @param itemName            item name of item
+     * @param itemPrice           price of item
+     * @param itemLocation        location of item
      * @param itemPictureFileName picture file name of item
      */
     public Item(String itemName, double itemPrice, String itemLocation,
-                String itemPictureFileName) {
+            String itemPictureFileName) {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.itemLocation = itemLocation;
@@ -39,6 +42,7 @@ public class Item implements ItemInterface, Serializable {
      *
      * @return item name
      */
+    @Override
     public String getItemName() {
         return itemName;
     }
@@ -48,6 +52,7 @@ public class Item implements ItemInterface, Serializable {
      *
      * @return item price
      */
+    @Override
     public double getItemPrice() {
         return itemPrice;
     }
@@ -57,6 +62,7 @@ public class Item implements ItemInterface, Serializable {
      *
      * @return item location
      */
+    @Override
     public String getItemLocation() {
         return itemLocation;
     }
@@ -66,6 +72,7 @@ public class Item implements ItemInterface, Serializable {
      *
      * @return item picture file name
      */
+    @Override
     public String getItemPictureFileName() {
         return itemPictureFileName;
     }
@@ -75,6 +82,7 @@ public class Item implements ItemInterface, Serializable {
      *
      * @param itemName item name
      */
+    @Override
     public void setItemName(String itemName) {
         this.itemName = itemName;
     }
@@ -84,6 +92,7 @@ public class Item implements ItemInterface, Serializable {
      *
      * @param itemPrice item price
      */
+    @Override
     public void setItemPrice(double itemPrice) {
         this.itemPrice = itemPrice;
     }
@@ -93,6 +102,7 @@ public class Item implements ItemInterface, Serializable {
      *
      * @param itemLocation item location
      */
+    @Override
     public void setItemLocation(String itemLocation) {
         this.itemLocation = itemLocation;
     }
@@ -102,6 +112,7 @@ public class Item implements ItemInterface, Serializable {
      *
      * @param itemPictureFileName item picture file name
      */
+    @Override
     public void setItemPictureFileName(String itemPictureFileName) {
         this.itemPictureFileName = itemPictureFileName;
     }
@@ -112,6 +123,7 @@ public class Item implements ItemInterface, Serializable {
      *
      * @return the formatted String
      */
+    @Override
     public String toString() {
         return String.format("Name: %s\nPrice: $%.2f\nLocation: %s\n", itemName, itemPrice, itemLocation);
     }
@@ -126,11 +138,14 @@ public class Item implements ItemInterface, Serializable {
      * @method getItemLocation() of Item Class
      * @method getItemPictureFileName() of Item Class
      */
+    @Override
     public boolean equals(Object o) {
         if (o instanceof Item) {
-            Item item = (Item) o; //object o is cast as a Item object
-            return this.itemName.equals(item.getItemName()) && Math.abs(this.itemPrice - item.getItemPrice()) < EPSILON &&
-                    this.itemLocation.equals(item.getItemLocation()) && this.itemPictureFileName.equals(item.getItemPictureFileName());
+            Item item = (Item) o; // object o is cast as a Item object
+            return this.itemName.equals(item.getItemName()) && Math.abs(this.itemPrice - item.getItemPrice()) < EPSILON
+                    &&
+                    this.itemLocation.equals(item.getItemLocation())
+                    && this.itemPictureFileName.equals(item.getItemPictureFileName());
         }
         return false;
     }

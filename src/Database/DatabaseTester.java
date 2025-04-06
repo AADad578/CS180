@@ -24,10 +24,15 @@ public class DatabaseTester {
 
     @BeforeEach
     void setUp() {
-        Item[] items = { new Item(), new Item(), new Item() };
-        Chat[] chats = { new Chat(), new Chat(), new Chat() };
-        User[] users = { new User("test1", 1, "t1", "TEST1"), new User("test2", 2, "t2", "TEST2"),
-                new User("test3", 3, "t3", "TEST3") };
+        Item[] items = { new Item("test1", 1, "loc1", "pic1.png"), new Item("test2", 2, "loc2", "pic2.png"),
+                new Item("test3", 3, "loc3", "pic3.png") };
+        Item[] item1 = { items[0] };
+        Item[] item2 = { items[1] };
+        Item[] item3 = { items[2] };
+
+        User[] users = { new User("test1", 1, item1, "t1", "TEST1"), new User("test2", 2, item2, "t2", "TEST2"),
+                new User("test3", 3, item3, "t3", "TEST3") };
+        Chat[] chats = { new Chat(users[0], users[1]), new Chat(users[1], users[2]), new Chat(users[2], users[0]) };
         db = new Database(items, chats, users);
         this.items = items;
         this.chats = chats;
@@ -93,7 +98,6 @@ public class DatabaseTester {
         assertEquals(db.getChats(), deserializedDB.getChats());
         assertEquals(db.getItems(), deserializedDB.getItems());
         assertEquals(db.getUsers(), deserializedDB.getUsers());
-
 
     }
 }
