@@ -83,7 +83,35 @@ public class DatabaseTester {
 
     @Test
     void testToString() {
-        String expected = "Database { Items: \n    Chats: \n    Users: }";
+        String expected = """
+                Database:\s
+                    Items: [Item {Name: test1
+                Price: $1.00
+                Location: loc1
+                 }, Item {Name: test2
+                Price: $2.00
+                Location: loc2
+                 }, Item {Name: test3
+                Price: $3.00
+                Location: loc3
+                 }]
+                    Chats: [Chat { t1 (test1)
+                t2 (test2)
+                }, Chat { t2 (test2)
+                t3 (test3)
+                }, Chat { t3 (test3)
+                t1 (test1)
+                }]
+                    Users: [User:\s
+                   username: t1'
+                   name: test1'
+                   balance: 1.0, User:\s
+                   username: t2'
+                   name: test2'
+                   balance: 2.0, User:\s
+                   username: t3'
+                   name: test3'
+                   balance: 3.0]""";
         assertEquals(expected, db.toString());
     }
 
@@ -100,9 +128,7 @@ public class DatabaseTester {
         Database deserializedDB = (Database) in.readObject();
 
         // Verify that the deserialized object is equal to the original
-        assertEquals(db.getChats(), deserializedDB.getChats());
-        assertEquals(db.getItems(), deserializedDB.getItems());
-        assertEquals(db.getUsers(), deserializedDB.getUsers());
+        assertEquals(db.toString(), deserializedDB.toString());
 
     }
 }

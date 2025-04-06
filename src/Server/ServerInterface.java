@@ -29,7 +29,7 @@ public interface ServerInterface {
      * 
      * @param item the item to add
      */
-    public void addItem(Item item);
+    public void addItem(Item item) throws InvalidInputException;
 
     /**
      * removes an item from the database if there is an exact match and saves it
@@ -44,7 +44,7 @@ public interface ServerInterface {
      * 
      * @param chat the chat to add
      */
-    public void addChat(Chat chat);
+    public void addChat(Chat chat) throws InvalidInputException;
 
     /**
      * removes a chat from the database if there is an exact match and saves it

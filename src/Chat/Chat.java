@@ -69,6 +69,7 @@ public class Chat implements ChatInterface, Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("Chat { ");
         for (User u : users) {
             sb.append(u.getUserName()).append(" (").append(u.getName()).append(")");
             sb.append("\n");
@@ -77,7 +78,7 @@ public class Chat implements ChatInterface, Serializable {
         for (Message m : messages) {
             sb.append(m.toString()).append("\n");
         }
-
+        sb.append("}");
         return sb.toString();
     }
 }
