@@ -55,6 +55,8 @@ This exception class is used to signify to the server that the input given by th
 
 This testing class tests the creation of the InvalidInputException with a message
 
+---
+
 ### User - Karthik Nandagiri
 
 **Description**  
