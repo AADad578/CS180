@@ -102,7 +102,7 @@ public class ItemTester {
      */
     @Test
     public void testToString() {
-        String expected = String.format("Name: %s\nPrice: $%.2f\nLocation: %s\n",
+        String expected = String.format("Item {Name: %s\nPrice: $%.2f\nLocation: %s\n }",
                 "iPhone8", 340.99, "Chicago"); //string of expected output
         assertEquals("Error in toString method", expected.trim(), item.toString().trim());
     }

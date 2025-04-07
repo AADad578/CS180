@@ -22,7 +22,7 @@ public interface ChatInterface {
 
     List<Message> getMessages();
 
-    void addMessage(String message, User sentBy, int timesent) throws MessageError;
+    void addMessage(String message, User sentBy, int timesent) throws MessageException;
 
     boolean equals(Object o);
 

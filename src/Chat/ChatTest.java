@@ -43,7 +43,7 @@ public class ChatTest {
     }
 
     @Test
-    public void testAddValidMessage() throws MessageError {
+    public void testAddValidMessage() throws MessageException {
         chat.addMessage("Hello, Bob!", user1, 1000);
 
         ArrayList<Message> messages = chat.getMessages();
@@ -61,7 +61,7 @@ public class ChatTest {
         Item[] items = new Item[0];
         User outsider = new User("Charlie", 50.0, items, "charlie789", "pass3");
 
-        Exception exception = assertThrows(MessageError.class, () -> {
+        Exception exception = assertThrows(MessageException.class, () -> {
             chat.addMessage("Can I join?", outsider, 1234);
         });
 
@@ -85,7 +85,9 @@ public class ChatTest {
 
     @Test
     public void testToString() {
-        String expected = "";
+        String expected = "Chat { alice123 (Alice)\n" +
+                "bob456 (Bob)\n" +
+                "}";
         assertEquals(expected, chat.toString());
     }
 }
