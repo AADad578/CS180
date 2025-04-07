@@ -55,3 +55,116 @@ This exception class is used to signify to the server that the input given by th
 
 This testing class tests the creation of the InvalidInputException with a message
 
+### User - Karthik Nandagiri
+
+**Description**  
+The `User` class represents a user entity in the marketplace system. It encapsulates user-specific information such as name, balance, username, password, and associated items.  
+It provides mechanisms for identity management, authentication, and data persistence via the `Serializable` interface.  
+The class adheres to the `UserInterface` contract, ensuring standardized access to user data.
+
+**Key Responsibilities**
+- Store and retrieve user profile information.
+- Modify account details (name, username, password, balance).
+- Maintain an array of items associated with the user.
+- Support object comparison and formatted string representation.
+
+**Implements**
+- `UserInterface`
+- `Serializable`
+
+---
+
+### UserInterface - Karthik Nandagiri
+
+**Description**  
+Defines the contract that any user-related class must fulfill in the marketplace system.  
+Provides method signatures for basic user account manipulation and retrieval.
+
+**Key Responsibilities**
+- Get/set the user's name, username, password, and balance.
+- Enforce consistent behavior across all user-like entities.
+
+---
+
+### UserTester - Karthik Nandagiri
+
+**Description**  
+A unit test class for the `User` class.  
+It ensures correctness of all core functionalities such as getters, setters, serialization, and string representation.
+
+**Key Responsibilities**
+- Test all mutator and accessor methods.
+- Validate object serialization and deserialization behavior.
+- Check equivalence and formatting logic.
+
+---
+
+### ClientInterface - Karthik Nandagiri
+
+**Description**  
+The `ClientInterface` specifies operations that a client-side class must support to interact with the marketplace system.  
+This includes network communication, session handling, and synchronization with server-side data such as chats and items.
+
+**Key Responsibilities**
+- Establish and terminate server connections.
+- Perform login authentication.
+- Receive chats and item listings from the server.
+
+> 🛠 This interface is a stub for Phase 2 implementation.
+
+---
+
+### ClientTester - Karthik Nandagiri
+
+**Description**  
+Placeholder class for testing the future `Client` implementation.
+
+> 🛠 To be implemented in **Phase 2**.
+
+---
+
+
+### Chat - Karthik Nandagiri
+
+**Description**  
+Models a conversation between two users.  
+Stores the list of exchanged messages and tracks the users involved.  
+Supports adding new messages while enforcing participant validation.
+
+**Key Responsibilities**
+- Manage the list of two users in a conversation.
+- Add validated messages to the chat history.
+- Retrieve the entire conversation.
+- Implement equality checks based on participant identity (order-independent).
+
+**Implements**
+- `ChatInterface`
+- `Serializable`
+
+---
+
+### ChatInterface - Karthik Nandagiri
+
+**Description**  
+Defines the essential behavior for a chat between two users in the system.
+
+**Key Responsibilities**
+- Provide access to the users and messages in the chat.
+- Add new messages under validity constraints.
+- Support equality and string formatting of chat instances.
+
+---
+
+### ChatTest - Karthik Nandagiri
+
+**Description**  
+Unit tests for the `Chat` class.  
+Verifies correct behavior for chat creation, message exchange, participant validation, and equality.
+
+**Key Responsibilities**
+- Ensure that valid users can exchange messages.
+- Prevent message injection from unauthorized users.
+- Confirm proper string and equality behavior.
+
+---
+
