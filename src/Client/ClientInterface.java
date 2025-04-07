@@ -1,14 +1,15 @@
 package Client;
 
+import java.util.ArrayList;
+
 import Chat.Chat;
 import Item.Item;
-
-import java.util.ArrayList;
 
 /**
  * Team Project Phase 1 -- ClientInterface
  * <p>
- * The ClientInterface defines the functionality of the Client(TO BE IMPLEMENTED IN PHASE 2 ) class,
+ * The ClientInterface defines the functionality of the Client(TO BE IMPLEMENTED
+ * IN PHASE 2 ) class,
  * such as managing Items, Users, Chats on the client side.
  * <p/>
  *

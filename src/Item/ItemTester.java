@@ -17,8 +17,8 @@ import org.junit.*;
  *
  */
 public class ItemTester {
-    private Item item; //test item object
-    private static final double EPSILON = 0.001; //very small epsilon value for double comparisons
+    private Item item; // test item object
+    private static final double EPSILON = 0.001; // very small epsilon value for double comparisons
 
     /**
      * A setUp() that sets up this exact Item object for each test method
@@ -26,7 +26,7 @@ public class ItemTester {
     @Before
     public void setUp() {
         item = new Item("iPhone8", 340.99, "Chicago", "itemImage.jpg");
-                            //test item object
+        // test item object
     }
 
     /**
@@ -103,7 +103,7 @@ public class ItemTester {
     @Test
     public void testToString() {
         String expected = String.format("Item {Name: %s\nPrice: $%.2f\nLocation: %s\n }",
-                "iPhone8", 340.99, "Chicago"); //string of expected output
+                "iPhone8", 340.99, "Chicago"); // string of expected output
         assertEquals("Error in toString method", expected.trim(), item.toString().trim());
     }
 
@@ -113,24 +113,25 @@ public class ItemTester {
     @Test
     public void testEquals() {
         Item item2 = new Item("iPhone8", 340.99, "Chicago", "itemImage.jpg");
-                                                                        //test item object that's equal to item
+        // test item object that's equal to item
         Item item3 = new Item("iPhone8", 340.98, "Chicago", "itemImage.jpg");
-                                                                //test item object that's not equal to item with differing price
+        // test item object that's not equal to item with differing price
         Item item4 = new Item("iPhone8", 340.99, "New York", "itemImage.jpg");
-                                            //test item object that's not equal to item with differing location
+        // test item object that's not equal to item with differing location
         Item item5 = new Item("NotIPhone8", 340.99, "Chicago", "itemImage.jpg");
-                                                        //test item object that's not equal to item with differing name
-        Item item6 =  new Item("iPhone8", 340.99, "Chicago", "newItemImage.jpg");
-                                        //test item object that's not equal to item with differing picture file name
+        // test item object that's not equal to item with differing name
+        Item item6 = new Item("iPhone8", 340.99, "Chicago", "newItemImage.jpg");
+        // test item object that's not equal to item with differing picture file name
 
         Item[] items = {
                 new Item("iPhone7", 140.99, "Portland", "image1.jpg"),
                 new Item("Galaxy Phone", 199.99, "Miami", "image2.jpg"),
-        }; //test list of Item objects for User objects
-        User sender = new User("Vincent", 54.65, items, "vhollow", "etefev443"); //test User object for Message object
-        User receiver = new User("NotVincent", 64.65, items, "novince", "teertk43j"); //test User object for Message object
+        }; // test list of Item objects for User objects
+        User sender = new User("Vincent", 54.65, items, "vhollow", "etefev443"); // test User object for Message object
+        User receiver = new User("NotVincent", 64.65, items, "novince", "teertk43j"); // test User object for Message
+                                                                                      // object
         Message message = new Message("Can I buy your phone?", 1756,
-                sender, receiver); //test Message object
+                sender, receiver); // test Message object
 
         assertTrue("Item should equal Item2", item.equals(item2));
         assertFalse("Item shouldn't equal Item3", item.equals(item3));

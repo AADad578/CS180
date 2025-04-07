@@ -13,12 +13,22 @@ import Database.Database;
 import Item.Item;
 import User.User;
 
+/**
+ * Server
+ *
+ * This class handles the server side of the project. It will connect to clients
+ * and make changes to the database.
+ *
+ * @version 4/6/2025
+ *
+ * @author Ankur Raghavan
+ */
 public class Server extends Thread implements ServerInterface {
     static Database db;
-    private static final Object dbUserGuard = new Object();
-    private static final Object dbChatGuard = new Object();
-    private static final Object dbItemGuard = new Object();
-    private final ServerSocket socket;
+    private static final Object DB_USER_GUARD = new Object();
+    private static final Object DB_CHAT_GUARD = new Object();
+    private static final Object DB_ITEM_GUARD = new Object();
+    private ServerSocket socket;
     public boolean hasClient;
 
     /**
@@ -30,7 +40,7 @@ public class Server extends Thread implements ServerInterface {
      */
     @Override
     public void addUser(User user) throws InvalidInputException {
-        synchronized (dbUserGuard) {
+        synchronized (DB_USER_GUARD) {
             User[] currUsers = db.getUsers();
             User[] newUsers = new User[currUsers.length + 1];
             for (int i = 0; i < currUsers.length; i++) {
@@ -53,9 +63,9 @@ public class Server extends Thread implements ServerInterface {
      */
     @Override
     public void removeUser(User user) throws InvalidInputException {
-        synchronized (dbUserGuard) {
+        synchronized (DB_USER_GUARD) {
             User[] currUsers = db.getUsers();
-            if(currUsers.length == 0) {
+            if (currUsers.length == 0) {
                 throw new InvalidInputException("Chat does not exist");
             }
             User[] newUsers = new User[currUsers.length - 1];
@@ -85,7 +95,7 @@ public class Server extends Thread implements ServerInterface {
      */
     @Override
     public void addItem(Item item) throws InvalidInputException {
-        synchronized (dbItemGuard) {
+        synchronized (DB_ITEM_GUARD) {
             Item[] currItems = db.getItems();
             Item[] newItems = new Item[currItems.length + 1];
             for (int i = 0; i < currItems.length; i++) {
@@ -108,9 +118,9 @@ public class Server extends Thread implements ServerInterface {
      */
     @Override
     public void removeItem(Item item) throws InvalidInputException {
-        synchronized (dbItemGuard) {
+        synchronized (DB_ITEM_GUARD) {
             Item[] currItems = db.getItems();
-            if(currItems.length == 0) {
+            if (currItems.length == 0) {
                 throw new InvalidInputException("Chat does not exist");
             }
             Item[] newItems = new Item[currItems.length - 1];
@@ -140,7 +150,7 @@ public class Server extends Thread implements ServerInterface {
      */
     @Override
     public void addChat(Chat chat) throws InvalidInputException {
-        synchronized (dbChatGuard) {
+        synchronized (DB_CHAT_GUARD) {
             Chat[] currChats = db.getChats();
             Chat[] newChats = new Chat[currChats.length + 1];
             for (int i = 0; i < currChats.length; i++) {
@@ -163,9 +173,9 @@ public class Server extends Thread implements ServerInterface {
      */
     @Override
     public void removeChat(Chat chat) throws InvalidInputException {
-        synchronized (dbChatGuard) {
+        synchronized (DB_CHAT_GUARD) {
             Chat[] currChats = db.getChats();
-            if(currChats.length == 0) {
+            if (currChats.length == 0) {
                 throw new InvalidInputException("Chat does not exist");
             }
             Chat[] newChats = new Chat[currChats.length - 1];
@@ -249,7 +259,6 @@ public class Server extends Thread implements ServerInterface {
                 socket.accept();
                 hasClient = true;
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -257,11 +266,13 @@ public class Server extends Thread implements ServerInterface {
 
     /**
      * Instantiates a Server object with the specified port
-     * @param port the port to use, if negative or greater than 65535, use automatic port
+     * 
+     * @param port the port to use, if negative or greater than 65535, use automatic
+     *             port
      * @throws IOException If ServerSocket fails to create
      */
     public Server(int port) throws IOException {
-        if(port<0 || port>65535) {
+        if (port < 0 || port > 65535) {
             this.socket = new ServerSocket();
         } else {
             this.socket = new ServerSocket(port);
@@ -271,6 +282,7 @@ public class Server extends Thread implements ServerInterface {
 
     /**
      * incomplete, will be done in future phase
+     * 
      * @param args
      */
     public static void main(String[] args) {
@@ -283,7 +295,6 @@ public class Server extends Thread implements ServerInterface {
             serverThreads.add(s);
             s.start();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         portNum++;
@@ -294,7 +305,6 @@ public class Server extends Thread implements ServerInterface {
                     serverThreads.add(s);
                     s.start();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 portNum++;

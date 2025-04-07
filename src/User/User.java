@@ -124,7 +124,8 @@ public class User implements Serializable, UserInterface {
     }
 
     /**
-     * Returns a string representation of the User object, excluding the password and items.
+     * Returns a string representation of the User object, excluding the password
+     * and items.
      *
      * @return a formatted string summarizing the user's public data
      */
@@ -140,7 +141,8 @@ public class User implements Serializable, UserInterface {
      * Compares this user to another object for equality based on username.
      *
      * @param o the object to compare with
-     * @return {@code true} if the object is a User with the same username; {@code false} otherwise
+     * @return {@code true} if the object is a User with the same username;
+     *         {@code false} otherwise
      */
     @Override
     public boolean equals(Object o) {

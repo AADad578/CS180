@@ -80,7 +80,8 @@ public interface UserInterface {
      * Compares this user to another object for equality.
      *
      * @param o the object to compare with
-     * @return {@code true} if the objects are equal based on implementation; {@code false} otherwise
+     * @return {@code true} if the objects are equal based on implementation;
+     *         {@code false} otherwise
      */
     boolean equals(Object o);
 }

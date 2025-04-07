@@ -18,6 +18,15 @@ import Chat.Chat;
 import Database.Database;
 import Item.Item;
 
+/**
+ * ServerTester
+ * 
+ * Tests the Server class
+ * 
+ * @version 4/6/2025
+ * 
+ * @author Ankur Raghavan
+ */
 public class ServerTester {
     private Database db;
     private Item[] items;
@@ -28,19 +37,19 @@ public class ServerTester {
     @BeforeEach
     void setUp() {
 
-        Item[] items = { new Item("test1", 1, "loc1", "pic1.png"),
-                new Item("test2", 2, "loc2", "pic2.png"),
-                new Item("test3", 3, "loc3", "pic3.png") };
-        Item[] item1 = { items[0] };
-        Item[] item2 = { items[1] };
+        Item[] itemsLoc = { new Item("test1", 1, "loc1", "pic1.png"),
+            new Item("test2", 2, "loc2", "pic2.png"),
+            new Item("test3", 3, "loc3", "pic3.png") };
+        Item[] item1 = { itemsLoc[0] };
+        Item[] item2 = { itemsLoc[1] };
 
-        User[] users = { new User("test1", 1, item1, "t1", "TEST1"),
-                new User("test2", 2, item2, "t2", "TEST2")};
-        Chat[] chats = { new Chat(users[0], users[1])};
-        db = new Database(items, chats, users);
-        this.items = items;
-        this.chats = chats;
-        this.users = users;
+        User[] usersLoc = { new User("test1", 1, item1, "t1", "TEST1"),
+            new User("test2", 2, item2, "t2", "TEST2") };
+        Chat[] chatsLoc = { new Chat(usersLoc[0], usersLoc[1]) };
+        db = new Database(itemsLoc, chatsLoc, usersLoc);
+        this.items = itemsLoc;
+        this.chats = chatsLoc;
+        this.users = usersLoc;
 
         Server.db = db;
         try {
@@ -61,7 +70,7 @@ public class ServerTester {
 
         User[] users2 = { new User("test1", 1, item1, "t1", "TEST1"),
                 new User("test2", 2, item2, "t2", "TEST2"),
-                new User("test3", 3, item3, "t3", "TEST3")};
+                new User("test3", 3, item3, "t3", "TEST3") };
 
         try {
             server.addUser(users2[2]);
@@ -74,7 +83,8 @@ public class ServerTester {
         try {
             server.addUser(users2[0]);
             fail();
-        } catch (InvalidInputException ignored){}
+        } catch (InvalidInputException ignored) {
+        }
     }
 
     /**
@@ -86,7 +96,7 @@ public class ServerTester {
         Item[] item2 = { items[1] };
         Item[] item3 = { items[2] };
 
-        User[] users2 = { new User("test1", 1, item1, "t1", "TEST1")};
+        User[] users2 = { new User("test1", 1, item1, "t1", "TEST1") };
         User remove = new User("test2", 2, item2, "t2", "TEST2");
         User invalid = new User("test3", 3, item3, "t3", "TEST3");
 
@@ -101,7 +111,8 @@ public class ServerTester {
         try {
             server.removeUser(invalid);
             fail();
-        } catch (InvalidInputException ignored) {}
+        } catch (InvalidInputException ignored) {
+        }
     }
 
     /**
@@ -125,7 +136,8 @@ public class ServerTester {
         try {
             server.addItem(items2[0]);
             fail();
-        } catch (InvalidInputException ignored){}
+        } catch (InvalidInputException ignored) {
+        }
     }
 
     /**
@@ -149,7 +161,8 @@ public class ServerTester {
         try {
             server.removeItem(invalid);
             fail();
-        } catch (InvalidInputException ignored) {}
+        } catch (InvalidInputException ignored) {
+        }
     }
 
     /**
@@ -163,10 +176,10 @@ public class ServerTester {
 
         User[] users2 = { new User("test1", 1, item1, "t1", "TEST1"),
                 new User("test2", 2, item2, "t2", "TEST2"),
-                new User("test3", 3, item3, "t3", "TEST3")};
+                new User("test3", 3, item3, "t3", "TEST3") };
 
         Chat[] chats2 = { new Chat(users2[0], users2[1]),
-            new Chat(users2[1], users2[2])};
+                new Chat(users2[1], users2[2]) };
 
         try {
             server.addChat(chats2[1]);
@@ -179,7 +192,8 @@ public class ServerTester {
         try {
             server.addChat(chats2[0]);
             fail();
-        } catch (InvalidInputException ignored){}
+        } catch (InvalidInputException ignored) {
+        }
     }
 
     /**
@@ -193,9 +207,9 @@ public class ServerTester {
 
         User[] users2 = { new User("test1", 1, item1, "t1", "TEST1"),
                 new User("test2", 2, item2, "t2", "TEST2"),
-                new User("test3", 3, item3, "t3", "TEST3")};
+                new User("test3", 3, item3, "t3", "TEST3") };
 
-        Chat[] chats2 = { };
+        Chat[] chats2 = {};
         Chat remove = new Chat(users2[0], users2[1]);
         Chat invalid = new Chat(users2[0], users2[2]);
 
@@ -210,7 +224,8 @@ public class ServerTester {
         try {
             server.removeChat(invalid);
             fail();
-        } catch (InvalidInputException ignored) {}
+        } catch (InvalidInputException ignored) {
+        }
     }
 
     /**

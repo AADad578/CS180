@@ -1,10 +1,11 @@
 package Database;
 
+import java.io.Serializable;
+import java.util.Arrays;
+
 import Chat.Chat;
 import Item.Item;
 import User.User;
-import java.io.Serializable;
-import java.util.Arrays;
 
 /**
  * DatabaseInterface

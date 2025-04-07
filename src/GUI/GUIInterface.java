@@ -4,6 +4,15 @@ import Chat.Chat;
 import Item.Item;
 import User.User;
 
+/**
+ * GUIInterface
+ * 
+ * The interface for the GUI class
+ * 
+ * @version 4/6/2025
+ * 
+ * @author Ankur Raghavan
+ */
 public interface GUIInterface {
 
     /**

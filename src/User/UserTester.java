@@ -6,13 +6,13 @@ import Item.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 import java.io.*;
 
 /**
  * Team Project Phase 1 -- UserTest
  * <p>
- * Tests all the methods in the User class rigorously such that we know that it works correctly
+ * Tests all the methods in the User class rigorously such that we know that it
+ * works correctly
  * <p/>
  *
  * @author Karthik Nandagiri

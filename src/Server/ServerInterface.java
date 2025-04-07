@@ -6,6 +6,15 @@ import Chat.Chat;
 import Item.Item;
 import User.User;
 
+/**
+ * ServerInterface
+ * 
+ * The interface for the server class
+ * 
+ * @version 4/6/2025
+ * 
+ * @author Ankur Raghavan
+ */
 public interface ServerInterface {
 
     /**
