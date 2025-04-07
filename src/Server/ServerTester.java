@@ -69,8 +69,8 @@ public class ServerTester {
         Item[] item3 = { items[2] };
 
         User[] users2 = { new User("test1", 1, item1, "t1", "TEST1"),
-                new User("test2", 2, item2, "t2", "TEST2"),
-                new User("test3", 3, item3, "t3", "TEST3") };
+            new User("test2", 2, item2, "t2", "TEST2"),
+            new User("test3", 3, item3, "t3", "TEST3") };
 
         try {
             server.addUser(users2[2]);
@@ -121,9 +121,9 @@ public class ServerTester {
     @Test
     void testAddItem() {
         Item[] items2 = { new Item("test1", 1, "loc1", "pic1.png"),
-                new Item("test2", 2, "loc2", "pic2.png"),
-                new Item("test3", 3, "loc3", "pic3.png"),
-                new Item("test4", 4, "loc4", "pic4.png") };
+            new Item("test2", 2, "loc2", "pic2.png"),
+            new Item("test3", 3, "loc3", "pic3.png"),
+            new Item("test4", 4, "loc4", "pic4.png") };
 
         try {
             server.addItem(items2[3]);
@@ -146,7 +146,7 @@ public class ServerTester {
     @Test
     void testRemoveItem() {
         Item[] items2 = { new Item("test1", 1, "loc1", "pic1.png"),
-                new Item("test2", 2, "loc2", "pic2.png") };
+            new Item("test2", 2, "loc2", "pic2.png") };
         Item remove = new Item("test3", 3, "loc3", "pic3.png");
         Item invalid = new Item("test4", 4, "loc4", "pic4.png");
 
@@ -175,11 +175,11 @@ public class ServerTester {
         Item[] item3 = { items[2] };
 
         User[] users2 = { new User("test1", 1, item1, "t1", "TEST1"),
-                new User("test2", 2, item2, "t2", "TEST2"),
-                new User("test3", 3, item3, "t3", "TEST3") };
+            new User("test2", 2, item2, "t2", "TEST2"),
+            new User("test3", 3, item3, "t3", "TEST3") };
 
         Chat[] chats2 = { new Chat(users2[0], users2[1]),
-                new Chat(users2[1], users2[2]) };
+            new Chat(users2[1], users2[2]) };
 
         try {
             server.addChat(chats2[1]);
@@ -206,8 +206,8 @@ public class ServerTester {
         Item[] item3 = { items[2] };
 
         User[] users2 = { new User("test1", 1, item1, "t1", "TEST1"),
-                new User("test2", 2, item2, "t2", "TEST2"),
-                new User("test3", 3, item3, "t3", "TEST3") };
+            new User("test2", 2, item2, "t2", "TEST2"),
+            new User("test3", 3, item3, "t3", "TEST3") };
 
         Chat[] chats2 = {};
         Chat remove = new Chat(users2[0], users2[1]);
@@ -234,9 +234,9 @@ public class ServerTester {
     @Test
     void testSaveRecallDatabase() {
         server.saveDatabase();
-        Database db = Server.db;
+        Database loc = Server.db;
         Server.db = null;
         Server.recallDatabase();
-        assertEquals(Server.db.toString(), db.toString());
+        assertEquals(Server.db.toString(), loc.toString());
     }
 }

@@ -124,8 +124,8 @@ public class ItemTester {
         // test item object that's not equal to item with differing picture file name
 
         Item[] items = {
-                new Item("iPhone7", 140.99, "Portland", "image1.jpg"),
-                new Item("Galaxy Phone", 199.99, "Miami", "image2.jpg"),
+            new Item("iPhone7", 140.99, "Portland", "image1.jpg"),
+            new Item("Galaxy Phone", 199.99, "Miami", "image2.jpg"),
         }; // test list of Item objects for User objects
         User sender = new User("Vincent", 54.65, items, "vhollow", "etefev443"); // test User object for Message object
         User receiver = new User("NotVincent", 64.65, items, "novince", "teertk43j"); // test User object for Message

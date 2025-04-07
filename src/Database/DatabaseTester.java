@@ -59,7 +59,7 @@ public class DatabaseTester {
     @Test
     void testSetItems() {
         Item[] items2 = { new Item("test1", 1, "loc1", "pic1.png"),
-                new Item("test3", 3, "loc3", "pic3.png") };
+            new Item("test3", 3, "loc3", "pic3.png") };
         db.setItems(items2);
         assertEquals(items2, db.getItems());
     }
@@ -86,7 +86,7 @@ public class DatabaseTester {
         Item[] item1 = { items[0] };
         Item[] item3 = { items[2] };
         User[] users2 = { new User("test1", 1, item1, "t1", "TEST1"),
-                new User("test3", 3, item3, "t3", "TEST3") };
+            new User("test3", 3, item3, "t3", "TEST3") };
         db.setUsers(users2);
         assertEquals(users2, db.getUsers());
     }
