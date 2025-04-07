@@ -11,6 +11,15 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Team Project Phase 1 -- ChatTest
+ * <p>
+ * The ChatTest tests all the methods in the Chat Class,
+ * and see if they work as intended
+ *
+ * @author Karthik Nandagiri
+ * @version April 6, 2025
+ */
 public class ChatTest {
     private User user1;
     private User user2;
