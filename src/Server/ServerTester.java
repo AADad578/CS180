@@ -84,6 +84,7 @@ public class ServerTester {
             server.addUser(users2[0]);
             fail();
         } catch (InvalidInputException ignored) {
+            System.out.println("good catch");
         }
     }
 
@@ -112,6 +113,7 @@ public class ServerTester {
             server.removeUser(invalid);
             fail();
         } catch (InvalidInputException ignored) {
+            System.out.println("good catch");
         }
     }
 
@@ -137,6 +139,7 @@ public class ServerTester {
             server.addItem(items2[0]);
             fail();
         } catch (InvalidInputException ignored) {
+            System.out.println("good catch");
         }
     }
 
@@ -162,6 +165,7 @@ public class ServerTester {
             server.removeItem(invalid);
             fail();
         } catch (InvalidInputException ignored) {
+            System.out.println("good catch");
         }
     }
 
@@ -193,6 +197,7 @@ public class ServerTester {
             server.addChat(chats2[0]);
             fail();
         } catch (InvalidInputException ignored) {
+            System.out.println("good catch");
         }
     }
 
@@ -225,6 +230,7 @@ public class ServerTester {
             server.removeChat(invalid);
             fail();
         } catch (InvalidInputException ignored) {
+            System.out.println("good catch");
         }
     }
 
