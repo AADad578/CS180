@@ -41,8 +41,8 @@ public class MessageTester {
      */
     @Test
     public void testToString() {
-        String expected = "To: NotVincent\nMessage: Can I buy your " +
-                "phone?\nFrom: Vincent\nTime: 1756\n"; //String of expected output
+        String expected = "Message { To: novince\nMessage: Can I buy your " +
+                "phone?\nFrom: vhollow\nTime: 1756\n }"; //String of expected output
         assertEquals("Error in toString method", expected.trim(), message.toString().trim());
     }
 

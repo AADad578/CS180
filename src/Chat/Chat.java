@@ -68,12 +68,12 @@ public class Chat implements ChatInterface, Serializable {
      * @param message  The content of the message.
      * @param sentBy   The user sending the message.
      * @param timesent The timestamp of when the message was sent.
-     * @throws MessageError If the sender is not a participant in the chat.
+     * @throws MessageException If the sender is not a participant in the chat.
      */
     @Override
-    public void addMessage(String message, User sentBy, int timesent) throws MessageError {
+    public void addMessage(String message, User sentBy, int timesent) throws MessageException {
         if (sentBy == null || (!sentBy.equals(users[0]) && !sentBy.equals(users[1]))) {
-            throw new MessageError("Sender is not a participant in this chat.");
+            throw new MessageException("Sender is not a participant in this chat.");
         }
 
         // Determining which user in the array sent the message

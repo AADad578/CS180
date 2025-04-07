@@ -8,8 +8,8 @@ package Chat;
  * @author Karthik Nandagiri
  * @version April 6, 2025
  */
-public class MessageError extends Exception {
-    public MessageError(String message) {
+public class MessageException extends Exception {
+    public MessageException(String message) {
         super(message);
     }
 }
