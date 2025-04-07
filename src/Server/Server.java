@@ -196,13 +196,7 @@ public class Server extends Thread implements ServerInterface {
     @Override
     public void saveDatabase() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("database.db"))) {
-            synchronized (dbChatGuard) {
-                synchronized (dbItemGuard) {
-                    synchronized (dbUserGuard) {
-                        oos.writeObject(db);
-                    }
-                }
-            }
+            oos.writeObject(db);
             oos.flush();
             oos.close();
         } catch (IOException e) {
