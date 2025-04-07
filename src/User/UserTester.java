@@ -9,12 +9,21 @@ import org.junit.jupiter.api.Test;
 
 import java.io.*;
 
+/**
+ * Team Project Phase 1 -- UserTest
+ * <p>
+ * Tests all the methods in the User class rigorously such that we know that it works correctly
+ * <p/>
+ *
+ * @author Karthik Nandagiri
+ * @version April 6, 2025
+ */
 class UserTester {
     private User user;
 
     @BeforeEach
     void setUp() {
-        user = new User("Alice", 100.0, new Item[5],"alice123", "securePass");
+        user = new User("Alice", 100.0, new Item[5], "alice123", "securePass");
     }
 
     @Test
