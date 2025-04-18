@@ -1,31 +1,50 @@
 package Client;
 
-import java.util.ArrayList;
-
 import Chat.Chat;
 import Item.Item;
+import java.io.IOException;
+import java.util.List;
 
-/**
- * Team Project Phase 1 -- ClientInterface
- * <p>
- * The ClientInterface defines the functionality of the Client(TO BE IMPLEMENTED
- * IN PHASE 2 ) class,
- * such as managing Items, Users, Chats on the client side.
- * <p/>
- *
- * @author Karthik Nandagiri
- * @version April 6, 2025
- */
 public interface ClientInterface {
 
-    void connectToServer(String address, int port);
+    /**
+     * Establishes a connection to the remote server.
+     */
+    void connectToServer(String address, int port) throws IOException;
 
+    /**
+     * Gracerver.
+     */
     void disconnectFromServer();
 
-    ArrayList<Chat> receiveChats();
+    /**
+     * Sends a serialized request object to the server.
+     */
+    void sendRequest(Object request) throws IOException;
 
-    ArrayList<Item> receiveItems();
+    /**
+     * Receives a response object from the server.
+     */
+    Object receiveResponse() throws IOException, ClassNotFoundException;
 
-    boolean login(String username, String password);
+    /**
+     * Logs in the user and stores session state, if any.
+     * Returns true if login is successful.
+     */
+    boolean login(String username, String password) throws IOException, ClassNotFoundException;
 
+    /**
+     * Returns a list of items available to the user.
+     */
+    List<Item> getAvailableItems() throws IOException, ClassNotFoundException;
+
+    /**
+     * Returns the list of chats/messages associated with the user.
+     */
+    List<Chat> getUserChats() throws IOException, ClassNotFoundException;
+
+    /**
+     * Returns true if the client is currently connected.
+     */
+    boolean isConnected();
 }
