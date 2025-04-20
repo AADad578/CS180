@@ -355,7 +355,12 @@ public class Server extends Thread implements ServerInterface {
         output = out.toArray(output);
         return output;
     }
-
+    
+    /**
+     * The function that contains all of the logic for recieving and responding to client communications
+     * 
+     * Gets called on thread startup and stays until client disconnects.
+     */
     @Override
     public void run() {
         try {
@@ -407,7 +412,7 @@ public class Server extends Thread implements ServerInterface {
                     try {
                         chat = (Chat) input.getPayload();
                     } catch (ClassCastException e) {
-                        oos.writeObject(new Request("ERROR", "Payload Not a Chat "));
+                        oos.writeObject(new Request("ERROR", "Payload Not a Chat"));
                         continue;
                     }
                     try {
@@ -488,25 +493,23 @@ public class Server extends Thread implements ServerInterface {
     }
 
     /**
-     * incomplete, will be done in future phase
+     * Starts new threads of the server as clients connect. All clients connect to port 8000
      * 
      * @param args
      */
     public static void main(String[] args) {
         recallDatabase();
         System.out.println("Server Started");
-        try {
-            ServerSocket serverSocket = new ServerSocket(8000);
+        try (ServerSocket serverSocket = new ServerSocket(8000)) {
             while (true) {
                 Socket socket = serverSocket.accept();
                 Server server = new Server(socket);
                 server.start();
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
     }
 
 }
