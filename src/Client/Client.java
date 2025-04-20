@@ -2,6 +2,7 @@ package Client;
 
 import Chat.Chat;
 import Item.Item;
+import Message.Message;
 import User.User;
 import java.io.*;
 import java.net.Socket;
@@ -84,18 +85,58 @@ public class Client implements ClientInterface {
     @Override
     public List<Item> getAvailableItems() throws IOException, ClassNotFoundException {
         sendRequest(new Request("GetAvailableItems", "All items"));
-        return (List<Item>) in.readObject();
+        return (List<Item>) this.receiveResponse();
     }
 
     @Override
     public List<Chat> getUserChats() throws IOException, ClassNotFoundException {
         sendRequest(new Request("GetUserChats", this.currentUsername));
-        return (List<Chat>) in.readObject();
+        return (List<Chat>) this.receiveResponse();
     }
 
     @Override
     public boolean isConnected() {
         return false;
+    }
+
+    @Override
+    public boolean createNewUser(User user) throws IOException, ClassNotFoundException, ServerResponseException {
+        sendRequest(new Request("CreateNewUser", user));
+        String response = (String) this.receiveResponse();
+        if (!response.equals("OK")){
+            throw new ServerResponseException(response);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean createNewItem(Item item) throws IOException, ClassNotFoundException, ServerResponseException {
+        this.sendRequest(new Request("CreateNewItem", item));
+        String response = (String) this.receiveResponse();
+        if (!response.equals("OK")){
+            throw new ServerResponseException(response);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean createNewChat(Chat chat) throws IOException, ClassNotFoundException, ServerResponseException {
+        this.sendRequest(new Request("CreateNewChat", chat));
+        String response = (String) this.receiveResponse();
+        if (!response.equals("OK")){
+            throw new ServerResponseException(response);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean addMessage(Message message) throws IOException, ClassNotFoundException, ServerResponseException {
+        this.sendRequest(new Request("AddMessage", message));
+        String response = (String) this.receiveResponse();
+        if (!response.equals("OK")){
+            throw new ServerResponseException(response);
+        }
+        return true;
     }
 
     public String getCurrentUsername() {

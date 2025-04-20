@@ -4,6 +4,8 @@ import Chat.Chat;
 import Item.Item;
 import java.io.IOException;
 import java.util.List;
+import User.User;
+import Message.Message;
 
 public interface ClientInterface {
 
@@ -64,4 +66,13 @@ public interface ClientInterface {
      * @return true if connected
      */
     boolean isConnected();
+
+    boolean createNewUser(User user) throws IOException, ClassNotFoundException, ServerResponseException;
+
+    boolean createNewItem(Item item) throws IOException, ClassNotFoundException, ServerResponseException;
+
+    boolean createNewChat(Chat chat) throws IOException, ClassNotFoundException, ServerResponseException;
+
+    boolean addMessage(Message message) throws IOException, ClassNotFoundException, ServerResponseException;
+
 }
