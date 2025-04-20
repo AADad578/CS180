@@ -44,6 +44,17 @@ public class User implements Serializable, UserInterface {
     }
 
     /**
+     * Constructs a new User with the specified details.
+     *
+     * @param username the unique username for login
+     * @param password the password for authentication
+     */
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    /**
      * Returns the full name of the user.
      *
      * @return the user's name
