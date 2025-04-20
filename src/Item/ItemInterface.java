@@ -1,5 +1,7 @@
 package Item;
 
+import User.User;
+
 /**
  * Team Project Phase 2 -- Item Interface
  *

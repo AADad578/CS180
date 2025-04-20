@@ -1,3 +1,5 @@
+package GUI;
+
 /**
  * Team Project Phase 2 -- GUI Interface
  *

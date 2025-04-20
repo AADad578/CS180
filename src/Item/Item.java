@@ -2,6 +2,8 @@ package Item;
 
 import java.io.Serializable;
 
+import User.User;
+
 /**
  * Team Project Phase 2 -- Item Class
  *
