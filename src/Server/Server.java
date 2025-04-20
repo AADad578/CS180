@@ -1,16 +1,16 @@
 package Server;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.awt.im.InputContext;
+import java.io.*;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 
 import Chat.Chat;
+import Chat.MessageException;
 import Database.Database;
 import Item.Item;
+import Message.Message;
 import User.User;
 
 /**
@@ -28,7 +28,7 @@ public class Server extends Thread implements ServerInterface {
     private static final Object DB_USER_GUARD = new Object();
     private static final Object DB_CHAT_GUARD = new Object();
     private static final Object DB_ITEM_GUARD = new Object();
-    private ServerSocket socket;
+    private Socket socket;
     public boolean hasClient;
 
     /**
@@ -66,7 +66,7 @@ public class Server extends Thread implements ServerInterface {
         synchronized (DB_USER_GUARD) {
             User[] currUsers = db.getUsers();
             if (currUsers.length == 0) {
-                throw new InvalidInputException("Chat does not exist");
+                throw new InvalidInputException("Selected User not found");
             }
             User[] newUsers = new User[currUsers.length - 1];
             boolean searching = true;
@@ -86,6 +86,10 @@ public class Server extends Thread implements ServerInterface {
             db.setUsers(newUsers);
         }
         saveDatabase();
+    }
+
+    public User[] getUsers() {
+        return db.getUsers();
     }
 
     /**
@@ -121,7 +125,7 @@ public class Server extends Thread implements ServerInterface {
         synchronized (DB_ITEM_GUARD) {
             Item[] currItems = db.getItems();
             if (currItems.length == 0) {
-                throw new InvalidInputException("Chat does not exist");
+                throw new InvalidInputException("Selected Item not found");
             }
             Item[] newItems = new Item[currItems.length - 1];
             boolean searching = true;
@@ -176,7 +180,7 @@ public class Server extends Thread implements ServerInterface {
         synchronized (DB_CHAT_GUARD) {
             Chat[] currChats = db.getChats();
             if (currChats.length == 0) {
-                throw new InvalidInputException("Chat does not exist");
+                throw new InvalidInputException("Selected Chat not found");
             }
             Chat[] newChats = new Chat[currChats.length - 1];
             boolean searching = true;
@@ -250,34 +254,182 @@ public class Server extends Thread implements ServerInterface {
     }
 
     /**
-     * Incomplete, will be done in future phase
+     * Gets the chat between two users
+     * @param user1
+     * @param user2
+     * @return one chat that is between the two users
+     * @throws InvalidInputException If users have same username or there aren't any chats between the users.
      */
-    @Override
-    public void run() {
-        if (!hasClient) {
-            try {
-                socket.accept();
-                hasClient = true;
-            } catch (IOException e) {
-                e.printStackTrace();
+    private Chat getChat(User user1, User user2) throws InvalidInputException {
+        if (user1.equals(user2)) {
+            throw new InvalidInputException("Users have same username");
+        }
+        Chat in = new Chat(user1, user2);
+        for (Chat i : db.getChats()) {
+            if (i.equals(in)) {
+                return i;
             }
+        }
+        throw new InvalidInputException("No Chat Found Between Selected Users");
+    }
+    
+    /**
+     * Adds a message to the chat between two users. If no chat is found, a new one is created
+     * @param message the message to add 
+     * @throws InvalidInputException If the users have the same username or the users aren't in the chat.
+     */
+    private void addMessage(Message message) throws InvalidInputException {
+        Chat chat;
+        if (message.getSender().equals(message.getReceiver())) {
+            throw new InvalidInputException("Users have same username");
+        }
+        try {
+            chat = getChat(message.getSender(), message.getReceiver());
+        } catch (InvalidInputException e) {
+            chat = new Chat(message.getSender(), message.getReceiver());
+            addChat(chat);
+        }
+        if (message.getSender().equals(message.getReceiver())) {
+            throw new InvalidInputException("Users have same username");
+        }
+        try {
+            chat.addMessage(message);
+        } catch (MessageException e) {
+            throw new InvalidInputException(e.getMessage());
         }
     }
 
     /**
-     * Instantiates a Server object with the specified port
-     * 
-     * @param port the port to use, if negative or greater than 65535, use automatic
-     *             port
-     * @throws IOException If ServerSocket fails to create
+     * Gets all chats from/to one user
+     * @param user 
+     * @return all chats that include the user
      */
-    public Server(int port) throws IOException {
-        if (port < 0 || port > 65535) {
-            this.socket = new ServerSocket();
-        } else {
-            this.socket = new ServerSocket(port);
+    private Chat[] getChats(User user) {
+        Chat[] allChats;
+        synchronized (DB_CHAT_GUARD) {
+            allChats = db.getChats();
         }
-        this.hasClient = false;
+        ArrayList<Chat> out = new ArrayList<>();
+        for (Chat c : allChats) {
+            if(c.getUsers()[0].equals(user) || c.getUsers()[1].equals(user)) {
+                out.add(c);
+            }
+        }
+        Chat[] output = new Chat[0];
+        output = out.toArray(output);
+        return output;
+    }
+
+    @Override
+    public void run() {
+        try {
+            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream()); //from client
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream()); //to client
+
+            //parse client requests
+            while (true) {
+                Request input;
+                try {
+                    input = (Request) ois.readObject();
+                } catch (IOException | ClassNotFoundException e) {
+                    oos.writeObject(new Request("ERROR", "Failed to Transmit Data Correctly"));
+                    continue;
+                }
+                String action = input.getAction();
+                if (action.equals("CreateNewUser")) {
+                    User user;
+                    try {
+                        user = (User) input.getPayload();
+                    } catch (ClassCastException e) {
+                        oos.writeObject(new Request("ERROR", "Payload Not a User"));
+                        continue;
+                    }
+                    try {
+                        addUser(user);
+                    } catch (InvalidInputException e) {
+                        oos.writeObject(new Request("ERROR", e.getMessage()));
+                        continue;
+                    }
+                    oos.writeObject(new Request("OK", null));
+                } else if (action.equals("CreateNewItem")) {
+                    Item item;
+                    try {
+                        item = (Item) input.getPayload();
+                    } catch (ClassCastException e) {
+                        oos.writeObject(new Request("ERROR", "Payload Not an Item"));
+                        continue;
+                    }
+                    try {
+                        addItem(item);
+                    } catch (InvalidInputException e) {
+                        oos.writeObject(new Request("ERROR", e.getMessage()));
+                        continue;
+                    }
+                    oos.writeObject(new Request("OK", null));
+                } else if (action.equals("CreateNewChat")) {
+                    Chat chat;
+                    try {
+                        chat = (Chat) input.getPayload();
+                    } catch (ClassCastException e) {
+                        oos.writeObject(new Request("ERROR", "Payload Not a Chat "));
+                        continue;
+                    }
+                    try {
+                        addChat(chat);
+                    } catch (InvalidInputException e) {
+                        oos.writeObject(new Request("ERROR", e.getMessage()));
+                        continue;
+                    }
+                    oos.writeObject(new Request("OK", null));
+                } else if (action.equals("AddMessage")) {
+                    Message message;
+                    try {
+                        message = (Message) input.getPayload();
+                    } catch (ClassCastException e) {
+                        oos.writeObject(new Request("ERROR", "Payload Not a Message"));
+                        continue;
+                    }
+                    try {
+                        addMessage(message);
+                    } catch (InvalidInputException e) {
+                        oos.writeObject(new Request("ERROR", e.getMessage()));
+                        continue;
+                    }
+                    oos.writeObject(new Request("OK", null));
+                } else if (action.equals("GetUsers")) {
+                    User[] users = getUsers();
+                    oos.writeObject(new Request("RESPONSE", users));
+                } else if (action.equals("GetChats")) {
+                    User user;
+                    try {
+                        user = (User) input.getPayload();
+                    } catch (ClassCastException e) {
+                        oos.writeObject(new Request("ERROR", "Payload Not a User"));
+                        continue;
+                    }
+                    Chat[] chats;
+                    chats = getChats(user);
+                    oos.writeObject(new Request("RESPONSE", chats));
+                }
+
+                
+                
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Instantiates a Server object with the specified socket
+     * 
+     * @param socket The Socket that contains the contact with the client.
+     */
+    public Server(Socket socket) {
+        this.socket = socket;
     }
 
     /**
@@ -288,27 +440,17 @@ public class Server extends Thread implements ServerInterface {
     public static void main(String[] args) {
         recallDatabase();
         System.out.println("Server Started");
-        ArrayList<Server> serverThreads = new ArrayList<>();
-        int portNum = 8000;
         try {
-            Server s = new Server(portNum);
-            serverThreads.add(s);
-            s.start();
+            ServerSocket serverSocket = new ServerSocket(8000);
+            while (true) {
+                Socket socket = serverSocket.accept();
+                Server server = new Server(socket);
+                server.start();
+            }
+
+
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        portNum++;
-        while (true) {
-            if (serverThreads.get(serverThreads.size() - 1).hasClient) {
-                try {
-                    Server s = new Server(portNum);
-                    serverThreads.add(s);
-                    s.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                portNum++;
-            }
         }
     }
 

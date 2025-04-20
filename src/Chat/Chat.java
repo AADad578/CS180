@@ -144,4 +144,15 @@ public class Chat implements ChatInterface, Serializable {
         sb.append("}");
         return sb.toString();
     }
+
+    public void addMessage(Message message) throws MessageException {
+        if (message.getSender() == null || (!message.getSender().equals(users[0]) && !message.getSender().equals(users[1]))) {
+            throw new MessageException("Sender is not a participant in this chat.");
+        }
+        if (message.getReceiver() == null || (!message.getReceiver().equals(users[0]) && !message.getReceiver().equals(users[1]))) {
+            throw new MessageException("Reciever is not a participant in this chat.");
+        }
+
+        messages.add(message);
+    }
 }

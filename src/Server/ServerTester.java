@@ -53,7 +53,7 @@ public class ServerTester {
 
         Server.db = db;
         try {
-            server = new Server(-1);
+            server = new Server(null);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
