@@ -1,4 +1,4 @@
-# CS 18000 - Team Project Phase 1 - Marketplace
+# CS 18000 - Team Project Phase 2 - Marketplace
 
 ## How to compile and run the project
 
@@ -7,13 +7,13 @@ To run unit tests, it is required to have both Junit 4 and 5. It is garunteed to
 
 ## Submission Log
 
-Ankur Raghavan - Submitted Project Phase 1 to Vocareum 
+Ankur Raghavan - Submitted Project Phase 2 to Vocareum 
 
 ## Detailed description of each class
 
 ### Item Class - Vincent Holloway
 
-This class has four instance variables relating to an item which include its name, price, location, and picture file name. When a User is interested in buying or selling an item, with name, price, and location all being cruical information about the item with the picture file name being the way to access the item's picture file. This class has setter and getter methods of each instance variable. The toString() method includes all variables except the picture file name and returns a formatted String based on the other variables. The toEquals() method determiness whether one item is equal to another item by comparing every variable to each other. One of the instance variables of the User class includes a list of Items made by the a user. 
+This class has five instance variables relating to an item which include its name, price, location, owner, and picture file name. When a User is interested in buying or selling an item, with name, price, owner, and location all being cruical information about the item with the picture file name being the way to access the item's picture file. This class has setter and getter methods of each instance variable. The toString() method includes all variables except the picture file name and returns a formatted String based on the other variables. The toEquals() method determiness whether one item is equal to another item by comparing every variable to each other. One of the instance variables of the User class includes a list of Items made by the a user. 
 
 ### ItemTester Class - Vincent Holloway
 
@@ -26,6 +26,10 @@ This class has four instance variables relating to a message which include its w
 ### MessageTester Class - Vincent Holloway
 
 This testing class tests every method in the Message Class by using the assertEquals() method in the testing of all methods except for testing the toEquals(). The testing of this method used assertTrue() and assertFalse() while comparing different Messages to each other. When using the assertEquals() for every other method, an expected output was compared to the acutal output. 
+
+## GUI Class - Vincent Holloway
+
+This class will handle the GUI and will be called by the Client class. It does not have a testing class at the moment because none of the methods are able to be tested automatically as they cause GUI changes. Currently, only the layout of the GUI has been created as the rest while be implemented in Phase 3.
 
 ## Database Class - Ankur Raghavan
 
@@ -42,10 +46,6 @@ This class has 4 static variables and 2 instance variables. The static variables
 ## ServerTester Class - Ankur Raghavan
 
 This testing class tests every method in the Server class by comparing expected values to the true values using assertEquals. Additionally it tests the throwing of InvalidInputException by using the fail() method if it does not throw the error. It also tests saving and recalling the database.
-
-## GUI Class - Ankur Raghavan
-
-This class will handle the GUI and will be called by the Client class. It does not have a testing class at the moment because none of the methods are able to be tested automatically as they cause GUI changes.
 
 ## InvalidInputException - Ankur Raghavan
 
