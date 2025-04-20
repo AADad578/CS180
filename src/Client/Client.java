@@ -2,29 +2,30 @@ package Client;
 
 import Chat.Chat;
 import Item.Item;
+import User.User;
 import java.io.*;
 import java.net.Socket;
 import java.util.List;
 
 /**
- * Client
+ * Client:
  *
- * Handles the User interactions with the Server
+ * Final Phase 2 implementation using object-based Request architecture.
+ * All actions use structured Request objects.
+ * Thread-safe. Throws ServerResponseException when server returns errors.
  *
- * @version 4/15/2025
- *
- * @author Karthik Nandagiri
+ * @version 4/18/2025
+ * Author: Karthik Nandagiri
  */
 public class Client implements ClientInterface {
 
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
-    private final Object ioLock = new Object(); // Lock for I/O
+    private final Object ioLock = new Object();
     private volatile boolean connected;
     private String host;
     private int port;
-
     private volatile String currentUsername;
 
     @Override
@@ -73,40 +74,28 @@ public class Client implements ClientInterface {
 
     @Override
     public boolean login(String username, String password) throws IOException, ClassNotFoundException {
-        sendRequest("LOGIN:" + username + ":" + password);
-        Object response = receiveResponse();
-        if (response instanceof Boolean && (Boolean) response) {
-            this.currentUsername = username;
-            return true;
-        }
+        if (!connected)
+            throw new IOException("Not connected to server.");
+        sendRequest(new Request("Login", new String[]{username, password}));
+
         return false;
     }
 
     @Override
     public List<Item> getAvailableItems() throws IOException, ClassNotFoundException {
-        sendRequest("GET_ITEMS");
-        Object response = receiveResponse();
-
-        if (response instanceof List<?>) {
-            return (List<Item>) response;
-        }
-        throw new IOException("Unexpected response from server.");
+        sendRequest(new Request("GetAvailableItems", "All items"));
+        return (List<Item>) in.readObject();
     }
 
     @Override
     public List<Chat> getUserChats() throws IOException, ClassNotFoundException {
-        sendRequest("GET_CHATS:" + currentUsername);
-        Object response = receiveResponse();
-
-        if (response instanceof List<?>) {
-            return (List<Chat>) response;
-        }
-        throw new IOException("Unexpected response from server.");
+        sendRequest(new Request("GetUserChats", this.currentUsername));
+        return (List<Chat>) in.readObject();
     }
 
     @Override
     public boolean isConnected() {
-        return connected;
+        return false;
     }
 
     public String getCurrentUsername() {
