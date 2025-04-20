@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
 
+import Message.Message;
 import User.User;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,11 +53,8 @@ public class ServerTester {
         this.users = usersLoc;
 
         Server.db = db;
-        try {
-            server = new Server(null);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        server = new Server(null);
+
     }
 
     /**
@@ -115,6 +113,15 @@ public class ServerTester {
         } catch (InvalidInputException ignored) {
             System.out.println("good catch");
         }
+    }
+
+    /**
+     * Tests the getUsers method
+     */
+    @Test
+    void testGetUsers() {
+        User[] users2 = server.getUsers();
+        assertEquals(Arrays.toString(this.users), Arrays.toString(users2));
     }
 
     /**
@@ -244,5 +251,122 @@ public class ServerTester {
         Server.db = null;
         Server.recallDatabase();
         assertEquals(Server.db.toString(), loc.toString());
+    }
+
+    /**
+     * tests the searchItems method
+     */
+    @Test
+    void testSearchItems() {
+        Item[] items1 = server.searchItems("test");
+        assertEquals(Arrays.toString(Server.db.getItems()), Arrays.toString(items1));
+        Item[] items2 = server.searchItems("2");
+        Item[] items2validate = {items[1]};
+        assertEquals(Arrays.toString(items2validate), Arrays.toString(items2));
+    }
+
+    /**
+     * tests the getChat method
+     */
+    @Test
+    void testGetChat() {
+        try {
+            Chat chat = server.getChat(users[0], users[1]);
+            assertEquals(chat, chats[0]);
+        } catch (InvalidInputException e) {
+            fail();
+        }
+
+        try {
+            Chat chat = server.getChat(users[1], users[0]);
+            assertEquals(chat, chats[0]);
+        } catch (InvalidInputException e) {
+            fail();
+        }
+
+        try {
+            Chat chat = server.getChat(users[0], users[0]);
+            fail();
+        } catch (InvalidInputException e) {
+            System.out.println("good catch");
+        }
+        Item[] item3 = { items[2] };
+        User user3 = new User("test3", 3, item3, "t3", "TEST3");
+
+        try {
+            Chat chat = server.getChat(users[0], user3);
+            fail();
+        } catch (InvalidInputException e) {
+            System.out.println("good catch");
+        }
+    }
+
+    /**
+     * tests the addMessage method
+     */
+    @Test
+    void testAddMessage() {
+        Message newMessage = new Message("testMessage", 100, users[0], users[1]);
+        try {
+            server.addMessage(newMessage);
+            assertEquals(newMessage, server.getChat(users[0], users[1]).getMessages().get(0));
+        } catch (InvalidInputException e) {
+            fail();
+        }
+
+        Message newMessage2 = new Message("testMessageFail", 100, users[0], users[0]);
+        try {
+            server.addMessage(newMessage2);
+            fail();
+        } catch (InvalidInputException e) {
+            System.out.println("good catch");
+        }
+
+        Item[] item3 = { items[2] };
+        User user3 = new User("test3", 3, item3, "t3", "TEST3");
+        Message newMessage3 = new Message("testMessage", 100, users[0], user3);
+        try {
+            server.addMessage(newMessage3);
+            assertEquals(newMessage3, server.getChat(users[0], user3).getMessages().get(0));
+        } catch (InvalidInputException e) {
+            fail();
+        }
+    }
+
+    /**
+     * tests the logIn method
+     */
+    @Test
+    void testLogIn() {
+        try {
+            server.logIn(users[1]);
+        } catch (InvalidInputException e) {
+            fail();
+        }
+
+        User user3 = new User("", 0, null, users[0].getUserName(), "wrongPassword" );
+        try {
+            server.logIn(user3);
+            fail();
+        } catch (InvalidInputException e) {
+            System.out.println("good catch");
+        }
+
+        User user4 = new User("", 0, null, "wrongUsername", "wrongPassword" );
+        try {
+            server.logIn(user4);
+            fail();
+        } catch (InvalidInputException e) {
+            System.out.println("good catch");
+        }
+    }
+
+    /**
+     * tests the getChats method
+     */
+    @Test
+    void testGetChats() {
+        Chat[] chats1 = server.getChats(users[0]);
+        assertEquals(Arrays.toString(Server.db.getChats()), Arrays.toString(chats1));
     }
 }

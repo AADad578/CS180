@@ -287,7 +287,7 @@ public class Server extends Thread implements ServerInterface {
     /**
      * Adds a message to the chat between two users. If no chat is found, a new one is created
      * @param message the message to add 
-     * @throws InvalidInputException If the users have the same username or the users aren't in the chat.
+     * @throws InvalidInputException If the users have the same username
      */
     @Override
     public void addMessage(Message message) throws InvalidInputException {
@@ -475,6 +475,7 @@ public class Server extends Thread implements ServerInterface {
                         oos.writeObject(new Request("ERROR", e.getMessage()));
                         continue;
                     }
+                    oos.writeObject(new Request("OK", null));
                 }
             }
         } catch (IOException e) {
