@@ -1,7 +1,10 @@
 package Server;
 
-import java.awt.im.InputContext;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -88,6 +91,12 @@ public class Server extends Thread implements ServerInterface {
         saveDatabase();
     }
 
+    /**
+     * Gets all the users from the database
+     * 
+     * @return the list of users
+     */
+    @Override
     public User[] getUsers() {
         return db.getUsers();
     }
@@ -243,14 +252,15 @@ public class Server extends Thread implements ServerInterface {
      * @return all items that match
      */
     @Override
-    public ArrayList<Item> searchItems(String searchTerm) {
+    public Item[] searchItems(String searchTerm) {
         ArrayList<Item> newItems = new ArrayList<>();
         for (Item i : db.getItems()) {
             if (i.getItemName().contains(searchTerm)) {
                 newItems.add(i);
             }
         }
-        return newItems;
+        Item[] out = new Item[0];
+        return newItems.toArray(out);
     }
 
     /**
@@ -260,7 +270,8 @@ public class Server extends Thread implements ServerInterface {
      * @return one chat that is between the two users
      * @throws InvalidInputException If users have same username or there aren't any chats between the users.
      */
-    private Chat getChat(User user1, User user2) throws InvalidInputException {
+    @Override
+    public Chat getChat(User user1, User user2) throws InvalidInputException {
         if (user1.equals(user2)) {
             throw new InvalidInputException("Users have same username");
         }
@@ -278,7 +289,8 @@ public class Server extends Thread implements ServerInterface {
      * @param message the message to add 
      * @throws InvalidInputException If the users have the same username or the users aren't in the chat.
      */
-    private void addMessage(Message message) throws InvalidInputException {
+    @Override
+    public void addMessage(Message message) throws InvalidInputException {
         Chat chat;
         if (message.getSender().equals(message.getReceiver())) {
             throw new InvalidInputException("Users have same username");
@@ -300,11 +312,35 @@ public class Server extends Thread implements ServerInterface {
     }
 
     /**
+     * Checks a user's username and password against a list of all the usernames and passwords
+     * @param user the user object that contains the username and password
+     * @throws InvalidInputException if password is wrong or username is not found.
+     */
+    @Override
+    public void logIn (User user) throws InvalidInputException {
+        User[] allUsers;
+        synchronized (DB_USER_GUARD) {
+            allUsers = db.getUsers();
+        }
+        for (User u : allUsers) {
+            if (user.getUserName().equals(u.getUserName())) {
+                if (user.getPassword().equals(u.getPassword())) {
+                    return;
+                } else {
+                    throw new InvalidInputException("Invalid Password");
+                }
+            }
+        }
+        throw new InvalidInputException("Invalid Username");
+    }
+
+    /**
      * Gets all chats from/to one user
      * @param user 
      * @return all chats that include the user
      */
-    private Chat[] getChats(User user) {
+    @Override
+    public Chat[] getChats(User user) {
         Chat[] allChats;
         synchronized (DB_CHAT_GUARD) {
             allChats = db.getChats();
@@ -410,13 +446,32 @@ public class Server extends Thread implements ServerInterface {
                     Chat[] chats;
                     chats = getChats(user);
                     oos.writeObject(new Request("RESPONSE", chats));
+                } else if (action.equals("SearchItems")) {
+                    String searchTerm;
+                    try {
+                        searchTerm = (String) input.getPayload();
+                    } catch (ClassCastException e) {
+                        oos.writeObject(new Request("ERROR", "Payload Not a String"));
+                        continue;
+                    }
+                    Item[] out = searchItems(searchTerm);
+                    oos.writeObject(new Request("RESPONSE", out));
+                } else if (action.equals("LogInUser")) {
+                    User user;
+                    try {
+                        user = (User) input.getPayload();
+                    } catch (ClassCastException e) {
+                        oos.writeObject(new Request("ERROR", "Payload Not a User"));
+                        continue;
+                    }
+                    try {
+                        logIn(user);
+                    } catch (InvalidInputException e) {
+                        oos.writeObject(new Request("ERROR", e.getMessage()));
+                        continue;
+                    }
                 }
-
-                
-                
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
