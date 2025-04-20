@@ -1,17 +1,18 @@
 import static org.junit.Assert.*;
 import org.junit.*;
 /**
- * Team Project Phase 1 -- MessageTester Class
+ * Team Project Phase 2 -- MessageTester Class
  *
  * This class is the testing class for the Message class
  *
  * @author Vincent Holloway, lab sec 24
  *
- * @version April 5, 2025
+ * @version April 20, 2025
  *
  */
 public class MessageTester {
     private Item[] items; //test list of items for User objects
+    private User owner; //test owner User object
     private User sender; //test User object for Message object
     private User receiver; //test User object for the Message object
     private Message message; //test Message object
@@ -21,10 +22,12 @@ public class MessageTester {
      */
     @Before
     public void setUp() {
-        items = new Item[]{
-                new Item("iPhone7", 140.99, "Portland", "image1.jpg"),
-                new Item("Galaxy Phone", 199.99, "Miami", "image2.jpg")
-        }; //test list of items for User objects
+        items = new Item[2]; 
+        owner = new User("Billy", 24.65, items, "bfollow", "etgfrv493");
+                                //test owner User object
+        items[0] = new Item("iPhone7", 140.99, "Portland", "image1.jpg", owner);
+        items[1] = new Item("Galaxy Phone", 199.99, "Miami", "image2.jpg", owner); 
+                                //test list of items for User object     
         sender = new User("Vincent", 54.65, items, "vhollow", "etefev443"); //test User object for Message object
         receiver = new User("NotVincent", 64.65, items, "novince", "teertk43j");  //test User object for the Message object
         message = new Message("Can I buy your phone?", 1756,
@@ -42,7 +45,7 @@ public class MessageTester {
     }
 
     /**
-     * Tests the toEquals() method
+     * Tests the equals() method
      */
     @Test
     public void testEquals() {
@@ -65,7 +68,7 @@ public class MessageTester {
                 sender, newReceiver);
             //test message object that's not equal to message due to differing sender
 
-        Item item = new Item("iPhone8", 340.99, "Chicago", "image.jpg");
+        Item item = new Item("iPhone8", 340.99, "Chicago", "image.jpg", owner);
                     //test Item object
 
         assertTrue("Message should equal Message2", message.equals(message2));
