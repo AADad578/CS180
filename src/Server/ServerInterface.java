@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Chat.Chat;
 import Item.Item;
+import Message.Message;
 import User.User;
 
 /**
@@ -32,6 +33,13 @@ public interface ServerInterface {
      * @throws InvalidInputException
      */
     public void removeUser(User user) throws InvalidInputException;
+
+    /**
+     * gets all users from the database
+     * 
+     * @return List of all users
+     */
+    public User[] getUsers();
 
     /**
      * adds an item to the database and saves it
@@ -76,6 +84,43 @@ public interface ServerInterface {
      * @param searchTerm the term to match with
      * @return all items that match
      */
-    public ArrayList<Item> searchItems(String searchTerm);
+    public Item[] searchItems(String searchTerm);
 
+    /**
+     * Checks a user's username and password against a list of all the usernames and passwords
+     * @param user the user object that contains the username and password
+     * @throws InvalidInputException if password is wrong or username is not found.
+     */
+    public void logIn (User user) throws InvalidInputException;
+
+    /**
+     * Gets the chat between two users
+     * @param user1 
+     * @param user2 
+     * @return one chat that is the one between the two users
+     * @throws InvalidInputException IF useres have the same username or there aren't any chats between them.
+     */
+    public Chat getChat(User user1, User user2) throws InvalidInputException;
+
+
+    /**
+     * Adds a message to the chat between two users. If no chat is found. a new one is created
+     * @param message the message to add
+     * @throws InvalidInputException If the users have the same username or the users aren't in the chat.
+     */
+    public void addMessage(Message message) throws InvalidInputException;
+
+    /**
+     * Gets all chats from/to one user
+     * @param user
+     * @return all chats that include the user
+     */
+    public Chat[] getChats(User user);
+
+    /**
+     * The function that contains all of the logic for recieving and responding to client communications
+     * 
+     * Gets called on thread startup and stays until client disconnects.
+     */
+    public void run();
 }
