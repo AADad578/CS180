@@ -3,22 +3,23 @@ package Item;
 import java.io.Serializable;
 
 /**
- * Team Project Phase 1 -- Item Class
+ * Team Project Phase 2 -- Item Class
  *
  * This class is for items in a marketplace where
  * items can be bought or sold
  *
  * @author Vincent Holloway, lab sec 24
  *
- * @version April 5, 2025
+ * @version April 20, 2025
  *
  */
 public class Item implements ItemInterface, Serializable {
-    private String itemName; // name of item
-    private double itemPrice; // price of item
-    private String itemLocation; // location of item
-    private String itemPictureFileName; // picture file name of item
-    private static final double EPSILON = 0.001; // small epsilon value for double comparisons
+    private String itemName; //name of item
+    private double itemPrice; //price of item
+    private String itemLocation; //location of item
+    private String itemPictureFileName; //picture file name of item
+    private User itemOwner; //owner of item
+    private static final double EPSILON = 0.001; //small epsilon value for double comparisons
 
     /**
      * Item Constructor Method
@@ -28,13 +29,15 @@ public class Item implements ItemInterface, Serializable {
      * @param itemPrice           price of item
      * @param itemLocation        location of item
      * @param itemPictureFileName picture file name of item
+     * @param itemOwner owner of item
      */
     public Item(String itemName, double itemPrice, String itemLocation,
-            String itemPictureFileName) {
+                String itemPictureFileName, User itemOwner) {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.itemLocation = itemLocation;
         this.itemPictureFileName = itemPictureFileName;
+        this.itemOwner = itemOwner;
     }
 
     /**
@@ -78,6 +81,15 @@ public class Item implements ItemInterface, Serializable {
     }
 
     /**
+     * A getter method for item owner
+     *
+     * @return item owner
+     */
+    public User getItemOwner() {
+        return itemOwner;
+    }
+
+    /**
      * A setter method for item name
      *
      * @param itemName item name
@@ -118,14 +130,23 @@ public class Item implements ItemInterface, Serializable {
     }
 
     /**
+     * A setter method for item owner
+     * @param itemOwner item owner
+     */
+    public void setItemOwner(User itemOwner) {
+        this.itemOwner = itemOwner;
+    }
+
+    /**
      * A toString() method that returns a formatted String including
-     * item name, item price, and item location (but not item picture file name)
+     * item name, item price, item location, and item owner (but not item picture file name)
      *
      * @return the formatted String
      */
     @Override
     public String toString() {
-        return String.format("Item {Name: %s\nPrice: $%.2f\nLocation: %s\n }", itemName, itemPrice, itemLocation);
+        return String.format("Name: %s\nPrice: $%.2f\nLocation: %s\nOwner: %s\n", itemName, itemPrice, 
+                                itemLocation, itemOwner.getName());
     }
 
     /**
@@ -137,15 +158,15 @@ public class Item implements ItemInterface, Serializable {
      * @method getItemPrice() of Item Class
      * @method getItemLocation() of Item Class
      * @method getItemPictureFileName() of Item Class
+     * @method getItemOwner() of Item Class
      */
     @Override
     public boolean equals(Object o) {
         if (o instanceof Item) {
-            Item item = (Item) o; // object o is cast as a Item object
-            return this.itemName.equals(item.getItemName()) && Math.abs(this.itemPrice - item.getItemPrice()) < EPSILON
-                    &&
-                    this.itemLocation.equals(item.getItemLocation())
-                    && this.itemPictureFileName.equals(item.getItemPictureFileName());
+            Item item = (Item) o; //object o is cast as a Item object
+            return this.itemName.equals(item.getItemName()) && Math.abs(this.itemPrice - item.getItemPrice()) < EPSILON &&
+                    this.itemLocation.equals(item.getItemLocation()) && this.itemPictureFileName.equals(item.getItemPictureFileName())
+                    && this.itemOwner.equals(item.getItemOwner());
         }
         return false;
     }

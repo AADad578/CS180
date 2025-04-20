@@ -1,14 +1,14 @@
 package Item;
 
 /**
- * Team Project Phase 1 -- Item Interface
+ * Team Project Phase 2 -- Item Interface
  *
  * This interface is for the interface for the
  * Item Class
  *
  * @author Vincent Holloway, lab sec 24
  *
- * @version April 5, 2025
+ * @version April 20, 2025
  *
  */
 public interface ItemInterface {
@@ -33,6 +33,11 @@ public interface ItemInterface {
     String getItemPictureFileName();
 
     /**
+     * A getter method for item owner
+     */
+    User getItemOwner();
+
+    /**
      * A setter method for item name
      */
     void setItemName(String itemName);
@@ -53,8 +58,13 @@ public interface ItemInterface {
     void setItemPictureFileName(String itemPictureFileName);
 
     /**
+     * A setter method for item owner
+     */
+    void setItemOwner(User itemOwner);
+
+    /**
      * A toString() method that returns a formatted String including
-     * item name, item price, and item location (but not item picture file name)
+     * item name, item price, item location, and item owner (but not item picture file name)
      */
     @Override
     String toString();
