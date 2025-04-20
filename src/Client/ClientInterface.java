@@ -2,10 +2,10 @@ package Client;
 
 import Chat.Chat;
 import Item.Item;
+import Message.Message;
+import User.User;
 import java.io.IOException;
 import java.util.List;
-import User.User;
-import Message.Message;
 
 public interface ClientInterface {
 
@@ -33,46 +33,58 @@ public interface ClientInterface {
     Object receiveResponse() throws IOException, ClassNotFoundException;
 
     /**
-     * Logs in the user and stores session state, if any.
-     * @param username the username to log in
-     * @param password the password associated
-     * @return true if login is successful
-     * @throws IOException if network communication fails
-     * @throws ClassNotFoundException if deserialization fails
-     * @throws ServerResponseException if login fails due to invalid credentials
+     * Creates a new user in the system.
+     * @param user User object to register
      */
-    boolean login(String username, String password) throws IOException, ClassNotFoundException, ServerResponseException;
+    void createNewUser(User user) throws IOException, ClassNotFoundException, ServerResponseException;
 
     /**
-     * Returns a list of items available to the user.
-     * @return list of Item objects
-     * @throws IOException if data retrieval fails
-     * @throws ClassNotFoundException if casting the result fails
-     * @throws ServerResponseException if the server responds with an error
+     * Adds a new item to the system.
+     * @param item Item object to add
      */
-    List<Item> getAvailableItems() throws IOException, ClassNotFoundException, ServerResponseException;
+    void createNewItem(Item item) throws IOException, ClassNotFoundException, ServerResponseException;
 
     /**
-     * Returns the list of chats/messages associated with the user.
+     * Creates a new chat between users.
+     * @param chat Chat object containing user1 and user2
+     */
+    void createNewChat(Chat chat) throws IOException, ClassNotFoundException, ServerResponseException;
+
+    /**
+     * Adds a message to an existing chat.
+     * @param message Message object to add
+     */
+    void addMessage(Message message) throws IOException, ClassNotFoundException, ServerResponseException;
+
+    /**
+     * Logs in a user.
+     * @param user User with username and password to check
+     */
+    void logInUser(User user) throws IOException, ClassNotFoundException, ServerResponseException;
+
+    /**
+     * Returns the current list of users in the system.
+     * @return list of users
+     */
+    List<User> getUsers() throws IOException, ClassNotFoundException, ServerResponseException;
+
+    /**
+     * Returns the list of chats a given user is part of.
+     * @param user the user to find chats for
      * @return list of Chat objects
-     * @throws IOException if communication fails
-     * @throws ClassNotFoundException if deserialization fails
-     * @throws ServerResponseException if the server indicates a problem
      */
-    List<Chat> getUserChats() throws IOException, ClassNotFoundException, ServerResponseException;
+    List<Chat> getChats(User user) throws IOException, ClassNotFoundException, ServerResponseException;
+
+    /**
+     * Searches for items matching a term.
+     * @param term string to search by
+     * @return list of matching Item objects
+     */
+    List<Item> searchItems(String term) throws IOException, ClassNotFoundException, ServerResponseException;
 
     /**
      * Returns true if the client is currently connected.
      * @return true if connected
      */
     boolean isConnected();
-
-    boolean createNewUser(User user) throws IOException, ClassNotFoundException, ServerResponseException;
-
-    boolean createNewItem(Item item) throws IOException, ClassNotFoundException, ServerResponseException;
-
-    boolean createNewChat(Chat chat) throws IOException, ClassNotFoundException, ServerResponseException;
-
-    boolean addMessage(Message message) throws IOException, ClassNotFoundException, ServerResponseException;
-
 }

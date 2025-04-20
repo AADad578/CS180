@@ -6,12 +6,14 @@ import Message.Message;
 import User.User;
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
+import Server.Request;
 
 /**
  * Client:
  *
- * Final Phase 2 implementation using object-based Request architecture.
+ * Implementation using object-based Request architecture.
  * All actions use structured Request objects.
  * Thread-safe. Throws ServerResponseException when server returns errors.
  *
@@ -73,70 +75,86 @@ public class Client implements ClientInterface {
         }
     }
 
-    @Override
-    public boolean login(String username, String password) throws IOException, ClassNotFoundException {
-        if (!connected)
-            throw new IOException("Not connected to server.");
-        sendRequest(new Request("Login", new String[]{username, password}));
-
-        return false;
+    private void handleOkResponse() throws IOException, ClassNotFoundException, ServerResponseException {
+        Object response = receiveResponse();
+        if (!(response instanceof String str) || !str.equals("OK")) {
+            throw new ServerResponseException(response.toString());
+        }
     }
 
     @Override
-    public List<Item> getAvailableItems() throws IOException, ClassNotFoundException {
-        sendRequest(new Request("GetAvailableItems", "All items"));
-        return (List<Item>) this.receiveResponse();
+    public void createNewUser(User user) throws IOException, ClassNotFoundException, ServerResponseException {
+        sendRequest(new Request("CreateNewUser", user));
+        handleOkResponse();
     }
 
     @Override
-    public List<Chat> getUserChats() throws IOException, ClassNotFoundException {
-        sendRequest(new Request("GetUserChats", this.currentUsername));
-        return (List<Chat>) this.receiveResponse();
+    public void createNewItem(Item item) throws IOException, ClassNotFoundException, ServerResponseException {
+        sendRequest(new Request("CreateNewItem", item));
+        handleOkResponse();
+    }
+
+    @Override
+    public void createNewChat(Chat chat) throws IOException, ClassNotFoundException, ServerResponseException {
+        sendRequest(new Request("CreateNewChat", chat));
+        handleOkResponse();
+    }
+
+    @Override
+    public void addMessage(Message message) throws IOException, ClassNotFoundException, ServerResponseException {
+        sendRequest(new Request("AddMessage", message));
+        handleOkResponse();
+    }
+
+    @Override
+    public void logInUser(User user) throws IOException, ClassNotFoundException, ServerResponseException {
+        sendRequest(new Request("LogInUser", user));
+        handleOkResponse();
+        this.currentUsername = user.getUserName();
+    }
+
+    @Override
+    public List<User> getUsers() throws IOException, ClassNotFoundException, ServerResponseException {
+        sendRequest(new Request("GetUsers", null));
+        Object response = receiveResponse();
+        if (response instanceof List<?> list && !list.isEmpty() && list.get(0) instanceof User) {
+            return (List<User>) list;
+        } else if (response instanceof String && response.equals("OK")) {
+            return new ArrayList<>();
+        } else {
+            throw new ServerResponseException(response.toString());
+        }
+    }
+
+    @Override
+    public List<Chat> getChats(User user) throws IOException, ClassNotFoundException, ServerResponseException {
+        sendRequest(new Request("GetChats", user));
+        Object response = receiveResponse();
+        if (response instanceof List<?> list && !list.isEmpty() && list.get(0) instanceof Chat) {
+            return (List<Chat>) list;
+        } else if (response instanceof String && response.equals("OK")) {
+            return new ArrayList<>();
+        } else {
+            throw new ServerResponseException(response.toString());
+        }
+    }
+
+    @Override
+    public List<Item> searchItems(String term) throws IOException, ClassNotFoundException, ServerResponseException {
+        sendRequest(new Request("SearchItems", term));
+        Object response = receiveResponse();
+        if (response instanceof List<?> list && !list.isEmpty() && list.get(0) instanceof Item) {
+            return (List<Item>) list;
+        } else if (response instanceof String && response.equals("OK")) {
+            return new ArrayList<>();
+        } else {
+            throw new ServerResponseException(response.toString());
+        }
     }
 
     @Override
     public boolean isConnected() {
-        return false;
-    }
-
-    @Override
-    public boolean createNewUser(User user) throws IOException, ClassNotFoundException, ServerResponseException {
-        sendRequest(new Request("CreateNewUser", user));
-        String response = (String) this.receiveResponse();
-        if (!response.equals("OK")){
-            throw new ServerResponseException(response);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean createNewItem(Item item) throws IOException, ClassNotFoundException, ServerResponseException {
-        this.sendRequest(new Request("CreateNewItem", item));
-        String response = (String) this.receiveResponse();
-        if (!response.equals("OK")){
-            throw new ServerResponseException(response);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean createNewChat(Chat chat) throws IOException, ClassNotFoundException, ServerResponseException {
-        this.sendRequest(new Request("CreateNewChat", chat));
-        String response = (String) this.receiveResponse();
-        if (!response.equals("OK")){
-            throw new ServerResponseException(response);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean addMessage(Message message) throws IOException, ClassNotFoundException, ServerResponseException {
-        this.sendRequest(new Request("AddMessage", message));
-        String response = (String) this.receiveResponse();
-        if (!response.equals("OK")){
-            throw new ServerResponseException(response);
-        }
-        return true;
+        return this.connected;
     }
 
     public String getCurrentUsername() {
