@@ -68,87 +68,83 @@ public class Client implements ClientInterface {
     }
 
     @Override
-    public Object receiveResponse() throws IOException, ClassNotFoundException {
+    public Request receiveResponse() throws IOException, ServerResponseException {
         if (!connected) throw new IOException("Not connected to server.");
+        Request response;
         synchronized (ioLock) {
-            return in.readObject();
+            try {
+                response = (Request) in.readObject();
+                if (response.getAction() == "Error") {
+                    throw new ServerResponseException((String) response.getPayload());
+                }
+            } catch (ClassCastException | ClassNotFoundException e) {
+                throw new ServerResponseException("Failed to transmit data correctly");
+            }
         }
-    }
-
-    private void handleOkResponse() throws IOException, ClassNotFoundException, ServerResponseException {
-        Object response = receiveResponse();
-        if (!(response instanceof String str) || !str.equals("OK")) {
-            throw new ServerResponseException(response.toString());
-        }
+        return response;
     }
 
     @Override
-    public void createNewUser(User user) throws IOException, ClassNotFoundException, ServerResponseException {
+    public void createNewUser(User user) throws IOException, ServerResponseException {
         sendRequest(new Request("CreateNewUser", user));
-        handleOkResponse();
+        receiveResponse();
     }
 
     @Override
-    public void createNewItem(Item item) throws IOException, ClassNotFoundException, ServerResponseException {
+    public void createNewItem(Item item) throws IOException, ServerResponseException {
         sendRequest(new Request("CreateNewItem", item));
-        handleOkResponse();
+        receiveResponse();
     }
 
     @Override
-    public void createNewChat(Chat chat) throws IOException, ClassNotFoundException, ServerResponseException {
+    public void createNewChat(Chat chat) throws IOException, ServerResponseException {
         sendRequest(new Request("CreateNewChat", chat));
-        handleOkResponse();
+        receiveResponse();
     }
 
     @Override
-    public void addMessage(Message message) throws IOException, ClassNotFoundException, ServerResponseException {
+    public void addMessage(Message message) throws IOException, ServerResponseException {
         sendRequest(new Request("AddMessage", message));
-        handleOkResponse();
+        receiveResponse();
     }
 
     @Override
-    public void logInUser(User user) throws IOException, ClassNotFoundException, ServerResponseException {
+    public void logInUser(User user) throws IOException, ServerResponseException {
         sendRequest(new Request("LogInUser", user));
-        handleOkResponse();
+        receiveResponse();
         this.currentUsername = user.getUserName();
     }
 
     @Override
-    public List<User> getUsers() throws IOException, ClassNotFoundException, ServerResponseException {
+    public User[] getUsers() throws IOException, ServerResponseException {
         sendRequest(new Request("GetUsers", null));
-        Object response = receiveResponse();
-        if (response instanceof List<?> list && !list.isEmpty() && list.get(0) instanceof User) {
-            return (List<User>) list;
-        } else if (response instanceof String && response.equals("OK")) {
-            return new ArrayList<>();
-        } else {
-            throw new ServerResponseException(response.toString());
+        Request response = receiveResponse();
+        try {
+            return (User[]) response.getPayload();
+        } catch (ClassCastException e) {
+            throw new ServerResponseException("Payload not a User[]");
         }
     }
 
     @Override
-    public List<Chat> getChats(User user) throws IOException, ClassNotFoundException, ServerResponseException {
+    public Chat[] getChats(User user) throws IOException, ServerResponseException {
         sendRequest(new Request("GetChats", user));
-        Object response = receiveResponse();
-        if (response instanceof List<?> list && !list.isEmpty() && list.get(0) instanceof Chat) {
-            return (List<Chat>) list;
-        } else if (response instanceof String && response.equals("OK")) {
-            return new ArrayList<>();
-        } else {
-            throw new ServerResponseException(response.toString());
+        Request response = receiveResponse();
+        try {
+            return (Chat[]) response.getPayload();
+        } catch (ClassCastException e) {
+            throw new ServerResponseException("Payload not a Chat[]");
         }
     }
 
     @Override
-    public List<Item> searchItems(String term) throws IOException, ClassNotFoundException, ServerResponseException {
+    public Item[] searchItems(String term) throws IOException, ServerResponseException {
         sendRequest(new Request("SearchItems", term));
-        Object response = receiveResponse();
-        if (response instanceof List<?> list && !list.isEmpty() && list.get(0) instanceof Item) {
-            return (List<Item>) list;
-        } else if (response instanceof String && response.equals("OK")) {
-            return new ArrayList<>();
-        } else {
-            throw new ServerResponseException(response.toString());
+        Request response = receiveResponse();
+        try {
+            return (Item[]) response.getPayload();
+        } catch (ClassCastException e) {
+            throw new ServerResponseException("Payload not a Item[]");
         }
     }
 

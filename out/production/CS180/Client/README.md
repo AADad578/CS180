@@ -1,3 +1,5 @@
+# CLIENT PACKAGE DOCUMENTATION
+
 # Client Interface Documentation
 
 The `ClientInterface` interface defines the essential methods for interacting with a server-side marketplace application. It includes functionalities such as connecting to the server, sending messages, logging in, and handling payments.
@@ -80,3 +82,17 @@ Sends a new item to be listed on the marketplace.
 - **Returns**: `void`
 
 ---
+
+## Client Class
+
+The `Client` class implements the `ClientInterface` and handles client-side network communication with the server.
+
+### Responsibilities
+
+- Implements all methods defined in `ClientInterface`
+- Manages the socket connection (`connectToServer`, `disconnectFromServer`)
+- Sends and receives serialized objects via `ObjectOutputStream` and `ObjectInputStream`
+- Uses synchronized blocks to ensure thread-safe communication
+- Tracks login session state (`currentUsername`)
+- Serves as the foundation for GUI integration in Phase 3
+- Communicates with the server exclusively for all data access (no local storage)

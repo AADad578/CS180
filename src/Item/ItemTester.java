@@ -18,6 +18,7 @@ import org.junit.*;
  */
 public class ItemTester {
     private Item item; //test item object
+    private Item[] items;
     private User owner; //test owner User object
     private static final double EPSILON = 0.001; //very small epsilon value for double comparisons
 
@@ -26,7 +27,7 @@ public class ItemTester {
      */
     @Before
     public void setUp() {
-        Item[] items = new Item[2]; 
+        items = new Item[2];
         owner = new User("Billy", 24.65, items, "bfollow", "etgfrv493");
                                 //test owner User object
         items[0] = new Item("iPhone7", 140.99, "Portland", "image1.jpg", owner);
@@ -146,7 +147,7 @@ public class ItemTester {
                                                         //test item object that's not equal to item with differing name
         Item item6 =  new Item("iPhone8", 340.99, "Chicago", "newItemImage.jpg", owner);
                                         //test item object that's not equal to item with differing picture file name 
-        User newOwner = new User("Radny", 53.65, items, "ranllow", "ejdfijdfoijf");    //new owner User object                           
+        User newOwner = new User("Radny", 53.65, items, "ranllow", "ejdfijdfoijf");    //new owner User object
         Item item7 =  new Item("iPhone8", 340.99, "Chicago", "newItemImage.jpg", newOwner);
                                 //test item object that's not equal to item with differing owner                                                                
 

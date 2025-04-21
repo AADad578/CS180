@@ -33,9 +33,9 @@ public class DatabaseTester {
 
     @BeforeEach
     void setUp() {
-        Item[] itemsLoc = { new Item("test1", 1, "loc1", "pic1.png"),
-            new Item("test2", 2, "loc2", "pic2.png"),
-            new Item("test3", 3, "loc3", "pic3.png") };
+        Item[] itemsLoc = { new Item("test1", 1, "loc1", "pic1.png", null),
+            new Item("test2", 2, "loc2", "pic2.png", null),
+            new Item("test3", 3, "loc3", "pic3.png", null)};
         this.items = itemsLoc;
         Item[] item1 = { itemsLoc[0] };
         Item[] item2 = { itemsLoc[1] };
@@ -58,8 +58,8 @@ public class DatabaseTester {
 
     @Test
     void testSetItems() {
-        Item[] items2 = { new Item("test1", 1, "loc1", "pic1.png"),
-            new Item("test3", 3, "loc3", "pic3.png") };
+        Item[] items2 = { new Item("test1", 1, "loc1", "pic1.png", null),
+            new Item("test3", 3, "loc3", "pic3.png", null) };
         db.setItems(items2);
         assertEquals(items2, db.getItems());
     }

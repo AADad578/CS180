@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 import Chat.Chat;
@@ -215,16 +216,20 @@ public class Server extends Thread implements ServerInterface {
      * Saves the database to a file.
      * FileName = "database.db"
      * Should be called after any change to db
+     * 
+     * not necessary to synchronize bc this is called after all changes are complete, 
+     * so it will contain all changes even if one is occuring while it runs.
      */
     @Override
     public void saveDatabase() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("database.db"))) {
-            oos.writeObject(db);
-            oos.flush();
-            oos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("database.db"))) {
+             oos.writeObject(db);
+             oos.flush();
+             oos.close();
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+        System.out.println("saved");
     }
 
     /**
@@ -309,6 +314,7 @@ public class Server extends Thread implements ServerInterface {
         } catch (MessageException e) {
             throw new InvalidInputException(e.getMessage());
         }
+        saveDatabase();
     }
 
     /**
@@ -479,7 +485,7 @@ public class Server extends Thread implements ServerInterface {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            return;
         }
     }
 

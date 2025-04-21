@@ -38,9 +38,9 @@ public class ServerTester {
     @BeforeEach
     void setUp() {
 
-        Item[] itemsLoc = { new Item("test1", 1, "loc1", "pic1.png"),
-            new Item("test2", 2, "loc2", "pic2.png"),
-            new Item("test3", 3, "loc3", "pic3.png") };
+        Item[] itemsLoc = { new Item("test1", 1, "loc1", "pic1.png", null),
+            new Item("test2", 2, "loc2", "pic2.png", null),
+            new Item("test3", 3, "loc3", "pic3.png", null) };
         Item[] item1 = { itemsLoc[0] };
         Item[] item2 = { itemsLoc[1] };
 
@@ -129,10 +129,10 @@ public class ServerTester {
      */
     @Test
     void testAddItem() {
-        Item[] items2 = { new Item("test1", 1, "loc1", "pic1.png"),
-            new Item("test2", 2, "loc2", "pic2.png"),
-            new Item("test3", 3, "loc3", "pic3.png"),
-            new Item("test4", 4, "loc4", "pic4.png") };
+        Item[] items2 = { new Item("test1", 1, "loc1", "pic1.png", null),
+            new Item("test2", 2, "loc2", "pic2.png", null),
+            new Item("test3", 3, "loc3", "pic3.png", null),
+            new Item("test4", 4, "loc4", "pic4.png", null) };
 
         try {
             server.addItem(items2[3]);
@@ -155,10 +155,10 @@ public class ServerTester {
      */
     @Test
     void testRemoveItem() {
-        Item[] items2 = { new Item("test1", 1, "loc1", "pic1.png"),
-            new Item("test2", 2, "loc2", "pic2.png") };
-        Item remove = new Item("test3", 3, "loc3", "pic3.png");
-        Item invalid = new Item("test4", 4, "loc4", "pic4.png");
+        Item[] items2 = { new Item("test1", 1, "loc1", "pic1.png", null),
+            new Item("test2", 2, "loc2", "pic2.png", null) };
+        Item remove = new Item("test3", 3, "loc3", "pic3.png", null);
+        Item invalid = new Item("test4", 4, "loc4", "pic4.png", null);
 
         try {
             server.removeItem(remove);

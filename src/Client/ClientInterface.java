@@ -30,57 +30,58 @@ public interface ClientInterface {
      * @throws IOException if the stream fails
      * @throws ClassNotFoundException if the response object cannot be cast
      */
-    Object receiveResponse() throws IOException, ClassNotFoundException;
+    Object receiveResponse() throws IOException, ServerResponseException;
 
     /**
      * Creates a new user in the system.
      * @param user User object to register
      */
-    void createNewUser(User user) throws IOException, ClassNotFoundException, ServerResponseException;
+    void createNewUser(User user) throws IOException, ServerResponseException;
 
     /**
      * Adds a new item to the system.
      * @param item Item object to add
      */
-    void createNewItem(Item item) throws IOException, ClassNotFoundException, ServerResponseException;
+    void createNewItem(Item item) throws IOException, ServerResponseException;
 
     /**
      * Creates a new chat between users.
      * @param chat Chat object containing user1 and user2
      */
-    void createNewChat(Chat chat) throws IOException, ClassNotFoundException, ServerResponseException;
+    void createNewChat(Chat chat) throws IOException, ServerResponseException;
 
     /**
      * Adds a message to an existing chat.
      * @param message Message object to add
      */
-    void addMessage(Message message) throws IOException, ClassNotFoundException, ServerResponseException;
+    void addMessage(Message message) throws IOException, ServerResponseException;
 
     /**
      * Logs in a user.
      * @param user User with username and password to check
      */
-    void logInUser(User user) throws IOException, ClassNotFoundException, ServerResponseException;
+    void logInUser(User user) throws IOException, ServerResponseException;
 
     /**
      * Returns the current list of users in the system.
+     *
      * @return list of users
      */
-    List<User> getUsers() throws IOException, ClassNotFoundException, ServerResponseException;
+    User[] getUsers() throws IOException, ServerResponseException;
 
     /**
      * Returns the list of chats a given user is part of.
      * @param user the user to find chats for
      * @return list of Chat objects
      */
-    List<Chat> getChats(User user) throws IOException, ClassNotFoundException, ServerResponseException;
+    Chat[] getChats(User user) throws IOException, ServerResponseException;
 
     /**
      * Searches for items matching a term.
      * @param term string to search by
      * @return list of matching Item objects
      */
-    List<Item> searchItems(String term) throws IOException, ClassNotFoundException, ServerResponseException;
+    Item[] searchItems(String term) throws IOException, ServerResponseException;
 
     /**
      * Returns true if the client is currently connected.
