@@ -160,24 +160,40 @@ It ensures correctness of all core functionalities such as getters, setters, ser
 ### ClientInterface - Karthik Nandagiri
 
 **Description**  
-The `ClientInterface` specifies operations that a client-side class must support to interact with the marketplace system.  
-This includes network communication, session handling, and synchronization with server-side data such as chats and items.
+Defines the core functionalities required for a client to communicate with a marketplace server using object-based requests. This interface ensures consistency and testability of different client implementations.
 
 **Key Responsibilities**
-- Establish and terminate server connections.
-- Perform login authentication.
-- Receive chats and item listings from the server.
-
-> 🛠 This interface is a stub for Phase 2 implementation.
+- Specify how clients connect to/disconnect from the server.
+- Define how requests are sent and responses are received.
+- Provide method contracts for all user, item, chat, and message-related actions.
+- Ensure the client supports login, update, search, and data retrieval operations.
 
 ---
 
-### ClientTester - Karthik Nandagiri
+### Client - Karthik Nandagiri
 
 **Description**  
-Placeholder class for testing the future `Client` implementation.
+Implements the `ClientInterface` using Java sockets and object streams. All client-server communication is encapsulated in `Request` objects. Ensures thread safety and error propagation via structured exception handling.
 
-> 🛠 To be implemented in **Phase 2**.
+**Key Responsibilities**
+- Handle connection lifecycle with the server (`connect`, `disconnect`).
+- Manage synchronized input/output using `ObjectInputStream` and `ObjectOutputStream`.
+- Send structured `Request` objects and process `Request`-based responses.
+- Perform user authentication, data creation, and querying actions.
+- Maintain internal state for the connected user.
+
+---
+
+### ServerResponseException - Karthik Nandagiri
+
+**Description**  
+Custom exception class thrown when the server returns an error in response to a client request. It encapsulates the error message and enables uniform handling of server-side issues.
+
+**Key Responsibilities**
+- Represent server error responses in client logic.
+- Improve debuggability and control flow during request handling.
+- Integrate seamlessly with client-side exception handling logic.
+
 
 ---
 
