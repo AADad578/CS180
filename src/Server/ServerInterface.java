@@ -118,6 +118,13 @@ public interface ServerInterface {
     public Chat[] getChats(User user);
 
     /**
+     * updates the User's balance if it finds a user with the same username
+     * @param user the username and balance to update
+     * @throws InvalidInputException if the username isn't found
+     */
+    void updateUser(User user) throws InvalidInputException;
+
+    /**
      * The function that contains all of the logic for recieving and responding to client communications
      * 
      * Gets called on thread startup and stays until client disconnects.

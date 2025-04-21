@@ -29,10 +29,10 @@ public class ClientTester {
         try {
             client.connectToServer("localhost", 8000);
 
-            User[] usersLoc = { new User("test1", 1, null, "t1", "TEST1"),
-                    new User("test2", 2, null, "t2", "TEST2"),
-                    new User("test3", 3, null, "t3", "TEST3"),
-                    new User("test4", 4, null, "t4", "TEST4"),};
+            User[] usersLoc = { new User("test1", 1, "t1", "TEST1"),
+                    new User("test2", 2, "t2", "TEST2"),
+                    new User("test3", 3, "t3", "TEST3"),
+                    new User("test4", 4, "t4", "TEST4"),};
 
             client.createNewUser(usersLoc[0]);
             System.out.println("Create New User");

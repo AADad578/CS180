@@ -23,7 +23,7 @@ class UserTester {
 
     @BeforeEach
     void setUp() {
-        user = new User("Alice", 100.0, new Item[5], "alice123", "securePass");
+        user = new User("Alice", 100.0, "alice123", "securePass");
     }
 
     @Test

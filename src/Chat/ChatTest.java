@@ -27,10 +27,8 @@ public class ChatTest {
 
     @BeforeEach
     public void setUp() {
-        // Empty item arrays for now; can fill in when Item class is available
-        Item[] items = new Item[0];
-        user1 = new User("Alice", 100.0, items, "alice123", "pass1");
-        user2 = new User("Bob", 150.0, items, "bob456", "pass2");
+        user1 = new User("Alice", 100.0, "alice123", "pass1");
+        user2 = new User("Bob", 150.0, "bob456", "pass2");
         chat = new Chat(user1, user2);
     }
 
@@ -58,8 +56,7 @@ public class ChatTest {
 
     @Test
     public void testAddMessageFromNonParticipantThrows() {
-        Item[] items = new Item[0];
-        User outsider = new User("Charlie", 50.0, items, "charlie789", "pass3");
+        User outsider = new User("Charlie", 50.0, "charlie789", "pass3");
 
         Exception exception = assertThrows(MessageException.class, () -> {
             chat.addMessage("Can I join?", outsider, 1234);

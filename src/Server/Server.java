@@ -7,7 +7,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
 
 import Chat.Chat;
@@ -361,7 +360,26 @@ public class Server extends Thread implements ServerInterface {
         output = out.toArray(output);
         return output;
     }
-    
+
+    /**
+     * updates the User's balance if it finds a user with the same username
+     * @param user the username and balance to update
+     * @throws InvalidInputException if the username isn't found
+     */
+    @Override
+    public void updateUser(User user) throws InvalidInputException {
+        synchronized (DB_USER_GUARD) {
+            User[] allUsers = db.getUsers();
+            for (User u : allUsers) {
+                if (u.equals(user)) {
+                    u.setBalance(user.getBalance());
+                    return;
+                }
+            }
+            throw new InvalidInputException("No user found");
+        }
+    }
+
     /**
      * The function that contains all of the logic for recieving and responding to client communications
      * 

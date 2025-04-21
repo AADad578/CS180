@@ -2,8 +2,6 @@ package User;
 
 import java.io.Serializable;
 
-import Item.Item;
-
 /**
  * Team Project Phase 1 -- User
  *
@@ -23,7 +21,6 @@ public class User implements Serializable, UserInterface {
     private String username;
     private String name;
     private double balance;
-    private Item[] items;
     private String password;
 
     /**
@@ -31,14 +28,12 @@ public class User implements Serializable, UserInterface {
      *
      * @param name     the full name of the user
      * @param balance  the initial balance of the user
-     * @param items    an array of items associated with the user
      * @param username the unique username for login
      * @param password the password for authentication
      */
-    public User(String name, double balance, Item[] items, String username, String password) {
+    public User(String name, double balance, String username, String password) {
         this.name = name;
         this.balance = balance;
-        this.items = items;
         this.username = username;
         this.password = password;
     }

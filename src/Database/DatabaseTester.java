@@ -30,20 +30,20 @@ public class DatabaseTester {
     private Item[] items;
     private Chat[] chats;
     private User[] users;
+    private User itemOwner;
 
     @BeforeEach
     void setUp() {
-        Item[] itemsLoc = { new Item("test1", 1, "loc1", "pic1.png", null),
-            new Item("test2", 2, "loc2", "pic2.png", null),
-            new Item("test3", 3, "loc3", "pic3.png", null)};
-        this.items = itemsLoc;
-        Item[] item1 = { itemsLoc[0] };
-        Item[] item2 = { itemsLoc[1] };
-        Item[] item3 = { itemsLoc[2] };
+        itemOwner = new User("ItemOwner", 1000, "owner", "iOwnEverything");
 
-        User[] usersLoc = { new User("test1", 1, item1, "t1", "TEST1"),
-            new User("test2", 2, item2, "t2", "TEST2"),
-            new User("test3", 3, item3, "t3", "TEST3") };
+        Item[] itemsLoc = { new Item("test1", 1, "loc1", "pic1.png", itemOwner),
+            new Item("test2", 2, "loc2", "pic2.png", itemOwner),
+            new Item("test3", 3, "loc3", "pic3.png", itemOwner)};
+        this.items = itemsLoc;
+
+        User[] usersLoc = { new User("test1", 1, "t1", "TEST1"),
+            new User("test2", 2, "t2", "TEST2"),
+            new User("test3", 3, "t3", "TEST3") };
         this.users = usersLoc;
         Chat[] chatsLoc = { new Chat(usersLoc[0], usersLoc[1]), new Chat(usersLoc[1], usersLoc[2]),
             new Chat(usersLoc[2], usersLoc[0]) };
@@ -58,8 +58,8 @@ public class DatabaseTester {
 
     @Test
     void testSetItems() {
-        Item[] items2 = { new Item("test1", 1, "loc1", "pic1.png", null),
-            new Item("test3", 3, "loc3", "pic3.png", null) };
+        Item[] items2 = { new Item("test1", 1, "loc1", "pic1.png", itemOwner),
+            new Item("test3", 3, "loc3", "pic3.png", itemOwner) };
         db.setItems(items2);
         assertEquals(items2, db.getItems());
     }
@@ -83,10 +83,8 @@ public class DatabaseTester {
 
     @Test
     void testSetUsers() {
-        Item[] item1 = { items[0] };
-        Item[] item3 = { items[2] };
-        User[] users2 = { new User("test1", 1, item1, "t1", "TEST1"),
-            new User("test3", 3, item3, "t3", "TEST3") };
+        User[] users2 = { new User("test1", 1, "t1", "TEST1"),
+            new User("test3", 3, "t3", "TEST3") };
         db.setUsers(users2);
         assertEquals(users2, db.getUsers());
     }
@@ -94,16 +92,19 @@ public class DatabaseTester {
     @Test
     void testToString() {
         String expected = "Database: \n" +
-                "    Items: [Item {Name: test1\n" +
+                "    Items: [Name: test1\n" +
                 "Price: $1.00\n" +
                 "Location: loc1\n" +
-                " }, Item {Name: test2\n" +
+                "Owner: ItemOwner\n" +
+                ", Name: test2\n" +
                 "Price: $2.00\n" +
                 "Location: loc2\n" +
-                " }, Item {Name: test3\n" +
+                "Owner: ItemOwner\n" +
+                ", Name: test3\n" +
                 "Price: $3.00\n" +
                 "Location: loc3\n" +
-                " }]\n" +
+                "Owner: ItemOwner\n" +
+                "]\n" +
                 "    Chats: [Chat { t1 (test1)\n" +
                 "t2 (test2)\n" +
                 "}, Chat { t2 (test2)\n" +
