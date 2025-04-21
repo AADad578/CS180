@@ -83,6 +83,8 @@ public interface ClientInterface {
      */
     Item[] searchItems(String term) throws IOException, ServerResponseException;
 
+    void updateUser(User user) throws IOException, ServerResponseException;
+
     /**
      * Returns true if the client is currently connected.
      * @return true if connected

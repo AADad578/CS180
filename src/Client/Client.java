@@ -6,8 +6,7 @@ import Message.Message;
 import User.User;
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
+
 import Server.Request;
 
 /**
@@ -146,6 +145,12 @@ public class Client implements ClientInterface {
         } catch (ClassCastException e) {
             throw new ServerResponseException("Payload not a Item[]");
         }
+    }
+
+    @Override
+    public void updateUser(User user) throws IOException, ServerResponseException {
+        sendRequest(new Request("UpdateUser", user));
+        receiveResponse();
     }
 
     @Override

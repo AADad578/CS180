@@ -500,6 +500,21 @@ public class Server extends Thread implements ServerInterface {
                         continue;
                     }
                     oos.writeObject(new Request("OK", null));
+                } else if (action.equals("UpdateUser")) {
+                    User user;
+                    try {
+                        user = (User) input.getPayload();
+                    } catch (ClassCastException e) {
+                        oos.writeObject(new Request("ERROR", "Payload Not a User"));
+                        continue;
+                    }
+                    try {
+                        updateUser(user);
+                    } catch (InvalidInputException e) {
+                        oos.writeObject(new Request("ERROR", e.getMessage()));
+                        continue;
+                    }
+                    oos.writeObject(new Request("OK", null));
                 }
             }
         } catch (IOException e) {
