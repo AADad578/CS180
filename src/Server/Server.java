@@ -31,8 +31,7 @@ public class Server extends Thread implements ServerInterface {
     private static final Object DB_USER_GUARD = new Object();
     private static final Object DB_CHAT_GUARD = new Object();
     private static final Object DB_ITEM_GUARD = new Object();
-    private Socket socket;
-    public boolean hasClient;
+    private final Socket socket;
 
     /**
      * adds a user to the database and saves it
@@ -376,7 +375,7 @@ public class Server extends Thread implements ServerInterface {
                     return;
                 }
             }
-            throw new InvalidInputException("No user found");
+            throw new InvalidInputException("Invalid Username");
         }
     }
 
