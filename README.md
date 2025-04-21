@@ -3,10 +3,11 @@
 ## How to compile and run the project
 
 Use intelliJ to run this program. The server side can be run from the Server.java class in the Server package. The client will be able to be run from the Client.java class in the Client package. The server will automatically launch more instances with Sockets open on threads when a client connects. Client should be launched once per client.
-To run unit tests, it is required to have both Junit 4 and 5. It is garunteed to work on the default installation of IntelliJ, which is the recommended way to run this code.
+To run unit tests, it is required to have both Junit 4 and 5. It is guaranteed to work on the default installation of IntelliJ, which is the recommended way to run this code.
 
 ## Submission Log
 
+Ankur Raghavan - Submitted Project Phase 1 to Vocareum
 Ankur Raghavan - Submitted Project Phase 2 to Vocareum 
 
 ## Detailed description of each class
