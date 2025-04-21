@@ -153,7 +153,8 @@ public class ItemTester {
         //test item object that's not equal to item with differing owner
 
         Item[] messageItems = { new Item("iPhone7", 140.99, "Portland", "image1.jpg", owner),
-            new Item("Galaxy Phone", 199.99, "Miami", "image2.jpg", owner)}; //test list of Item objects for User objects
+            new Item("Galaxy Phone", 199.99, "Miami", "image2.jpg", owner)}; 
+        //test list of Item objects for User objects
         User sender = new User("Vincent", 54.65, "vhollow", "etefev443"); //test User object for Message object
         User receiver = new User("NotVincent", 64.65, "novince", "teertk43j"); //test User object for Message object
         Message message = new Message("Can I buy your phone?", 1756,
