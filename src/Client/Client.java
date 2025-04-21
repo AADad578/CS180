@@ -30,6 +30,12 @@ public class Client implements ClientInterface {
     private int port;
     private volatile String currentUsername;
 
+    /**
+     * Connects to the server using the specified address and port.
+     * @param address the server address
+     * @param port the port number to connect to
+     * @throws IOException if connection fails
+     */
     @Override
     public void connectToServer(String address, int port) throws IOException {
         synchronized (this) {
@@ -42,6 +48,9 @@ public class Client implements ClientInterface {
         }
     }
 
+    /**
+     * Disconnects from the server and closes all resources.
+     */
     @Override
     public void disconnectFromServer() {
         synchronized (this) {
@@ -57,6 +66,11 @@ public class Client implements ClientInterface {
         }
     }
 
+    /**
+     * Sends a request object to the server.
+     * @param request the request to send
+     * @throws IOException if sending fails
+     */
     @Override
     public void sendRequest(Object request) throws IOException {
         if (!connected) throw new IOException("Not connected to server.");
@@ -66,6 +80,12 @@ public class Client implements ClientInterface {
         }
     }
 
+    /**
+     * Receives and processes the server's response.
+     * @return the response Request object
+     * @throws IOException if receiving fails
+     * @throws ServerResponseException if server returns an error action
+     */
     @Override
     public Request receiveResponse() throws IOException, ServerResponseException {
         if (!connected) throw new IOException("Not connected to server.");
@@ -83,30 +103,60 @@ public class Client implements ClientInterface {
         return response;
     }
 
+    /**
+     * Sends a request to create a new user on the server.
+     * @param user the user to create
+     * @throws IOException if sending fails
+     * @throws ServerResponseException if server returns an error
+     */
     @Override
     public void createNewUser(User user) throws IOException, ServerResponseException {
         sendRequest(new Request("CreateNewUser", user));
         receiveResponse();
     }
 
+    /**
+     * Sends a request to create a new item on the server.
+     * @param item the item to create
+     * @throws IOException if sending fails
+     * @throws ServerResponseException if server returns an error
+     */
     @Override
     public void createNewItem(Item item) throws IOException, ServerResponseException {
         sendRequest(new Request("CreateNewItem", item));
         receiveResponse();
     }
 
+    /**
+     * Sends a request to create a new chat on the server.
+     * @param chat the chat to create
+     * @throws IOException if sending fails
+     * @throws ServerResponseException if server returns an error
+     */
     @Override
     public void createNewChat(Chat chat) throws IOException, ServerResponseException {
         sendRequest(new Request("CreateNewChat", chat));
         receiveResponse();
     }
 
+    /**
+     * Sends a message in a chat to the server.
+     * @param message the message to send
+     * @throws IOException if sending fails
+     * @throws ServerResponseException if server returns an error
+     */
     @Override
     public void addMessage(Message message) throws IOException, ServerResponseException {
         sendRequest(new Request("AddMessage", message));
         receiveResponse();
     }
 
+    /**
+     * Attempts to log in a user by sending credentials to the server.
+     * @param user the user to log in
+     * @throws IOException if sending fails
+     * @throws ServerResponseException if login fails
+     */
     @Override
     public void logInUser(User user) throws IOException, ServerResponseException {
         sendRequest(new Request("LogInUser", user));
@@ -114,6 +164,12 @@ public class Client implements ClientInterface {
         this.currentUsername = user.getUserName();
     }
 
+    /**
+     * Retrieves the list of users from the server.
+     * @return an array of User objects
+     * @throws IOException if sending or receiving fails
+     * @throws ServerResponseException if server returns an error or payload mismatch
+     */
     @Override
     public User[] getUsers() throws IOException, ServerResponseException {
         sendRequest(new Request("GetUsers", null));
@@ -125,6 +181,13 @@ public class Client implements ClientInterface {
         }
     }
 
+    /**
+     * Retrieves all chats associated with a given user.
+     * @param user the user whose chats to fetch
+     * @return an array of Chat objects
+     * @throws IOException if sending or receiving fails
+     * @throws ServerResponseException if server returns an error or payload mismatch
+     */
     @Override
     public Chat[] getChats(User user) throws IOException, ServerResponseException {
         sendRequest(new Request("GetChats", user));
@@ -136,6 +199,13 @@ public class Client implements ClientInterface {
         }
     }
 
+    /**
+     * Searches for items matching the given term.
+     * @param term the search keyword
+     * @return an array of matching Item objects
+     * @throws IOException if sending or receiving fails
+     * @throws ServerResponseException if server returns an error or payload mismatch
+     */
     @Override
     public Item[] searchItems(String term) throws IOException, ServerResponseException {
         sendRequest(new Request("SearchItems", term));
@@ -147,17 +217,31 @@ public class Client implements ClientInterface {
         }
     }
 
+    /**
+     * Updates a user's data on the server.
+     * @param user the updated user data
+     * @throws IOException if sending fails
+     * @throws ServerResponseException if update fails
+     */
     @Override
     public void updateUser(User user) throws IOException, ServerResponseException {
         sendRequest(new Request("UpdateUser", user));
         receiveResponse();
     }
 
+    /**
+     * Returns true if the client is connected to the server.
+     * @return true if connected, false otherwise
+     */
     @Override
     public boolean isConnected() {
         return this.connected;
     }
 
+    /**
+     * Returns the username of the currently logged-in user.
+     * @return the current username
+     */
     public String getCurrentUsername() {
         return currentUsername;
     }

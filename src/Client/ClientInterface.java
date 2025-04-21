@@ -7,6 +7,14 @@ import User.User;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * ClientInterface:
+ *
+ * The framework for creating the Client class, and defines which functionalities must exist in a client class
+ *
+ * @version 4/18/2025
+ * Author: Karthik Nandagiri
+ */
 public interface ClientInterface {
 
     /**
