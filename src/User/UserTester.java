@@ -2,7 +2,6 @@ package User;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import Item.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
