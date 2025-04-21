@@ -16,7 +16,7 @@ import java.awt.event.*;
 
 //FOR PHASE 2: ONLY LAYOUT OF GUI HAS BEEN CREATED, REST TO BE IMPLEMENTED IN PHASE 3
 
-public class GUI implements Runnable, GUI_Interface {
+public class GUI implements Runnable, GUIInterface {
     private JFrame frame; //frame of GUI
 
     private JButton loginButton; //login button on welcome screen
@@ -143,7 +143,7 @@ public class GUI implements Runnable, GUI_Interface {
         content.setLayout(new BorderLayout());
 
         JPanel panel = new JPanel(); //panel
-        panel.setLayout(new GridLayout(0,1));
+        panel.setLayout(new GridLayout(0, 1));
 
         JTextField balanceField = new JTextField(10); //field for enter balance
         //show current balance
@@ -176,7 +176,7 @@ public class GUI implements Runnable, GUI_Interface {
         content.setLayout(new BorderLayout());
 
         JPanel panel = new JPanel(); //panel
-        panel.setLayout(new GridLayout(3,0));
+        panel.setLayout(new GridLayout(3, 0));
 
         addItemButton = new JButton("Add Item");
         panel.add(addItemButton);
@@ -212,7 +212,7 @@ public class GUI implements Runnable, GUI_Interface {
         content.setLayout(new BorderLayout());
 
         JPanel panel = new JPanel(); //panel
-        panel.setLayout(new GridLayout(3,0));
+        panel.setLayout(new GridLayout(3, 0));
 
         createChatButton = new JButton("Create Chat");
         panel.add(createChatButton);
@@ -280,7 +280,7 @@ public class GUI implements Runnable, GUI_Interface {
         content.add(topPanel, BorderLayout.NORTH);
 
         JPanel panel = new JPanel(); //panel
-        panel.setLayout(new GridLayout(4,0));
+        panel.setLayout(new GridLayout(4, 0));
 
         chatButton = new JButton("Chat");
         panel.add(chatButton);

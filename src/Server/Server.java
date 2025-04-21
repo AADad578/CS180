@@ -220,14 +220,13 @@ public class Server extends Thread implements ServerInterface {
      */
     @Override
     public void saveDatabase() {
-         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("database.db"))) {
-             oos.writeObject(db);
-             oos.flush();
-             oos.close();
-         } catch (IOException e) {
-             e.printStackTrace();
-         }
-        System.out.println("saved");
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("database.db"))) {
+            oos.writeObject(db);
+            oos.flush();
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -323,7 +322,7 @@ public class Server extends Thread implements ServerInterface {
     @Override
     public void logIn (User user) throws InvalidInputException {
         User[] allUsers;
-        synchronized (DB_USER_GUARD) {
+        synchronized(DB_USER_GUARD) {
             allUsers = db.getUsers();
         }
         for (User u : allUsers) {
@@ -351,7 +350,7 @@ public class Server extends Thread implements ServerInterface {
         }
         ArrayList<Chat> out = new ArrayList<>();
         for (Chat c : allChats) {
-            if(c.getUsers()[0].equals(user) || c.getUsers()[1].equals(user)) {
+            if (c.getUsers()[0].equals(user) || c.getUsers()[1].equals(user)) {
                 out.add(c);
             }
         }

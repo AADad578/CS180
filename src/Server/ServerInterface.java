@@ -91,7 +91,7 @@ public interface ServerInterface {
      * @param user the user object that contains the username and password
      * @throws InvalidInputException if password is wrong or username is not found.
      */
-    public void logIn (User user) throws InvalidInputException;
+    public void logIn(User user) throws InvalidInputException;
 
     /**
      * Gets the chat between two users

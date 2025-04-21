@@ -137,19 +137,20 @@ public class ItemTester {
      */
     @Test
     public void testEquals() {
-        Item item2 = new Item("iPhone8", 340.99, "Chicago", "itemImage.jpg", owner);
-                                                                        //test item object that's equal to item
+        Item item2 = new Item("iPhone8", 340.99, "Chicago", "itemImage.jpg", owner); 
+        //test item object that's equal to item
         Item item3 = new Item("iPhone8", 340.98, "Chicago", "itemImage.jpg", owner);
-                                                                //test item object that's not equal to item with differing price
+        //test item object that's not equal to item with differing price
         Item item4 = new Item("iPhone8", 340.99, "New York", "itemImage.jpg", owner);
-                                            //test item object that's not equal to item with differing location
+        //test item object that's not equal to item with differing location
         Item item5 = new Item("NotIPhone8", 340.99, "Chicago", "itemImage.jpg", owner);
-                                                        //test item object that's not equal to item with differing name
+        //test item object that's not equal to item with differing name
         Item item6 =  new Item("iPhone8", 340.99, "Chicago", "newItemImage.jpg", owner);
-                                        //test item object that's not equal to item with differing picture file name 
-        User newOwner = new User("Radny", 53.65, "ranllow", "ejdfijdfoijf");    //new owner User object
+        //test item object that's not equal to item with differing picture file name 
+        User newOwner = new User("Radny", 53.65, "ranllow", "ejdfijdfoijf");
+        //new owner User object
         Item item7 =  new Item("iPhone8", 340.99, "Chicago", "newItemImage.jpg", newOwner);
-                                //test item object that's not equal to item with differing owner                                                                
+        //test item object that's not equal to item with differing owner                                                                
 
         Item[] messageItems = {
                 new Item("iPhone7", 140.99, "Portland", "image1.jpg", owner),

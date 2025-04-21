@@ -10,7 +10,7 @@ package GUI;
  * @version April 20, 2025
  *
  */
-public interface GUI_Interface {
+public interface GUIInterface {
     // Method to display the welcome screen
     void welcome();
 

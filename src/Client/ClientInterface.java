@@ -13,7 +13,7 @@ import java.util.List;
  * The framework for creating the Client class, and defines which functionalities must exist in a client class
  *
  * @version 4/18/2025
- * Author: Karthik Nandagiri
+ * @author Karthik Nandagiri
  */
 public interface ClientInterface {
 

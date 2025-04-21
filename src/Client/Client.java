@@ -27,7 +27,6 @@ public class Client implements ClientInterface {
     private final Object ioLock = new Object();
     private volatile boolean connected;
     private String host;
-    private int port;
     private volatile String currentUsername;
 
     /**
@@ -40,7 +39,6 @@ public class Client implements ClientInterface {
     public void connectToServer(String address, int port) throws IOException {
         synchronized (this) {
             this.host = address;
-            this.port = port;
             this.socket = new Socket(host, port);
             this.out = new ObjectOutputStream(socket.getOutputStream());
             this.in = new ObjectInputStream(socket.getInputStream());
@@ -93,7 +91,7 @@ public class Client implements ClientInterface {
         synchronized (ioLock) {
             try {
                 response = (Request) in.readObject();
-                if (response.getAction() == "Error") {
+                if (response.getAction().equals("Error")) {
                     throw new ServerResponseException((String) response.getPayload());
                 }
             } catch (ClassCastException | ClassNotFoundException e) {
