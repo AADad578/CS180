@@ -20,12 +20,8 @@ public class ItemTester {
      */
     @Before
     public void setUp() {
-        Item[] items = new Item[2]; 
-        owner = new User("Billy", 24.65, items, "bfollow", "etgfrv493");
-                                //test owner User object
-        items[0] = new Item("iPhone7", 140.99, "Portland", "image1.jpg", owner);
-        items[1] = new Item("Galaxy Phone", 199.99, "Miami", "image2.jpg", owner); 
-                                    //test list of items for User object    
+        owner = new User("Billy", 24.65, "bfollow", "etgfrv493");
+                                //test owner User object 
         item = new Item("iPhone8", 340.99, "Chicago", "itemImage.jpg", owner);
                             //test item object
     }
@@ -140,16 +136,12 @@ public class ItemTester {
                                                         //test item object that's not equal to item with differing name
         Item item6 =  new Item("iPhone8", 340.99, "Chicago", "newItemImage.jpg", owner);
                                         //test item object that's not equal to item with differing picture file name 
-        User newOwner = new User("Radny", 53.65, items, "ranllow", "ejdfijdfoijf");    //new owner User object                           
+        User newOwner = new User("Radny", 53.65, "ranllow", "ejdfijdfoijf");    //new owner User object                           
         Item item7 =  new Item("iPhone8", 340.99, "Chicago", "newItemImage.jpg", newOwner);
                                 //test item object that's not equal to item with differing owner                                                                
 
-        Item[] messageItems = {
-                new Item("iPhone7", 140.99, "Portland", "image1.jpg", owner),
-                new Item("Galaxy Phone", 199.99, "Miami", "image2.jpg", owner),
-        }; //test list of Item objects for User objects
-        User sender = new User("Vincent", 54.65, messageItems, "vhollow", "etefev443"); //test User object for Message object
-        User receiver = new User("NotVincent", 64.65, messageItems, "novince", "teertk43j"); //test User object for Message object
+        User sender = new User("Vincent", 54.65, "vhollow", "etefev443"); //test User object for Message object
+        User receiver = new User("NotVincent", 64.65, "novince", "teertk43j"); //test User object for Message object
         Message message = new Message("Can I buy your phone?", 1756,
                 sender, receiver); //test Message object
 

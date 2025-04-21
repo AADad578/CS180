@@ -11,7 +11,6 @@ import org.junit.*;
  *
  */
 public class MessageTester {
-    private Item[] items; //test list of items for User objects
     private User owner; //test owner User object
     private User sender; //test User object for Message object
     private User receiver; //test User object for the Message object
@@ -22,14 +21,10 @@ public class MessageTester {
      */
     @Before
     public void setUp() {
-        items = new Item[2]; 
-        owner = new User("Billy", 24.65, items, "bfollow", "etgfrv493");
-                                //test owner User object
-        items[0] = new Item("iPhone7", 140.99, "Portland", "image1.jpg", owner);
-        items[1] = new Item("Galaxy Phone", 199.99, "Miami", "image2.jpg", owner); 
-                                //test list of items for User object     
-        sender = new User("Vincent", 54.65, items, "vhollow", "etefev443"); //test User object for Message object
-        receiver = new User("NotVincent", 64.65, items, "novince", "teertk43j");  //test User object for the Message object
+        owner = new User("Billy", 24.65, "bfollow", "etgfrv493");
+                                //test owner User object   
+        sender = new User("Vincent", 54.65, "vhollow", "etefev443"); //test User object for Message object
+        receiver = new User("NotVincent", 64.65, "novince", "teertk43j");  //test User object for the Message object
         message = new Message("Can I buy your phone?", 1756,
                 sender, receiver); //test Message object
     }
@@ -57,16 +52,16 @@ public class MessageTester {
         Message message4 = new Message("Can I buy your phone?", 1356,
                 sender, receiver);
                     //test message object that's not equal to message due to differing time sent
-        User newSender = new User("Billy", 54.65, items, "billest", "eteffdgev443");
+        User newSender = new User("Billy", 54.65, "billest", "eteffdgev443");
                         //differing test sender
-        User newReceiver = new User("NotBilly", 64.65, items, "nonobilly", "teggrtk43j");
+        User newReceiver = new User("NotBilly", 64.65, "nonobilly", "teggrtk43j");
                         //differing test receiver
         Message message5 = new Message("Can I buy your phone?", 1756,
                 newSender, receiver);
-            //test message object that's not equal to message due to differing receiver
+            //test message object that's not equal to message due to differing sender
         Message message6 = new Message("Can I buy your phone?", 1756,
                 sender, newReceiver);
-            //test message object that's not equal to message due to differing sender
+            //test message object that's not equal to message due to differing receiver
 
         Item item = new Item("iPhone8", 340.99, "Chicago", "image.jpg", owner);
                     //test Item object
@@ -98,9 +93,9 @@ public class MessageTester {
     public void testSetters() {
         message.setMessageContent("Can I not buy anything?");
         message.setTimeSent(1845);
-        sender = new User("Bob", 24.65, items, "bobbytheman", "12345ok"); //new test sender
+        sender = new User("Bob", 24.65, "bobbytheman", "12345ok"); //new test sender
         message.setSender(sender);
-        receiver = new User("NotBob", 44.65, items, "notbobtheguy", "54311ok"); //new test receiver
+        receiver = new User("NotBob", 44.65, "notbobtheguy", "54311ok"); //new test receiver
         message.setReceiver(receiver);
 
         assertEquals("Error in setMessageContent()", "Can I not buy anything?",
