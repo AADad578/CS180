@@ -17,7 +17,7 @@ import Server.Request;
  * Thread-safe. Throws ServerResponseException when server returns errors.
  *
  * @version 4/18/2025
- * Author: Karthik Nandagiri
+ * @author Karthik Nandagiri
  */
 public class Client implements ClientInterface {
 

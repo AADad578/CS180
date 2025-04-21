@@ -22,7 +22,7 @@ import User.User;
  * This class handles the server side of the project. It will connect to clients
  * and make changes to the database.
  *
- * @version 4/6/2025
+ * @version 4/20/2025
  *
  * @author Ankur Raghavan
  */
@@ -320,9 +320,9 @@ public class Server extends Thread implements ServerInterface {
      * @throws InvalidInputException if password is wrong or username is not found.
      */
     @Override
-    public void logIn (User user) throws InvalidInputException {
+    public void logIn(User user) throws InvalidInputException {
         User[] allUsers;
-        synchronized(DB_USER_GUARD) {
+        synchronized (DB_USER_GUARD) {
             allUsers = db.getUsers();
         }
         for (User u : allUsers) {
