@@ -26,8 +26,7 @@ public interface GUI_Interface {
     // Method to display the user profile screen
     void user();
 
-    // Method to display the balance screen
-    void balance();
+    void updateUser();
 
     // Method to display the item management screen
     void item();
@@ -35,6 +34,14 @@ public interface GUI_Interface {
     // Method to display the chat screen
     void chat();
 
+    void createChat();
+
+    void viewChats();
+
+    void addMessage();
+
     // Method to display the item search screen
     void search();
+
+    void exitGUI();
 }
