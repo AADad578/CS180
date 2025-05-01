@@ -226,6 +226,8 @@ public class Server extends Thread implements ServerInterface {
             oos.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (VerifyError e) {
+            e.printStackTrace();
         }
     }
 
@@ -508,6 +510,21 @@ public class Server extends Thread implements ServerInterface {
                     }
                     try {
                         updateUser(user);
+                    } catch (InvalidInputException e) {
+                        oos.writeObject(new Request("ERROR", e.getMessage()));
+                        continue;
+                    }
+                    oos.writeObject(new Request("OK", null));
+                } else if (action.equals("RemoveItem")) {
+                    Item item;
+                    try {
+                        item = (Item) input.getPayload();
+                    } catch (ClassCastException e) {
+                        oos.writeObject(new Request("ERROR", "Payload Not an Item"));
+                        continue;
+                    }
+                    try {
+                        removeItem(item);
                     } catch (InvalidInputException e) {
                         oos.writeObject(new Request("ERROR", e.getMessage()));
                         continue;
