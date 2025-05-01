@@ -24,7 +24,7 @@ import Item.Item;
  * 
  * Tests the Server class
  * 
- * @version 4/6/2025
+ * @version 4/20/2025
  * 
  * @author Ankur Raghavan
  */
@@ -360,7 +360,7 @@ public class ServerTester {
     @Test
     void testUpdateUser() {
         User[] users2 = { new User("test1", 1, "t1", "TEST1"),
-                new User("test2", 5, "t2", "TEST2") };
+            new User("test2", 5, "t2", "TEST2") };
         User invalid = new User("test3", 3, "t3", "TEST3");
         try {
             server.updateUser(users2[1]);

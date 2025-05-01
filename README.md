@@ -3,10 +3,11 @@
 ## How to compile and run the project
 
 Use intelliJ to run this program. The server side can be run from the Server.java class in the Server package. The client will be able to be run from the Client.java class in the Client package. The server will automatically launch more instances with Sockets open on threads when a client connects. Client should be launched once per client.
-To run unit tests, it is required to have both Junit 4 and 5. It is garunteed to work on the default installation of IntelliJ, which is the recommended way to run this code.
+To run unit tests, it is required to have both Junit 4 and 5. It is guaranteed to work on the default installation of IntelliJ, which is the recommended way to run this code.
 
 ## Submission Log
 
+Ankur Raghavan - Submitted Project Phase 1 to Vocareum
 Ankur Raghavan - Submitted Project Phase 2 to Vocareum 
 
 ## Detailed description of each class
@@ -41,7 +42,7 @@ This testing class tests every method in the Database class. It tests the getter
 
 ## Server Class - Ankur Raghavan
 
-This class has 4 static variables and 2 instance variables. The static variables include a Database object and 3 guards for it. One for each section: Users, Chats, and Items. These are used by the synchronized methods to ensure that multithreading doesn't corrupt the database, while allowing multiple things to happen simultaneously. The instance variables are the serverSocket that is being used by this object and whether it has a client attached. The ServerSocket is used to communicate with the client, while the boolean is used to automatically generate more servers when more clients connect. The methods in this class are adding or removing a Chat, Item, or User. When adding, it is not allowed to have identical objects in the list, so if given that, it will throw a InvalidInputException. When removing, if no match is found, it will throw an InvalidInputException. In addition to those methods, there are methods for saving and recalling the database from a file. the database is saved to file after every operation on the database. This method does not require synchronization because it is a read only operation and occurs after every operation. recallDatabase is only called on startup of the Server main method, so it is static and doesn't require synchronization. If the file containing the database doesn't exist, it will generate a new database. Finally there is a method to search through the list of items and return any that match the search parameters.
+This class has 4 static variables and 1 instance variable. The static variables include a Database object and 3 guards for it. One for each section: Users, Chats, and Items. These are used by the synchronized methods to ensure that multithreading doesn't corrupt the database, while allowing multiple things to happen simultaneously. The instance variable is the socket that is being used by this object. The Socket is used to communicate with the client. The methods in this class are adding or removing a Chat, Item, or User. When adding, it is not allowed to have identical objects in the list, so if given that, it will throw a InvalidInputException. When removing, if no match is found, it will throw an InvalidInputException. In addition to those methods, there are methods for saving and recalling the database from a file. the database is saved to file after every operation on the database. This method does not require synchronization because it is a read only operation and occurs after every operation. recallDatabase is only called on startup of the Server main method, so it is static and doesn't require synchronization. If the file containing the database doesn't exist, it will generate a new database. Finally there are some more methods including one to search through the list of items and return any that match the search parameters, one to update users, one to addMessages to a chat, and one to all chats a user is in and the one chat between two users.
 
 ## ServerTester Class - Ankur Raghavan
 
@@ -55,10 +56,67 @@ This exception class is used to signify to the server that the input given by th
 
 This testing class tests the creation of the InvalidInputException with a message
 
+## Request - Ankur Raghavan
+
+This class is used to send data between the Server and the Client. It contains a String that is the Action that must occur, and a Payload which is of a different type based off the action specified and the context
+
+Action:Payload
+- Return:Payload
+All actions may return: “ERROR:Failed to Transmit Data Correctly” if IOException or ClassNotFoundException is thrown on reading the object (ie. sending an object that the server can’t find)
+
+CreateNewUser:User
+- OK:null
+- ERROR:Payload Not a User
+- ERROR:Username already exists
+
+CreateNewItem:Item
+- OK:null
+- ERROR:Payload Not an Item
+- ERROR:Item already exists
+
+CreateNewChat:Chat
+- OK:null
+- ERROR:Payload Not an Chat
+- ERROR:Chat already exists
+
+AddMessage:Message
+- OK:null
+- ERROR:Payload Not a Message
+- ERROR:Users have same username
+- ERROR:Sender is not a participant in this chat.
+- ERROR:Receiver is not a participant in this chat.
+
+GetUsers:null
+- RESPONSE:User[]
+
+GetChats:User
+- ERROR:Payload Not a User
+- RESPONSE:Chat[]
+
+SearchItems:String (the search term)
+- ERROR:Payload Not a String
+- RESPONSE:Item[]
+
+LogInUser:User
+- OK:null
+- ERROR:Payload Not a User
+- ERROR:Invalid Password
+- ERROR:Invalid Username
+
+UpdateUser:User
+- OK:null
+- ERROR:Payload Not a User
+- ERROR:Invalid Username
+
+## RequestTester - Ankur Raghavan
+
+This testing class tests the Request class's ability to store both actions and payloads, and the getters associated with that
+
+
 ### User - Karthik Nandagiri
 
 **Description**  
-The `User` class represents a user entity in the marketplace system. It encapsulates user-specific information such as name, balance, username, password, and associated items.  
+The `User` class represents a user entity in the marketplace system. It encapsulates user-specific information such as name, balance, username, and password.  
 It provides mechanisms for identity management, authentication, and data persistence via the `Serializable` interface.  
 The class adheres to the `UserInterface` contract, ensuring standardized access to user data.
 
@@ -102,24 +160,40 @@ It ensures correctness of all core functionalities such as getters, setters, ser
 ### ClientInterface - Karthik Nandagiri
 
 **Description**  
-The `ClientInterface` specifies operations that a client-side class must support to interact with the marketplace system.  
-This includes network communication, session handling, and synchronization with server-side data such as chats and items.
+Defines the core functionalities required for a client to communicate with a marketplace server using object-based requests. This interface ensures consistency and testability of different client implementations.
 
 **Key Responsibilities**
-- Establish and terminate server connections.
-- Perform login authentication.
-- Receive chats and item listings from the server.
-
-> 🛠 This interface is a stub for Phase 2 implementation.
+- Specify how clients connect to/disconnect from the server.
+- Define how requests are sent and responses are received.
+- Provide method contracts for all user, item, chat, and message-related actions.
+- Ensure the client supports login, update, search, and data retrieval operations.
 
 ---
 
-### ClientTester - Karthik Nandagiri
+### Client - Karthik Nandagiri
 
 **Description**  
-Placeholder class for testing the future `Client` implementation.
+Implements the `ClientInterface` using Java sockets and object streams. All client-server communication is encapsulated in `Request` objects. Ensures thread safety and error propagation via structured exception handling.
 
-> 🛠 To be implemented in **Phase 2**.
+**Key Responsibilities**
+- Handle connection lifecycle with the server (`connect`, `disconnect`).
+- Manage synchronized input/output using `ObjectInputStream` and `ObjectOutputStream`.
+- Send structured `Request` objects and process `Request`-based responses.
+- Perform user authentication, data creation, and querying actions.
+- Maintain internal state for the connected user.
+
+---
+
+### ServerResponseException - Karthik Nandagiri
+
+**Description**  
+Custom exception class thrown when the server returns an error in response to a client request. It encapsulates the error message and enables uniform handling of server-side issues.
+
+**Key Responsibilities**
+- Represent server error responses in client logic.
+- Improve debuggability and control flow during request handling.
+- Integrate seamlessly with client-side exception handling logic.
+
 
 ---
 

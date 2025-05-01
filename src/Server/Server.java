@@ -22,7 +22,7 @@ import User.User;
  * This class handles the server side of the project. It will connect to clients
  * and make changes to the database.
  *
- * @version 4/6/2025
+ * @version 4/20/2025
  *
  * @author Ankur Raghavan
  */
@@ -31,8 +31,7 @@ public class Server extends Thread implements ServerInterface {
     private static final Object DB_USER_GUARD = new Object();
     private static final Object DB_CHAT_GUARD = new Object();
     private static final Object DB_ITEM_GUARD = new Object();
-    private Socket socket;
-    public boolean hasClient;
+    private final Socket socket;
 
     /**
      * adds a user to the database and saves it
@@ -221,14 +220,13 @@ public class Server extends Thread implements ServerInterface {
      */
     @Override
     public void saveDatabase() {
-         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("database.db"))) {
-             oos.writeObject(db);
-             oos.flush();
-             oos.close();
-         } catch (IOException e) {
-             e.printStackTrace();
-         }
-        System.out.println("saved");
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("database.db"))) {
+            oos.writeObject(db);
+            oos.flush();
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -322,7 +320,7 @@ public class Server extends Thread implements ServerInterface {
      * @throws InvalidInputException if password is wrong or username is not found.
      */
     @Override
-    public void logIn (User user) throws InvalidInputException {
+    public void logIn(User user) throws InvalidInputException {
         User[] allUsers;
         synchronized (DB_USER_GUARD) {
             allUsers = db.getUsers();
@@ -352,7 +350,7 @@ public class Server extends Thread implements ServerInterface {
         }
         ArrayList<Chat> out = new ArrayList<>();
         for (Chat c : allChats) {
-            if(c.getUsers()[0].equals(user) || c.getUsers()[1].equals(user)) {
+            if (c.getUsers()[0].equals(user) || c.getUsers()[1].equals(user)) {
                 out.add(c);
             }
         }
@@ -376,7 +374,7 @@ public class Server extends Thread implements ServerInterface {
                     return;
                 }
             }
-            throw new InvalidInputException("No user found");
+            throw new InvalidInputException("Invalid Username");
         }
     }
 

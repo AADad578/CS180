@@ -23,7 +23,7 @@ import User.User;
  *
  */
 
-public class GUI implements Runnable, GUI_Interface {
+public class GUI implements Runnable, GUIInterface {
     private JFrame frame; //frame of GUI
 
     private JButton loginButton; //login button on welcome screen

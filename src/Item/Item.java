@@ -166,9 +166,11 @@ public class Item implements ItemInterface, Serializable {
     public boolean equals(Object o) {
         if (o instanceof Item) {
             Item item = (Item) o; //object o is cast as a Item object
-            return this.itemName.equals(item.getItemName()) && Math.abs(this.itemPrice - item.getItemPrice()) < EPSILON &&
-                    this.itemLocation.equals(item.getItemLocation()) && this.itemPictureFileName.equals(item.getItemPictureFileName())
-                    && this.itemOwner.equals(item.getItemOwner());
+            return this.itemName.equals(item.getItemName()) 
+                && Math.abs(this.itemPrice - item.getItemPrice()) < EPSILON 
+                && this.itemLocation.equals(item.getItemLocation()) 
+                && this.itemPictureFileName.equals(item.getItemPictureFileName())
+                && this.itemOwner.equals(item.getItemOwner());
         }
         return false;
     }
