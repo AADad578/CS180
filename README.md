@@ -108,6 +108,11 @@ UpdateUser:User
 - ERROR:Payload Not a User
 - ERROR:Invalid Username
 
+RemoveItem:Item
+- OK:null
+- ERROR:Payload Not an Item
+- ERROR:Selected Item not found
+
 ## RequestTester - Ankur Raghavan
 
 This testing class tests the Request class's ability to store both actions and payloads, and the getters associated with that
