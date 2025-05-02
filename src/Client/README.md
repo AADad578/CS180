@@ -28,22 +28,23 @@ The `ClientInterface` defines the contract that any `Client` class must implemen
 
 ### Methods
 
-| Method Signature | Description |
-|------------------|-------------|
+| Method Signature                                 | Description |
+|--------------------------------------------------|-------------|
 | `void connectToServer(String address, int port)` | Establishes a connection to the server using the given address and port. |
-| `void disconnectFromServer()` | Gracefully disconnects from the server and closes resources. |
-| `void sendRequest(Object request)` | Sends a serialized request object to the server. |
-| `Object receiveResponse()` | Receives a response object from the server and handles errors. |
-| `void createNewUser(User user)` | Sends a request to create a new user in the system. |
-| `void createNewItem(Item item)` | Sends a request to add a new item to the system. |
-| `void createNewChat(Chat chat)` | Sends a request to create a new chat between users. |
-| `void addMessage(Message message)` | Sends a message to an existing chat. |
-| `void logInUser(User user)` | Logs in a user with their credentials. |
-| `User[] getUsers()` | Retrieves a list of all users in the system. |
-| `Chat[] getChats(User user)` | Retrieves all chats associated with a given user. |
-| `Item[] searchItems(String term)` | Searches for items by a keyword. |
-| `void updateUser(User user)` | Sends a request to update an existing user’s data. |
-| `boolean isConnected()` | Checks if the client is currently connected to the server. |
+| `void disconnectFromServer()`                    | Gracefully disconnects from the server and closes resources. |
+| `void sendRequest(Object request)`               | Sends a serialized request object to the server. |
+| `Object receiveResponse()`                       | Receives a response object from the server and handles errors. |
+| `void createNewUser(User user)`                  | Sends a request to create a new user in the system. |
+| `void createNewItem(Item item)`                  | Sends a request to add a new item to the system. |
+| `void createNewChat(Chat chat)`                  | Sends a request to create a new chat between users. |
+| `void addMessage(Message message)`               | Sends a message to an existing chat. |
+| `void logInUser(User user)`                      | Logs in a user with their credentials. |
+| `User[] getUsers()`                              | Retrieves a list of all users in the system. |
+| `Chat[] getChats(User user)`                     | Retrieves all chats associated with a given user. |
+| `Item[] searchItems(String term)`                | Searches for items by a keyword. |
+| `void updateUser(User user)`                     | Sends a request to update an existing user’s data. |
+| `void removeItem(Item item)`                     | Sends a request to remove an item from the server. |
+| `boolean isConnected()`                          | Checks if the client is currently connected to the server. |
 
 ---
 
@@ -76,6 +77,7 @@ The `Client` class implements `ClientInterface` and handles the actual network c
 | `Chat[] getChats(User user)` | Sends a `GetChats` request and returns associated chats. |
 | `Item[] searchItems(String term)` | Sends a `SearchItems` request and returns search results. |
 | `void updateUser(User user)` | Sends an `UpdateUser` request to update the user’s state. |
+| `void removeItem(Item item)` | Sends a `RemoveItem` request to remove an item from the server.|
 | `boolean isConnected()` | Returns whether the client is currently connected to the server. |
 | `String getCurrentUsername()` | Returns the current username of the logged-in user. |
 

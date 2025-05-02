@@ -91,7 +91,7 @@ public class Client implements ClientInterface {
         synchronized (ioLock) {
             try {
                 response = (Request) in.readObject();
-                if (response.getAction().equals("Error")) {
+                if (response.getAction().equals("ERROR")) {
                     throw new ServerResponseException((String) response.getPayload());
                 }
             } catch (ClassCastException | ClassNotFoundException e) {
@@ -226,6 +226,20 @@ public class Client implements ClientInterface {
         sendRequest(new Request("UpdateUser", user));
         receiveResponse();
     }
+
+    /**
+     * Sends a request to remove an item from the server.
+     *
+     * @param item the item to be removed
+     * @throws IOException if sending fails or the connection is broken
+     * @throws ServerResponseException if the server responds with an error
+     */
+    @Override
+    public void removeItem(Item item) throws IOException, ServerResponseException {
+        sendRequest(new Request("RemoveItem", item));
+        receiveResponse();
+    }
+
 
     /**
      * Returns true if the client is connected to the server.

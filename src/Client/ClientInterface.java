@@ -36,7 +36,7 @@ public interface ClientInterface {
     /**
      * Receives a response object from the server.
      * @throws IOException if the stream fails
-     * @throws ClassNotFoundException if the response object cannot be cast
+     * @throws ServerResponseException if the response object cannot be cast
      */
     Object receiveResponse() throws IOException, ServerResponseException;
 
@@ -73,25 +73,37 @@ public interface ClientInterface {
     /**
      * Returns the current list of users in the system.
      *
-     * @return list of users
+     * @return array of users
      */
     User[] getUsers() throws IOException, ServerResponseException;
 
     /**
      * Returns the list of chats a given user is part of.
      * @param user the user to find chats for
-     * @return list of Chat objects
+     * @return array of Chat objects
      */
     Chat[] getChats(User user) throws IOException, ServerResponseException;
 
     /**
      * Searches for items matching a term.
      * @param term string to search by
-     * @return list of matching Item objects
+     * @return array of matching Item objects
      */
     Item[] searchItems(String term) throws IOException, ServerResponseException;
 
+    /**
+     * Updates the user with the most relevant information
+     * @param user the user being modified
+     * @return array of matching Item objects
+     */
     void updateUser(User user) throws IOException, ServerResponseException;
+
+    /**
+     * Sends a request to remove an item from the server.
+     * @param item the item to be removed
+     */
+    void removeItem(Item item) throws IOException, ServerResponseException;
+
 
     /**
      * Returns true if the client is currently connected.
