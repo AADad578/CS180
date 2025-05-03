@@ -248,7 +248,7 @@ public class Client implements ClientInterface {
      * @throws ServerResponseException if the server responds with an error
      */
     public void removeUser(User user) throws IOException, ServerResponseException {
-        sendRequest(new Request("removeUser", user));
+        sendRequest(new Request("RemoveUser", user));
         receiveResponse();
     }
 

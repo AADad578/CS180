@@ -104,6 +104,14 @@ public interface ClientInterface {
      */
     void removeItem(Item item) throws IOException, ServerResponseException;
 
+    /**
+     * Sends a request to remove a user from the server.
+     *
+     * @param user the item to be removed
+     * @throws IOException if sending fails or the connection is broken
+     * @throws ServerResponseException if the server responds with an error
+     */
+    void removeUser(User user) throws IOException, ServerResponseException;
 
     /**
      * Returns true if the client is currently connected.

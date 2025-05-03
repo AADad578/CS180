@@ -76,9 +76,8 @@ public class Server extends Thread implements ServerInterface {
             for (int i = 0; i < currUsers.length; i++) {
                 if (searching && currUsers[i].equals(user)) {
                     searching = false;
-                    index--;
                     continue;
-                } else if (i + 1 == currUsers.length) {
+                } else if (searching && i + 1 == currUsers.length) {
                     // on the last item and didn't find a match
                     throw new InvalidInputException("Selected User not found");
                 }
