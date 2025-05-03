@@ -211,10 +211,6 @@ public class GUI implements Runnable, GUIInterface {
                         viewChatsEnterButton.addActionListener(actionListener);
                         userSendTo = item.getItemOwner();
 
-                        itemNameField.setText(item.getItemName());
-                        itemPriceField.setText(String.valueOf(item.getItemPrice()));
-                        itemLocationField.setText(item.getItemLocation());
-                        itemPictureFileNameField.setText(item.getItemPictureFileName());
                         sellItemButton = new JButton("Buy Item");
                         centerPanel.add(sellItemButton);
                         sellItemButton.addActionListener(actionListener);
@@ -245,32 +241,15 @@ public class GUI implements Runnable, GUIInterface {
             }
             if (e.getSource() == sellItemButton) {
                 try {
-                    String itemName = itemNameField.getText();
-                    double itemPrice = Double.parseDouble(itemPriceField.getText());              
-                    String itemLocation = itemLocationField.getText();
-                    String itemPictureFileName = itemPictureFileNameField.getText();
-                    itemList = client.searchItems(itemName);
-                    Item tempItem = new Item(itemName, itemPrice, itemLocation, itemPictureFileName, user);  
-                    boolean valid = false;
-                    for (Item item : itemList) {
-                        if (item.equals(tempItem)) {
-                            valid = true;
-                            break;
-                        }
-                    }      
-                    if (valid) {     
-                        if (itemPrice <= user.getBalance()) {
-                            client.removeItem(tempItem);           
-                            JOptionPane.showMessageDialog(null, "Item Successfully Bought!", 
+                    Item item = itemList[itemListIndex-1];      
+                    if (item.getItemPrice() <= user.getBalance()) {
+                    client.removeItem(item);           
+                    JOptionPane.showMessageDialog(null, "Item Successfully Bought!", 
                                                 "Item Bought", JOptionPane.PLAIN_MESSAGE); 
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Balance is too low!", 
-                            "Error", JOptionPane.ERROR_MESSAGE); 
-                        }                     
                     } else {
-                        JOptionPane.showMessageDialog(null, "Item Doesn't Exist", 
-                                                "Error", JOptionPane.ERROR_MESSAGE); 
-                    }                
+                        JOptionPane.showMessageDialog(null, "Balance is too low!", 
+                        "Error", JOptionPane.ERROR_MESSAGE); 
+                    }                                                      
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Unable To Buy Item", 
                                             "Error", JOptionPane.ERROR_MESSAGE);
@@ -598,6 +577,7 @@ public class GUI implements Runnable, GUIInterface {
         centerPanel.add(usernameLabel);
 
         usernameField = new JTextField(15);
+        usernameField.setText(user.getUserName());
         centerPanel.add(usernameField);
 
         JLabel passwordLabel = new JLabel("Password:");
@@ -605,6 +585,7 @@ public class GUI implements Runnable, GUIInterface {
         centerPanel.add(passwordLabel);
 
         passwordField = new JTextField(15);
+        passwordField.setText(user.getPassword());
         centerPanel.add(passwordField);
 
         JLabel nameLabel = new JLabel("Name:");
@@ -612,6 +593,7 @@ public class GUI implements Runnable, GUIInterface {
         centerPanel.add(nameLabel);
 
         nameField = new JTextField(15);
+        nameField.setText(user.getName());
         centerPanel.add(nameField);
 
         JLabel balanceLabel = new JLabel("Balance:");
@@ -619,6 +601,7 @@ public class GUI implements Runnable, GUIInterface {
         centerPanel.add(balanceLabel);
 
         balanceField = new JTextField(15);
+        balanceField.setText(String.valueOf(user.getBalance()));
         centerPanel.add(balanceField);     
 
         updateUserEnterButton = new JButton("Enter");
@@ -1001,10 +984,6 @@ public class GUI implements Runnable, GUIInterface {
                 viewChatsEnterButton.addActionListener(actionListener);
                 userSendTo = item.getItemOwner();
 
-                itemNameField.setText(item.getItemName());
-                itemPriceField.setText(String.valueOf(item.getItemPrice()));
-                itemLocationField.setText(item.getItemLocation());
-                itemPictureFileNameField.setText(item.getItemPictureFileName());
                 sellItemButton = new JButton("Buy Item");
                 centerPanel.add(sellItemButton);
                 sellItemButton.addActionListener(actionListener);
