@@ -211,6 +211,10 @@ public class GUI implements Runnable, GUIInterface {
                         viewChatsEnterButton.addActionListener(actionListener);
                         userSendTo = item.getItemOwner();
 
+                        itemNameField.setText(item.getItemName());
+                        itemPriceField.setText(String.valueOf(item.getItemPrice()));
+                        itemLocationField.setText(item.getItemLocation());
+                        itemPictureFileNameField.setText(item.getItemPictureFileName());
                         sellItemButton = new JButton("Buy Item");
                         centerPanel.add(sellItemButton);
                         sellItemButton.addActionListener(actionListener);
@@ -997,6 +1001,10 @@ public class GUI implements Runnable, GUIInterface {
                 viewChatsEnterButton.addActionListener(actionListener);
                 userSendTo = item.getItemOwner();
 
+                itemNameField.setText(item.getItemName());
+                itemPriceField.setText(String.valueOf(item.getItemPrice()));
+                itemLocationField.setText(item.getItemLocation());
+                itemPictureFileNameField.setText(item.getItemPictureFileName());
                 sellItemButton = new JButton("Buy Item");
                 centerPanel.add(sellItemButton);
                 sellItemButton.addActionListener(actionListener);
