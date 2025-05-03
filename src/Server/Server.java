@@ -530,7 +530,7 @@ public class Server extends Thread implements ServerInterface {
                         continue;
                     }
                     oos.writeObject(new Request("OK", null));
-                } else if (action.equals("removeUser")) {
+                } else if (action.equals("RemoveUser")) {
                     User user;
                     try {
                         user = (User) input.getPayload();

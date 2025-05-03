@@ -114,6 +114,11 @@ RemoveItem:Item
 - ERROR:Payload Not an Item
 - ERROR:Selected Item not found
 
+RemoveUser:User
+- OK:null
+- ERROR:Payload Not a User
+- ERROR:Selected User not found
+
 ## RequestTester - Ankur Raghavan
 
 This testing class tests the Request class's ability to store both actions and payloads, and the getters associated with that
