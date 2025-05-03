@@ -240,6 +240,18 @@ public class Client implements ClientInterface {
         receiveResponse();
     }
 
+    /**
+     * Sends a request to remove a user from the server.
+     *
+     * @param user the item to be removed
+     * @throws IOException if sending fails or the connection is broken
+     * @throws ServerResponseException if the server responds with an error
+     */
+    public void removeUser(User user) throws IOException, ServerResponseException {
+        sendRequest(new Request("removeUser", user));
+        receiveResponse();
+    }
+
 
     /**
      * Returns true if the client is connected to the server.
