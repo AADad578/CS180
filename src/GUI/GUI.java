@@ -159,7 +159,7 @@ public class GUI implements Runnable, GUIInterface {
                     frame.dispose();
                     GUI.this.search();
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Unable To Search Item", 
+                    JOptionPane.showMessageDialog(null, "Unable To Search Item",
                                             "Error", JOptionPane.ERROR_MESSAGE);
                 }                 
             }
@@ -244,7 +244,11 @@ public class GUI implements Runnable, GUIInterface {
                     Item item = itemList[itemListIndex-1];      
                     if (item.getItemPrice() <= user.getBalance()) {
                         client.removeItem(item);    
-                        user.setBalance(user.getBalance() - item.getItemPrice());        
+                        user.setBalance(user.getBalance() - item.getItemPrice());
+                        client.updateUser(user);
+                        User itemOwner = item.getItemOwner();
+                        itemOwner.setBalance(itemOwner.getBalance() + item.getItemPrice());
+                        client.updateUser(itemOwner);
                         JOptionPane.showMessageDialog(null, "Item Successfully Bought!", 
                                                 "Item Bought", JOptionPane.PLAIN_MESSAGE); 
                     } else {
