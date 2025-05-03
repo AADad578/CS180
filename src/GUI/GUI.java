@@ -344,7 +344,7 @@ public class GUI implements Runnable, GUIInterface {
                     JPanel centerPanel = new JPanel(); //new JPanel Object for panel
                     centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS)); 
                     Chat chat = chatList[chatListIndex];
-                    messageList = client.getMessages(chat);
+                    messageList = chat.getMessages().toArray(messageList);
                     messageListIndex = 0;
         
                     if (messageList.length != 0) {
@@ -462,6 +462,7 @@ public class GUI implements Runnable, GUIInterface {
                     JOptionPane.showMessageDialog(null, "Item Successfully Created!", 
                                             "New Item", JOptionPane.PLAIN_MESSAGE);                  
                 } catch (Exception ex) {
+                    ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Unable To Create New Item", 
                                             "Error", JOptionPane.ERROR_MESSAGE);
                 }    
@@ -529,6 +530,7 @@ public class GUI implements Runnable, GUIInterface {
                     frame.dispose();
                     exitGUI();                        
                 } catch (Exception ex) {
+                    ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Unable To Delete Account", 
                     "Error", JOptionPane.ERROR_MESSAGE);
                 }               
@@ -981,6 +983,7 @@ public class GUI implements Runnable, GUIInterface {
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Unable To Search Item", 
             "Error", JOptionPane.ERROR_MESSAGE);
             GUI.this.defaultView();

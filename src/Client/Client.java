@@ -25,9 +25,9 @@ public class Client implements ClientInterface {
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private final Object ioLock = new Object();
-    private volatile boolean connected;
+    private boolean connected;
     private String host;
-    private volatile String currentUsername;
+    private String currentUsername;
 
     /**
      * Connects to the server using the specified address and port.
