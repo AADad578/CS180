@@ -243,8 +243,9 @@ public class GUI implements Runnable, GUIInterface {
                 try {
                     Item item = itemList[itemListIndex-1];      
                     if (item.getItemPrice() <= user.getBalance()) {
-                    client.removeItem(item);           
-                    JOptionPane.showMessageDialog(null, "Item Successfully Bought!", 
+                        client.removeItem(item);    
+                        user.setBalance(user.getBalance() - item.getItemPrice());        
+                        JOptionPane.showMessageDialog(null, "Item Successfully Bought!", 
                                                 "Item Bought", JOptionPane.PLAIN_MESSAGE); 
                     } else {
                         JOptionPane.showMessageDialog(null, "Balance is too low!", 
