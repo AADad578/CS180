@@ -19,7 +19,7 @@ import User.User;
  *
  * @author Vincent Holloway, lab sec 24
  *
- * @version May 1, 2025
+ * @version May 3, 2025
  *
  */
 
@@ -45,6 +45,8 @@ public class GUI implements Runnable, GUIInterface {
     private JButton createChatEnterButton; //enter button of creating chat screen
     private JButton viewChatsEnterButton; //enter button of view chats screen
     private JButton chatDownButton; //down button for view chats screen
+    private JButton viewMessagesEnterButton; //button for viewing messages of a specific chat
+    private JButton viewMessagesDownButton; //down button for viewing messages
     private JButton addMessageEnterButton; //enter button of add message screen
     private JTextField messageField; //text field for message content
     
@@ -54,8 +56,12 @@ public class GUI implements Runnable, GUIInterface {
     private JTextField itemPictureFileNameField; //item picture file name 
     private JButton itemEnterButton; //item enter button 
 
+    private JButton removeItemButton; //removing item button
+    private JButton removeItemEnterButton; //enter button for removing item
+
     private JButton updateUserButton; //update user button
     private JButton updateUserEnterButton; //enter button for updating user
+    private JButton userRemoveButton; //removing user button
 
     private JButton exitButton; //back button in the chat, search, balance,
                                 //item, view user profile screens
@@ -72,10 +78,12 @@ public class GUI implements Runnable, GUIInterface {
     private Client client = new Client(); //client object
     private User user = null; //user object
     private User userSendTo = null; //user object of user receving message     
-    private Chat[] chatList = null;  
-    private int chatListIndex;   
-    private Item[] itemList = null;
-    private int itemListIndex;
+    private Chat[] chatList = null; //list of chats
+    private int chatListIndex; //index of chat list
+    private Message[] messageList = null; //list of messages
+    private int messageListIndex; //index of message list
+    private Item[] itemList = null; //item list
+    private int itemListIndex; //index of item list
 
     /**
      * The main method for GUI class
@@ -125,8 +133,7 @@ public class GUI implements Runnable, GUIInterface {
                     GUI.this.defaultView();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Unable To Login In", 
-                                            "Error", JOptionPane.ERROR_MESSAGE);     
-                    GUI.this.defaultView(); //REMOVE THIS                                         
+                                            "Error", JOptionPane.ERROR_MESSAGE);                                            
                 }        
             }
             if (e.getSource() == createEnterButton) {
@@ -216,6 +223,10 @@ public class GUI implements Runnable, GUIInterface {
                 frame.dispose();
                 GUI.this.item();
             }
+            if (e.getSource() == removeItemButton) {
+                frame.dispose();
+                GUI.this.removeItem();
+            }
             if (e.getSource() == userButton) {
                 frame.dispose();
                 GUI.this.user();
@@ -284,6 +295,10 @@ public class GUI implements Runnable, GUIInterface {
                         viewChatsEnterButton = new JButton("Add Message");
                         centerPanel.add(viewChatsEnterButton);
                         viewChatsEnterButton.addActionListener(actionListener); 
+
+                        viewMessagesEnterButton = new JButton("View Messages");
+                        centerPanel.add(viewMessagesEnterButton);
+                        viewMessagesEnterButton.addActionListener(actionListener);
         
                         chatListIndex++;
                         chatDownButton = new JButton("↓");
@@ -306,6 +321,96 @@ public class GUI implements Runnable, GUIInterface {
                     frame.setVisible(true);   
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Unable To View Chats", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                    GUI.this.defaultView();
+                }
+            }
+            if (e.getSource() == viewMessagesEnterButton) {              
+                try {                   
+                    frame = new JFrame("View Messages"); //new frame
+                    JPanel centerPanel = new JPanel(); //new JPanel Object for panel
+                    centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS)); 
+                    Chat chat = chatList[chatListIndex];
+                    messageList = client.getMessages(chat);
+                    messageListIndex = 0;
+        
+                    if (messageList.length != 0) {
+                        Message message = messageList[0];
+                        JLabel messageContentLabel = new JLabel(String.format("Message: %s", 
+                                                                message.getMessageContent()));
+                        messageContentLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+                        centerPanel.add(messageContentLabel);
+        
+                        JLabel timeLabel = new JLabel(String.format("Time Sent: %d", 
+                                                                message.getTimeSent()));
+                        timeLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+                        centerPanel.add(timeLabel);
+        
+                        messageListIndex++;
+                        viewMessagesDownButton = new JButton("↓");
+                        centerPanel.add(viewMessagesDownButton);
+                        viewMessagesDownButton.addActionListener(actionListener);    
+                        frame.add(centerPanel, BorderLayout.CENTER);      
+                    }
+        
+                    JPanel bottomPanel = new JPanel(); //bottom panel
+                    exitButton = new JButton("Back");
+                    bottomPanel.add(exitButton);
+                    exitButton.addActionListener(actionListener);
+                    frame.add(bottomPanel, BorderLayout.SOUTH);
+        
+                    exitGUI();
+        
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    frame.setSize(600, 400);
+                    frame.setLocationRelativeTo(null);
+                    frame.setVisible(true);   
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Unable To View Messages", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                    GUI.this.defaultView();
+                }       
+            }
+            if (e.getSource() == viewMessagesDownButton) {
+                try {
+                    frame.dispose();
+                    frame = new JFrame("View Messages"); //new frame
+                    JPanel centerPanel = new JPanel(); //new JPanel Object for panel
+                    centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS)); 
+        
+                    if (messageList.length > messageListIndex) {
+                        Message message = messageList[messageListIndex];
+                        JLabel messageContentLabel = new JLabel(String.format("Message: %s", 
+                                                                message.getMessageContent()));
+                        messageContentLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+                        centerPanel.add(messageContentLabel);
+        
+                        JLabel timeLabel = new JLabel(String.format("Time Sent: %d", 
+                                                                message.getTimeSent()));
+                        timeLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+                        centerPanel.add(timeLabel);
+        
+                        messageListIndex++;
+                        viewMessagesDownButton = new JButton("↓");
+                        centerPanel.add(viewMessagesDownButton);
+                        viewMessagesDownButton.addActionListener(actionListener);    
+                        frame.add(centerPanel, BorderLayout.CENTER);             
+                    }
+        
+                    JPanel bottomPanel = new JPanel(); //bottom panel
+                    exitButton = new JButton("Back");
+                    bottomPanel.add(exitButton);
+                    exitButton.addActionListener(actionListener);
+                    frame.add(bottomPanel, BorderLayout.SOUTH);
+
+                    exitGUI();
+
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    frame.setSize(600, 400);
+                    frame.setLocationRelativeTo(null);
+                    frame.setVisible(true);   
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Unable To View Messages", 
                     "Error", JOptionPane.ERROR_MESSAGE);
                     GUI.this.defaultView();
                 }
@@ -347,7 +452,35 @@ public class GUI implements Runnable, GUIInterface {
                     JOptionPane.showMessageDialog(null, "Unable To Create New Item", 
                                             "Error", JOptionPane.ERROR_MESSAGE);
                 }    
-            }           
+            }
+            if (e.getSource() == removeItemEnterButton) {
+                try {
+                    String itemName = itemNameField.getText();
+                    double itemPrice = Double.parseDouble(itemPriceField.getText());              
+                    String itemLocation = itemLocationField.getText();
+                    String itemPictureFileName = itemPictureFileNameField.getText();
+                    itemList = client.searchItems(itemName);
+                    Item tempItem = new Item(itemName, itemPrice, itemLocation, itemPictureFileName, user);  
+                    boolean valid = false;
+                    for (Item item : itemList) {
+                        if (item.equals(tempItem)) {
+                            valid = true;
+                            break;
+                        }
+                    }      
+                    if (valid) {     
+                        client.removeItem(tempItem);           
+                        JOptionPane.showMessageDialog(null, "Item Successfully Deleted!", 
+                                                "New Item", JOptionPane.PLAIN_MESSAGE); 
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Item Doesn't Exist", 
+                                                "Error", JOptionPane.ERROR_MESSAGE); 
+                    }                
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Unable To Delete Item", 
+                                            "Error", JOptionPane.ERROR_MESSAGE);
+                }    
+            }         
             if (e.getSource() == updateUserButton) {
                 frame.dispose();
                 GUI.this.updateUser();
@@ -375,11 +508,26 @@ public class GUI implements Runnable, GUIInterface {
                 frame.dispose();
                 GUI.this.user();    
             }
+            if (e.getSource() == userRemoveButton) {
+                try {
+                    client.removeUser(user);
+                    JOptionPane.showMessageDialog(null, "Deleting Account", 
+                                            "Delete", JOptionPane.PLAIN_MESSAGE);
+                    frame.dispose();
+                    exitGUI();                        
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Unable To Delete Account", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                }               
+            }
         }
     };
 
+    /**
+     * The frame and panel for the update user screen
+     */
     public void updateUser() {
-        frame = new JFrame("Login"); //new frame
+        frame = new JFrame("Update User Profile"); //new frame
         JPanel centerPanel = new JPanel(); //new JPanel Object for panel
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
 
@@ -409,7 +557,7 @@ public class GUI implements Runnable, GUIInterface {
         centerPanel.add(balanceLabel);
 
         balanceField = new JTextField(15);
-        centerPanel.add(balanceField);
+        centerPanel.add(balanceField);     
 
         updateUserEnterButton = new JButton("Enter");
         centerPanel.add(updateUserEnterButton);
@@ -430,7 +578,7 @@ public class GUI implements Runnable, GUIInterface {
     public void user() {
         frame = new JFrame("User Profile"); //new frame
         Container content = frame.getContentPane();
-        content.setLayout(new BorderLayout());
+        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
         //show user profile
         JLabel userProfileLabel = new JLabel("User Profile:");
@@ -460,6 +608,10 @@ public class GUI implements Runnable, GUIInterface {
         infoPanel.add(updateUserButton);
         updateUserButton.addActionListener(actionListener);
 
+        userRemoveButton = new JButton("Delete Account");
+        infoPanel.add(userRemoveButton);
+        userRemoveButton.addActionListener(actionListener);
+
         content.add(infoPanel, BorderLayout.CENTER);
 
         JPanel bottomPanel = new JPanel(); //bottom panel
@@ -474,6 +626,64 @@ public class GUI implements Runnable, GUIInterface {
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+    /**
+     * The frame and panel for the remove item screen
+     */
+    public void removeItem() {
+        frame = new JFrame("Remove Item"); //new frame
+        Container content = frame.getContentPane();
+        content.setLayout(new BorderLayout());
+
+        JPanel centerPanel = new JPanel(); //new JPanel Object for panel
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+
+        JLabel itemNameLabel = new JLabel("Name of Item:");
+        itemNameLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+        centerPanel.add(itemNameLabel);
+
+        itemNameField = new JTextField(15);
+        centerPanel.add(itemNameField);
+
+        JLabel itemPriceLabel = new JLabel("Price of Item:");
+        itemPriceLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+        centerPanel.add(itemPriceLabel);
+
+        itemPriceField = new JTextField(15);
+        centerPanel.add(itemPriceField);
+
+        JLabel itemLocationLabel = new JLabel("Location of Item:");
+        itemLocationLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+        centerPanel.add(itemLocationLabel);
+
+        itemLocationField = new JTextField(15);
+        centerPanel.add(itemLocationField);
+
+        JLabel itemPictureFileNameLabel = new JLabel("Picture File Name of Item:");
+        itemPictureFileNameLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+        centerPanel.add(itemPictureFileNameLabel);
+
+        itemPictureFileNameField = new JTextField(15);
+        centerPanel.add(itemPictureFileNameField);
+
+        removeItemEnterButton = new JButton("Enter");
+        centerPanel.add(removeItemEnterButton);
+        removeItemEnterButton.addActionListener(actionListener);
+        frame.add(centerPanel, BorderLayout.CENTER);
+
+        JPanel bottomPanel = new JPanel(); //bottom panel
+        exitButton = new JButton("Back");
+        bottomPanel.add(exitButton);
+        exitButton.addActionListener(actionListener);
+        content.add(bottomPanel, BorderLayout.SOUTH);
+
+        exitGUI();
+
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(800, 600);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);    
     }
 
     /**
@@ -534,6 +744,9 @@ public class GUI implements Runnable, GUIInterface {
         frame.setVisible(true);
     }
 
+    /**
+     * The frame and panel for the add message screen
+     */
     public void addMessage() {
         frame = new JFrame("Add Message"); //new frame
         JPanel centerPanel = new JPanel(); //new JPanel Object for panel
@@ -565,6 +778,9 @@ public class GUI implements Runnable, GUIInterface {
         frame.setVisible(true);   
     }
 
+    /**
+     * The frame and panel for the view chats screen
+     */
     public void viewChats() {
         try {
             frame = new JFrame("View Chats"); //new frame
@@ -587,6 +803,10 @@ public class GUI implements Runnable, GUIInterface {
                 viewChatsEnterButton = new JButton("Add Message");
                 centerPanel.add(viewChatsEnterButton);
                 viewChatsEnterButton.addActionListener(actionListener); 
+
+                viewMessagesEnterButton = new JButton("View Messages");
+                centerPanel.add(viewMessagesEnterButton);
+                viewMessagesEnterButton.addActionListener(actionListener);
 
                 chatListIndex++;
                 chatDownButton = new JButton("↓");
@@ -614,6 +834,9 @@ public class GUI implements Runnable, GUIInterface {
         }       
     }
 
+    /**
+     * The frame and panel for the create chat screen
+     */
     public void createChat() {
         frame = new JFrame("Create Chat"); //new frame
         JPanel centerPanel = new JPanel(); //new JPanel Object for panel
@@ -705,10 +928,19 @@ public class GUI implements Runnable, GUIInterface {
                 itemLocationLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
                 centerPanel.add(itemLocationLabel);
         
-                JLabel itemPictureFileNameLabel = new JLabel(String.format("Picture of Item: %s", 
-                                                                item.getItemPictureFileName()));
+                JLabel itemPictureFileNameLabel = new JLabel("Picture of Item: ");
                 itemPictureFileNameLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
                 centerPanel.add(itemPictureFileNameLabel);
+
+                try {
+                    ImageIcon imageIcon = new ImageIcon(item.getItemPictureFileName()); //loads image file into icon 
+                    JLabel imageLabel = new JLabel(imageIcon); //creates ability of image to display
+                    imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT); //properly aligns image
+                    centerPanel.add(imageLabel);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Unable To Load Item Image", 
+                                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
 
                 itemListIndex++;
                 itemDownButton = new JButton("↓");
@@ -757,7 +989,7 @@ public class GUI implements Runnable, GUIInterface {
         content.add(topPanel, BorderLayout.NORTH);
 
         JPanel panel = new JPanel(); //panel
-        panel.setLayout(new GridLayout(3,0));
+        panel.setLayout(new GridLayout(4,0));
 
         chatButton = new JButton("Chat");
         panel.add(chatButton);
@@ -766,6 +998,10 @@ public class GUI implements Runnable, GUIInterface {
         itemButton = new JButton("Add Item");
         panel.add(itemButton);
         itemButton.addActionListener(actionListener);
+
+        removeItemButton = new JButton("Remove Item");
+        panel.add(removeItemButton);
+        removeItemButton.addActionListener(actionListener);
 
         userButton = new JButton("View User Profile");
         panel.add(userButton);
@@ -888,6 +1124,11 @@ public class GUI implements Runnable, GUIInterface {
         frame.setVisible(true);
     }
 
+    /**
+     * for when user exits the GUI
+     * 
+     * @method windowClosing(WindowEvent e) for when GUI Window is closed
+     */
     public void exitGUI() {
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
