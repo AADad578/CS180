@@ -1,4 +1,4 @@
-# CS 18000 - Team Project Phase 2 - Marketplace
+# CS 18000 - Team Project Phase 3 - Marketplace
 
 ## How to compile and run the project
 
@@ -9,6 +9,7 @@ To run unit tests, it is required to have both Junit 4 and 5. It is guaranteed t
 
 Ankur Raghavan - Submitted Project Phase 1 to Vocareum
 Ankur Raghavan - Submitted Project Phase 2 to Vocareum 
+Ankur Raghavan - Submitted Project Phase 3 to Vocareum 
 
 ## Detailed description of each class
 
@@ -30,11 +31,11 @@ This testing class tests every method in the Message Class by using the assertEq
 
 ## GUI Class - Vincent Holloway
 
-This class will handle the GUI and will be called by the Client class. It does not have a testing class at the moment because none of the methods are able to be tested automatically as they cause GUI changes. Currently, only the layout of the GUI has been created as the rest while be implemented in Phase 3.
+This class will handle the GUI and will only call the Client Class methods for access to database. There is no specific testing class as this GUI was physically tested by the team members of this project. Currently, the layout of the GUI starts with a welcome screen with two options: "Login" and "Create Account". Then after the user enters their information into one of these two options, the main screen appears with a search items bar at the top and four buttons: "Chat", "Add Item", "Remove Item", and "View User Profile". The search item bar receives an input of a string that displays items related this string. The "Chat" button allows the user to view previous chats with the option to add a message to them or the user can create an entirely new chat. The "Add Item" button allows the user to add an item to the database. The "Remove Item" button allows the user to remove an item from the database. The 'View User Profile" button allows the user to view profile with ability to update it with information including balance and also allows user to delete account. The user will exit the GUI by clicking the X at the top right. 
 
 ## Database Class - Ankur Raghavan
 
-This claas has 3 instance variables which are lists of Items, Chats, and Users. The methods in this class include getters and setters for each of those lists and a toString that converts them to a string using Arrays.toString(A); This object stores all the data for the project and will be written to a file and read.
+This class has 3 instance variables which are lists of Items, Chats, and Users. The methods in this class include getters and setters for each of those lists and a toString that converts them to a string using Arrays.toString(A); This object stores all the data for the project and will be written to a file and read.
 
 ## DatabaseTester Class - Ankur Raghavan
 
