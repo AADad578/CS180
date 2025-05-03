@@ -183,20 +183,33 @@ public class GUI implements Runnable, GUIInterface {
                                                                 item.getItemLocation()));
                         itemLocationLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
                         centerPanel.add(itemLocationLabel);
+
+                        JLabel itemOwnerLabel = new JLabel(String.format("Seller of Item: %s", 
+                                                                item.getItemOwner()));
+                        itemOwnerLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+                        centerPanel.add(itemOwnerLabel);
                 
                         JLabel itemPictureFileNameLabel = new JLabel(String.format("Picture of Item: %s", 
                                                                         item.getItemPictureFileName()));
                         itemPictureFileNameLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
                         centerPanel.add(itemPictureFileNameLabel);
+
+                        try {
+                            ImageIcon imageIcon = new ImageIcon(item.getItemPictureFileName()); //loads image file into icon 
+                            JLabel imageLabel = new JLabel(imageIcon); //creates ability of image to display
+                            imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT); //properly aligns image
+                            centerPanel.add(imageLabel);
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null, "Unable To Load Item Image", 
+                                                    "Error", JOptionPane.ERROR_MESSAGE);
+                        }
         
                         itemListIndex++;
                         itemDownButton = new JButton("↓");
                         centerPanel.add(itemDownButton);
                         itemDownButton.addActionListener(actionListener);    
                         frame.add(centerPanel, BorderLayout.CENTER);      
-                    }
-                    
-        
+                    }                 
                     JPanel bottomPanel = new JPanel(); //bottom panel
                     exitButton = new JButton("Back");
                     bottomPanel.add(exitButton);
@@ -927,6 +940,11 @@ public class GUI implements Runnable, GUIInterface {
                                                         item.getItemLocation()));
                 itemLocationLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
                 centerPanel.add(itemLocationLabel);
+
+                JLabel itemOwnerLabel = new JLabel(String.format("Seller of Item: %s", 
+                                                                item.getItemOwner()));
+                itemOwnerLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+                centerPanel.add(itemOwnerLabel);
         
                 JLabel itemPictureFileNameLabel = new JLabel("Picture of Item: ");
                 itemPictureFileNameLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
