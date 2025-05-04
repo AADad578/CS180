@@ -140,9 +140,8 @@ public class Server extends Thread implements ServerInterface {
             for (int i = 0; i < currItems.length; i++) {
                 if (searching && currItems[i].equals(item)) {
                     searching = false;
-                    index--;
                     continue;
-                } else if (i + 1 == currItems.length) {
+                } else if (searching && i + 1 == currItems.length) {
                     // on the last item and didn't find a match
                     throw new InvalidInputException("Selected Item not found");
                 }

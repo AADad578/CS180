@@ -256,6 +256,7 @@ public class GUI implements Runnable, GUIInterface {
                         "Error", JOptionPane.ERROR_MESSAGE); 
                     }                                                      
                 } catch (Exception ex) {
+                    ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Unable To Buy Item", 
                                             "Error", JOptionPane.ERROR_MESSAGE);
                 }   
@@ -367,7 +368,7 @@ public class GUI implements Runnable, GUIInterface {
                     frame.setLocationRelativeTo(null);
                     frame.setVisible(true);   
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Unable To View Chats", 
+                    JOptionPane.showMessageDialog(null, "Unable To View Chats",
                     "Error", JOptionPane.ERROR_MESSAGE);
                     GUI.this.defaultView();
                 }
@@ -1024,7 +1025,7 @@ public class GUI implements Runnable, GUIInterface {
      * The frame and panel for the default view screen
      */
     public void defaultView() {
-        frame = new JFrame("Market Place"); //new frame
+        frame = new JFrame("Market Place - " + user.getUserName()); //new frame
         Container content = frame.getContentPane();
         content.setLayout(new BorderLayout());
 
