@@ -10,6 +10,8 @@ To run unit tests, it is required to have both Junit 4 and 5. It is guaranteed t
 Ankur Raghavan - Submitted Project Phase 1 to Vocareum
 Ankur Raghavan - Submitted Project Phase 2 to Vocareum 
 Ankur Raghavan - Submitted Project Phase 3 to Vocareum 
+Ankur Raghavan - Submitted Presentation Link to Brightspace
+Ankur Raghavan - Submitted Report to Brightspace
 
 ## Detailed description of each class
 

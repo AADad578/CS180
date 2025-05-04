@@ -133,8 +133,9 @@ public class GUI implements Runnable, GUIInterface {
                     frame.dispose();
                     GUI.this.defaultView();
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Unable To Login In", 
-                                            "Error", JOptionPane.ERROR_MESSAGE);                                            
+                    JOptionPane.showMessageDialog(null, 
+                        "Unable To Login In", "Error", 
+                        JOptionPane.ERROR_MESSAGE);
                 }        
             }
             if (e.getSource() == createEnterButton) {
@@ -197,7 +198,8 @@ public class GUI implements Runnable, GUIInterface {
                         centerPanel.add(itemPictureFileNameLabel);
 
                         try {
-                            ImageIcon imageIcon = new ImageIcon(item.getItemPictureFileName()); //loads image file into icon 
+                            ImageIcon imageIcon = new ImageIcon(item.getItemPictureFileName()); 
+                            //loads image file into icon 
                             JLabel imageLabel = new JLabel(imageIcon); //creates ability of image to display
                             imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT); //properly aligns image
                             centerPanel.add(imageLabel);
@@ -235,13 +237,13 @@ public class GUI implements Runnable, GUIInterface {
                     frame.setVisible(true);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Unable To Search Item", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                        "Error", JOptionPane.ERROR_MESSAGE);
                     GUI.this.defaultView();
                 }
             }
             if (e.getSource() == sellItemButton) {
                 try {
-                    Item item = itemList[itemListIndex-1];      
+                    Item item = itemList[itemListIndex - 1];      
                     if (item.getItemPrice() <= user.getBalance()) {
                         client.removeItem(item);    
                         user.setBalance(user.getBalance() - item.getItemPrice());
@@ -253,7 +255,7 @@ public class GUI implements Runnable, GUIInterface {
                                                 "Item Bought", JOptionPane.PLAIN_MESSAGE); 
                     } else {
                         JOptionPane.showMessageDialog(null, "Balance is too low!", 
-                        "Error", JOptionPane.ERROR_MESSAGE); 
+                            "Error", JOptionPane.ERROR_MESSAGE); 
                     }                                                      
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -306,12 +308,13 @@ public class GUI implements Runnable, GUIInterface {
                                             "New Chat", JOptionPane.PLAIN_MESSAGE);         
                         addMessage();                        
                     } else {
-                        JOptionPane.showMessageDialog(null, "Unable To Find User", 
-                                            "Error", JOptionPane.ERROR_MESSAGE);                                           
+                        JOptionPane.showMessageDialog(null, "Unable To Find User",
+                                            "Error", JOptionPane.ERROR_MESSAGE);
                     }                                
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Unable To Create New Chat", 
-                                            "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, 
+                        "Unable To Create New Chat", "Error", 
+                        JOptionPane.ERROR_MESSAGE);
                 }    
             }
             if (e.getSource() == viewChatsButton) {
@@ -369,7 +372,7 @@ public class GUI implements Runnable, GUIInterface {
                     frame.setVisible(true);   
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Unable To View Chats",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                        "Error", JOptionPane.ERROR_MESSAGE);
                     GUI.this.defaultView();
                 }
             }
@@ -378,7 +381,7 @@ public class GUI implements Runnable, GUIInterface {
                     frame = new JFrame("View Messages"); //new frame
                     JPanel centerPanel = new JPanel(); //new JPanel Object for panel
                     centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS)); 
-                    Chat chat = chatList[chatListIndex-1];
+                    Chat chat = chatList[chatListIndex - 1];
                     messageList = new Message[0];
                     messageList = chat.getMessages().toArray(messageList);
                     messageListIndex = 0;
@@ -416,7 +419,7 @@ public class GUI implements Runnable, GUIInterface {
                     frame.setVisible(true);   
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Unable To View Messages", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                        "Error", JOptionPane.ERROR_MESSAGE);
                     GUI.this.defaultView();
                 }       
             }
@@ -460,7 +463,7 @@ public class GUI implements Runnable, GUIInterface {
                     frame.setVisible(true);   
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Unable To View Messages", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                        "Error", JOptionPane.ERROR_MESSAGE);
                     GUI.this.defaultView();
                 }
             }
@@ -493,7 +496,8 @@ public class GUI implements Runnable, GUIInterface {
                     double itemPrice = Double.parseDouble(itemPriceField.getText());              
                     String itemLocation = itemLocationField.getText();
                     String itemPictureFileName = itemPictureFileNameField.getText();
-                    Item item = new Item(itemName, itemPrice, itemLocation, itemPictureFileName, user);                  
+                    Item item = new Item(itemName, itemPrice, itemLocation, 
+                                         itemPictureFileName, user);                  
                     client.createNewItem(item);             
                     JOptionPane.showMessageDialog(null, "Item Successfully Created!", 
                                             "New Item", JOptionPane.PLAIN_MESSAGE);                  
@@ -545,7 +549,7 @@ public class GUI implements Runnable, GUIInterface {
                     username = usernameField.getText();
                     password = passwordField.getText();                 
                     name = nameField.getText();
-                    balance = Double.parseDouble(balanceField.getText());                                                       
+                    balance = Double.parseDouble(balanceField.getText());
                     user = new User(name, balance, username, password);                  
                     client.updateUser(user);                                  
                 } catch (Exception ex) {
@@ -559,12 +563,12 @@ public class GUI implements Runnable, GUIInterface {
                 try {
                     client.removeUser(user);
                     JOptionPane.showMessageDialog(null, "Deleting Account", 
-                                            "Delete", JOptionPane.PLAIN_MESSAGE);                                          
+                        "Delete", JOptionPane.PLAIN_MESSAGE);                                          
                     frame.dispose();
                     exitGUI();                        
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Unable To Delete Account", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 }               
             }
         }
@@ -866,7 +870,7 @@ public class GUI implements Runnable, GUIInterface {
             frame.setVisible(true);   
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Unable To View Chats", 
-            "Error", JOptionPane.ERROR_MESSAGE);
+                "Error", JOptionPane.ERROR_MESSAGE);
             GUI.this.defaultView();
         }       
     }
@@ -914,7 +918,7 @@ public class GUI implements Runnable, GUIInterface {
         content.setLayout(new BorderLayout());
 
         JPanel panel = new JPanel(); //panel
-        panel.setLayout(new GridLayout(2,0));
+        panel.setLayout(new GridLayout(2, 0));
 
         createChatButton = new JButton("Create Chat");
         panel.add(createChatButton);
@@ -1016,7 +1020,7 @@ public class GUI implements Runnable, GUIInterface {
             frame.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Unable To Search Item", 
-            "Error", JOptionPane.ERROR_MESSAGE);
+                "Error", JOptionPane.ERROR_MESSAGE);
             GUI.this.defaultView();
         }
     }
@@ -1041,7 +1045,7 @@ public class GUI implements Runnable, GUIInterface {
         content.add(topPanel, BorderLayout.NORTH);
 
         JPanel panel = new JPanel(); //panel
-        panel.setLayout(new GridLayout(4,0));
+        panel.setLayout(new GridLayout(4, 0));
 
         chatButton = new JButton("Chat");
         panel.add(chatButton);
